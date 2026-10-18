@@ -1,0 +1,8 @@
+{
+  "appId": "com.blocaille.jeu",
+  "appName": "Blocaille",
+  "webDir": "www",
+  "backgroundColor": "#a43dff",
+  "ios": { "contentInset": "never" },
+  "android": { "backgroundColor": "#a43dff" }
+}

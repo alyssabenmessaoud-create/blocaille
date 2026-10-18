@@ -1,0 +1,24 @@
+{
+  "name": "blocaille",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Blocaille – jeu de blocs coloré avec défis, mots et quiz",
+  "scripts": {
+    "assets": "capacitor-assets generate --iconBackgroundColor '#a43dff' --splashBackgroundColor '#a43dff'",
+    "add:ios": "cap add ios && node scripts/configure-native.mjs",
+    "add:android": "cap add android && node scripts/configure-native.mjs",
+    "sync": "cap sync",
+    "ios": "cap open ios",
+    "android": "cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/ios": "^7.0.0",
+    "@capacitor-community/admob": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^7.0.0"
+  }
+}
