@@ -1,0 +1,45 @@
+# Compilation iPhone dans le cloud avec Codemagic (https://codemagic.io)
+# Le projet de l'appli est dans le dossier "app".
+# Prérequis dans Codemagic : Team settings > Integrations > Developer Portal,
+# ajoutez votre clé API App Store Connect sous le nom "app_store_connect".
+workflows:
+  ios-release:
+    name: Blocaille iOS
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: app_store_connect
+    environment:
+      node: 20
+      xcode: latest
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.blocaille.jeu
+    scripts:
+      - name: Installer les dépendances
+        script: |
+          cd app
+          npm install
+      - name: Créer le projet iOS
+        script: |
+          cd app
+          [ -d ios ] || npx cap add ios
+          node scripts/configure-native.mjs
+          npx capacitor-assets generate --ios --iconBackgroundColor '#a43dff' --splashBackgroundColor '#a43dff'
+          npx cap sync ios
+      - name: Signature
+        script: xcode-project use-profiles
+      - name: Numéro de build
+        script: |
+          cd app/ios/App
+          agvtool new-version -all $(($BUILD_NUMBER + 1))
+      - name: Compiler l'IPA
+        script: |
+          cd app
+          xcode-project build-ipa --workspace ios/App/App.xcworkspace --scheme App
+    artifacts:
+      - app/build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
