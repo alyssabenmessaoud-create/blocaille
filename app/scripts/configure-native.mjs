@@ -3,7 +3,7 @@
 // Remplacez les identifiants d'application de TEST par les vôtres (console AdMob).
 import fs from 'node:fs';
 
-const ADMOB_APP_ID_IOS = 'ca-app-pub-3940256099942544~1458002511';     // TEST
+const ADMOB_APP_ID_IOS = 'ca-app-pub-5323738460279716~9326598703';     // réel
 const ADMOB_APP_ID_ANDROID = 'ca-app-pub-3940256099942544~3347511713'; // TEST
 
 // --- iOS : Info.plist ---
