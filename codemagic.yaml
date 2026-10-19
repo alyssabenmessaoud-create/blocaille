@@ -47,7 +47,7 @@ workflows:
   android-release:
     name: Blocaille Android
     max_build_duration: 60
-    instance_type: linux_x2
+    instance_type: mac_mini_m2
     environment:
       node: 20
       java: 21
@@ -68,7 +68,7 @@ workflows:
       - name: Numéro de version
         script: |
           cd app/android/app
-          sed -i "s/versionCode [0-9]*/versionCode $(($BUILD_NUMBER + 1))/" build.gradle
+          perl -pi -e "s/versionCode \\d+/versionCode $(($BUILD_NUMBER + 1))/" build.gradle
       - name: Compiler l'AAB signé
         script: |
           echo "$CM_KEYSTORE" | base64 --decode > /tmp/blocaille-upload.jks
