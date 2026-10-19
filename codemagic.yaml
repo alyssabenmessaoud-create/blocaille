@@ -43,3 +43,41 @@ workflows:
       app_store_connect:
         auth: integration
         submit_to_testflight: true
+
+  android-release:
+    name: Blocaille Android
+    max_build_duration: 60
+    instance_type: linux_x2
+    environment:
+      node: 20
+      java: 21
+      groups:
+        - android_signing # CM_KEYSTORE (base64), CM_KEYSTORE_PASSWORD, CM_KEY_ALIAS, CM_KEY_PASSWORD
+    scripts:
+      - name: Installer les dépendances
+        script: |
+          cd app
+          npm install
+      - name: Créer le projet Android
+        script: |
+          cd app
+          [ -d android ] || npx cap add android
+          node scripts/configure-native.mjs
+          npx capacitor-assets generate --android --iconBackgroundColor '#a43dff' --splashBackgroundColor '#a43dff'
+          npx cap sync android
+      - name: Numéro de version
+        script: |
+          cd app/android/app
+          sed -i "s/versionCode [0-9]*/versionCode $(($BUILD_NUMBER + 1))/" build.gradle
+      - name: Compiler l'AAB signé
+        script: |
+          echo "$CM_KEYSTORE" | base64 --decode > /tmp/blocaille-upload.jks
+          cd app/android
+          chmod +x gradlew
+          ./gradlew bundleRelease \
+            -Pandroid.injected.signing.store.file=/tmp/blocaille-upload.jks \
+            -Pandroid.injected.signing.store.password="$CM_KEYSTORE_PASSWORD" \
+            -Pandroid.injected.signing.key.alias="$CM_KEY_ALIAS" \
+            -Pandroid.injected.signing.key.password="$CM_KEY_PASSWORD"
+    artifacts:
+      - app/android/app/build/outputs/bundle/release/*.aab

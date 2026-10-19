@@ -4,7 +4,7 @@
 import fs from 'node:fs';
 
 const ADMOB_APP_ID_IOS = 'ca-app-pub-5323738460279716~9326598703';     // réel
-const ADMOB_APP_ID_ANDROID = 'ca-app-pub-3940256099942544~3347511713'; // TEST
+const ADMOB_APP_ID_ANDROID = 'ca-app-pub-5323738460279716~8876006710'; // réel
 
 // --- iOS : Info.plist ---
 const plist = 'ios/App/App/Info.plist';
