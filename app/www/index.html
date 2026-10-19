@@ -85,7 +85,7 @@ h1 span{display:inline-block;color:var(--c);text-shadow:0 3px 0 var(--deep),0 0 
 .toast{position:absolute;top:12px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,var(--yellow),var(--orange));color:var(--deep);font-weight:700;padding:9px 16px;border-radius:999px;font-size:.9rem;z-index:6;white-space:nowrap;max-width:92%;overflow:hidden;text-overflow:ellipsis;box-shadow:0 4px 0 rgba(42,10,74,.35);transition:opacity .3s}
 .toast.show{animation:toastin .4s cubic-bezier(.2,1.6,.4,1)}
 @keyframes toastin{from{transform:translateX(-50%) scale(.3)}to{transform:translateX(-50%) scale(1)}}
-.banner{height:50px;flex-shrink:0;border-radius:12px;background:rgba(255,255,255,.88);border:2px dashed var(--purple);display:flex;align-items:center;justify-content:center;gap:8px;font-size:.75rem;color:var(--deep);letter-spacing:.04em;font-weight:500}
+.banner{height:var(--ad-h,50px);flex-shrink:0;border-radius:12px;background:rgba(255,255,255,.88);border:2px dashed var(--purple);display:flex;align-items:center;justify-content:center;gap:8px;font-size:.75rem;color:var(--deep);letter-spacing:.04em;font-weight:500}
 .banner.native{background:transparent;border:0}
 .banner.native *{display:none}
 .banner b{font-size:.6rem;background:var(--purple);color:#fff;padding:2px 6px;border-radius:4px;letter-spacing:.1em}
@@ -606,6 +606,8 @@ async function initAds(){
     const c=await AdMob.requestConsentInfo({});
     if(c&&c.isConsentFormAvailable&&c.status==='REQUIRED')await AdMob.showConsentForm();
     adsReady=true;
+    // réserve exactement la hauteur de la vraie bannière, pour qu'elle ne cache jamais le bas de la grille
+    AdMob.addListener('bannerAdSizeChanged',s=>{if(s&&s.height>0){document.documentElement.style.setProperty('--ad-h',Math.ceil(s.height)+'px');resize()}});
     await AdMob.showBanner({adId:adIds.banner,adSize:'BANNER',position:'BOTTOM_CENTER',margin:0,isTesting:ADS_CONFIG.testing});
     document.getElementById('bannerSlot').classList.add('native');
   }catch(e){console.warn('Pub indisponible',e)}
@@ -1120,7 +1122,7 @@ function renderShop(){
     <button class="shopad" id="shAd" ${left<=0?'disabled':''}><span class="ic">▶</span><span><b>Pièces gratuites</b><span>${left>0?`Regarde une pub : +${AD_COINS} 🪙 (encore ${left} aujourd'hui)`:'Reviens demain pour d\'autres pièces gratuites'}</span></span></button>
     ${starterDone?'':`<button class="pack starter" data-id="${STARTER.id}"><span class="ic">🎁</span><span class="nm"><b>Pack de départ</b><span>${STARTER.coins} 🪙 + ${STARTER.bombs} 💣 + ${STARTER.undos} ↶ · une seule fois</span></span><span class="pr">${STARTER.price}</span></button>`}
     <div class="packs">${PACKS.map(p=>`<button class="pack" data-id="${p.id}">${p.tag?`<i class="tag">${p.tag}</i>`:''}<span class="ic">🪙</span><b>${p.coins.toLocaleString('fr-FR')}</b><span class="nm2">${p.label}</span><span class="pr">${p.price}</span></button>`).join('')}</div>
-    ${noAds?'<p class="shopnote">✓ Version sans publicité activée. Merci !</p>':`<button class="pack noads" data-id="${NOADS.id}"><span class="ic">🚫</span><span class="nm"><b>Sans publicité</b><span>Retire la bannière pour toujours</span></span><span class="pr">${NOADS.price}</span></button>`}
+    ${noAds?'<p class="shopnote">✓ Version sans publicité activée. Merci !</p>':`<button class="pack noads" data-id="${NOADS.id}"><span class="ic">🚫</span><span class="nm"><b>Sans publicité</b><span>Retire la pub plein écran pour toujours</span></span><span class="pr">${NOADS.price}</span></button>`}
     <div class="shopcost"><b>À quoi servent les pièces ?</b><span>💣 Bombe ${COST.bomb} · ↶ Retour ${COST.undo} · Continuer après une défaite ${COST.cont}</span><span>Jeux bonus : lettres, 50/50, temps en plus, boussole, essai en plus…</span></div>
     <p class="shopnote">Les prix sont en euros, TTC. Les achats sont facultatifs : tout le jeu se joue sans payer.</p>
     <button class="btn ghost" id="shRestore" style="font-size:.85rem;padding:9px">Restaurer mes achats</button>`;
@@ -1131,13 +1133,14 @@ function renderShop(){
   $('shopBody').querySelectorAll('.pack').forEach(b=>b.onclick=()=>{const id=b.dataset.id;
     purchase(id,()=>{
       if(id===STARTER.id){store.set('starter',true);setCoins(coins+STARTER.coins,true);store.set('pendingBonus',{b:STARTER.bombs,u:STARTER.undos});applyPending();shopMsg='🎁 Pack de départ ajouté !'}
-      else if(id===NOADS.id){store.set('noads',true);applyNoAds();shopMsg='🚫 Publicités retirées.'}
+      else if(id===NOADS.id){store.set('noads',true);applyNoAds();shopMsg='🚫 Pub plein écran retirée.'}
       else{const p=PACKS.find(x=>x.id===id);setCoins(coins+p.coins,true);shopMsg=`+${p.coins.toLocaleString('fr-FR')} 🪙 ajoutées !`}
     })});
 }
 // bombs/undos bought outside a game wait for the next game
 function applyPending(){const p=store.get('pendingBonus',null);if(!p)return;if(state==='play'||state==='pause'||state==='over'){bombs+=p.b;undos+=p.u;hud()}else{carry.bomb+=p.b;carry.undo+=p.u}store.set('pendingBonus',null)}
-function applyNoAds(){if(!store.get('noads',false))return;const b=$('bannerSlot');if(b)b.hidden=true;if(typeof AdMob!=='undefined'&&AdMob&&AdMob.removeBanner)AdMob.removeBanner().catch(()=>{});setTimeout(resize,50)}
+// "Sans publicité" ne retire que la pub plein écran : la bannière reste toujours
+function applyNoAds(){window.noAds=!!store.get('noads',false)}
 
 // ---- daily gift with a 7-day calendar ----
 function checkDaily(){
@@ -1165,6 +1168,8 @@ function bgDraw(){bctx.clearRect(0,0,innerWidth,innerHeight);shapesBg.forEach(o=
   if(!matchMedia('(prefers-reduced-motion: reduce)').matches)requestAnimationFrame(bgDraw)}
 bgResize();bgDraw();window.addEventListener('resize',bgResize);
 grid=newGrid();bombs=1;undos=2;history=[];chIdx=0;stats={};next=make(draw7());hud();resize();requestAnimationFrame(loop);
+// recalcule la grille dès que sa place change : marges de l'iPhone connues après le lancement, polices, rotation…
+if(window.ResizeObserver)new ResizeObserver(resize).observe($('stage'));
 setCoins(coins);applyNoAds();$('coinBtn').onclick=()=>openShop();$('giftBtn').onclick=openBonusAnytime;$('shopClose').onclick=closeShop;setTimeout(checkDaily,600);
 })();
 </script>
