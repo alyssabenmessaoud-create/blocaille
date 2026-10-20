@@ -603,6 +603,9 @@ const adIds=ADS_CONFIG[platform]||ADS_CONFIG.android;
 let adsReady=false;
 async function initAds(){
   if(!AdMob)return;
+  // dans l'appli, on cache tout de suite l'encart de démonstration : la vraie bannière s'affiche par-dessus quand elle est chargée
+  document.getElementById('bannerSlot').classList.add('native');
+  document.documentElement.style.setProperty('--ad-h','0px');setTimeout(()=>{try{resize()}catch(e){}},0);
   try{
     await AdMob.initialize({});
     if(platform==='ios'){
@@ -613,11 +616,11 @@ async function initAds(){
     if(c&&c.isConsentFormAvailable&&c.status==='REQUIRED')await AdMob.showConsentForm();
     adsReady=true;
     await AdMob.showBanner({adId:adIds.banner,adSize:'BANNER',position:'BOTTOM_CENTER',margin:0,isTesting:ADS_CONFIG.testing});
-    document.getElementById('bannerSlot').classList.add('native');
   }catch(e){console.warn('Pub indisponible',e)}
 }
 async function showRewardedAd(){
-  if(!AdMob||!adsReady)return null; // null = pas de pub native, on simule
+  if(!AdMob)return null; // null = navigateur, on simule
+  if(!adsReady)return false;
   try{
     await AdMob.prepareRewardVideoAd({adId:adIds.rewarded,isTesting:ADS_CONFIG.testing});
     const reward=await AdMob.showRewardVideoAd();
@@ -634,7 +637,7 @@ function playRewarded(){
   usedReward=true;
   showRewardedAd().then(res=>{
     if(res===true){giveContinue();return}
-    if(res===false){toast('Pub indisponible, réessaie plus tard');usedReward=false;gameOver();return}
+    if(res===false){toast('Pas de pub disponible : on te l\'offre !');giveContinue();return}
     // navigateur : pub simulée
     $('adReward').textContent='Récompense : 4 lignes du bas effacées';const scr=$('adscreen');scr.hidden=false;let n=5;$('adCount').textContent=n;
     const iv=setInterval(()=>{n--;$('adCount').textContent=n;if(n<=0){clearInterval(iv);scr.hidden=true;giveContinue()}},1000);
@@ -1108,7 +1111,7 @@ function shopConfirm(id,onDone){
 function adsLeft(){const a=store.get('adsday',{d:'',n:0});return a.d===today()?ADS_PER_DAY-a.n:ADS_PER_DAY}
 function watchAdFor(text,onReward){
   const done=()=>{const a=store.get('adsday',{d:'',n:0});store.set('adsday',a.d===today()?{d:a.d,n:a.n+1}:{d:today(),n:1});onReward()};
-  if(typeof showRewardedAd==='function'){showRewardedAd().then(r=>{if(r===true)done();else if(r===null)simulateAd(text,done)});return}
+  if(typeof showRewardedAd==='function'){showRewardedAd().then(r=>{if(r===true)done();else if(r===null)simulateAd(text,done);else{toast('Pas de pub disponible : on te l\'offre !');done()}});return}
   simulateAd(text,done);
 }
 function simulateAd(text,cb){const scr=$('adscreen');$('adReward').textContent='Récompense : '+text;scr.hidden=false;let n=5;$('adCount').textContent=n;
