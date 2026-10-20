@@ -20,6 +20,16 @@ if (fs.existsSync(plist)) {
   console.log('✔ Info.plist configuré');
 }
 
+// --- iOS : version minimale iOS 15 (exigée par Apple à partir d'avril 2027) ---
+for (const f of ['ios/App/Podfile', 'ios/App/App.xcodeproj/project.pbxproj']) {
+  if (fs.existsSync(f)) {
+    let t = fs.readFileSync(f, 'utf8');
+    t = t.replace(/platform :ios, '1[0-4]\.\d+'/g, "platform :ios, '15.0'")
+         .replace(/IPHONEOS_DEPLOYMENT_TARGET = 1[0-4]\.\d+;/g, 'IPHONEOS_DEPLOYMENT_TARGET = 15.0;');
+    fs.writeFileSync(f, t);
+  }
+}
+
 // --- Android : AndroidManifest.xml ---
 const manifest = 'android/app/src/main/AndroidManifest.xml';
 if (fs.existsSync(manifest)) {
