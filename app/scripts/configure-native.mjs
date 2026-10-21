@@ -45,3 +45,12 @@ if (fs.existsSync(manifest)) {
   fs.writeFileSync(manifest, m);
   console.log('✔ AndroidManifest.xml configuré');
 }
+
+// --- Android : version minimale Android 7 (SDK 24, exigée par la protection automatique Play) ---
+const variables = 'android/variables.gradle';
+if (fs.existsSync(variables)) {
+  let v = fs.readFileSync(variables, 'utf8');
+  v = v.replace(/minSdkVersion = 2[0-3]\b/, 'minSdkVersion = 24');
+  fs.writeFileSync(variables, v);
+  console.log('✔ variables.gradle : minSdkVersion 24');
+}
