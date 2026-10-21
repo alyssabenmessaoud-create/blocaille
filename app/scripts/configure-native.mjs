@@ -50,7 +50,24 @@ if (fs.existsSync(manifest)) {
 const variables = 'android/variables.gradle';
 if (fs.existsSync(variables)) {
   let v = fs.readFileSync(variables, 'utf8');
-  v = v.replace(/minSdkVersion = 2[0-3]\b/, 'minSdkVersion = 24');
+  v = v.replace(/minSdkVersion = 2[0-3]\b/, 'minSdkVersion = 24')
+       .replace(/compileSdkVersion = 3[0-5]\b/, 'compileSdkVersion = 36')
+       .replace(/targetSdkVersion = 3[0-5]\b/, 'targetSdkVersion = 36');
   fs.writeFileSync(variables, v);
-  console.log('✔ variables.gradle : minSdkVersion 24');
+  console.log('✔ variables.gradle : minSdkVersion 24, compile/targetSdkVersion 36');
+}
+
+// --- Android : plugin Gradle compatible avec le SDK 36 (exigé par Google Play) ---
+const rootGradle = 'android/build.gradle';
+if (fs.existsSync(rootGradle)) {
+  let g = fs.readFileSync(rootGradle, 'utf8');
+  g = g.replace(/com\.android\.tools\.build:gradle:8\.[0-9]\.\d+/, 'com.android.tools.build:gradle:8.10.1');
+  fs.writeFileSync(rootGradle, g);
+  console.log('✔ build.gradle : Android Gradle Plugin 8.10.1');
+}
+const gradleProps = 'android/gradle.properties';
+if (fs.existsSync(gradleProps)) {
+  let gp = fs.readFileSync(gradleProps, 'utf8');
+  if (!gp.includes('android.suppressUnsupportedCompileSdk')) gp += '\nandroid.suppressUnsupportedCompileSdk=36\n';
+  fs.writeFileSync(gradleProps, gp);
 }
