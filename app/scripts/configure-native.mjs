@@ -4,6 +4,8 @@
 import fs from 'node:fs';
 
 const ADMOB_APP_ID_IOS = 'ca-app-pub-5323738460279716~9326598703';     // réel
+// Numéro de version affiché sur les stores (à augmenter à chaque nouvelle version)
+const APP_VERSION = '1.0.1';
 const ADMOB_APP_ID_ANDROID = 'ca-app-pub-5323738460279716~8876006710'; // réel
 
 // --- iOS : Info.plist ---
@@ -25,7 +27,8 @@ for (const f of ['ios/App/Podfile', 'ios/App/App.xcodeproj/project.pbxproj']) {
   if (fs.existsSync(f)) {
     let t = fs.readFileSync(f, 'utf8');
     t = t.replace(/platform :ios, '1[0-4]\.\d+'/g, "platform :ios, '15.0'")
-         .replace(/IPHONEOS_DEPLOYMENT_TARGET = 1[0-4]\.\d+;/g, 'IPHONEOS_DEPLOYMENT_TARGET = 15.0;');
+         .replace(/IPHONEOS_DEPLOYMENT_TARGET = 1[0-4]\.\d+;/g, 'IPHONEOS_DEPLOYMENT_TARGET = 15.0;')
+         .replace(/MARKETING_VERSION = [\d.]+;/g, `MARKETING_VERSION = ${APP_VERSION};`);
     fs.writeFileSync(f, t);
   }
 }
