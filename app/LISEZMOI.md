@@ -105,3 +105,25 @@ Le jeu contient une boutique avec des pièces 🪙. Dans ce projet, les achats s
 4. Le bouton « Restaurer mes achats » est obligatoire chez Apple pour les achats non consommables : il est déjà dans la boutique.
 
 Apple prélève 15 % (programme pour les petits développeurs, sous 1 million de dollars par an) ou 30 % sur chaque achat.
+
+---
+
+## Langues (depuis la version 1.1)
+
+Le jeu existe en **français, anglais, espagnol, portugais (Brésil), allemand et italien**. Il prend automatiquement la langue du téléphone (l'anglais si la langue n'est pas disponible) ; le bouton 🌐 de l'écran d'accueil permet d'en changer.
+
+| Élément | Rôle |
+|---|---|
+| `www/index.html` | Le jeu. Les textes y sont écrits en français, entourés de `L('…')`. Les mots et le quiz français sont dans `WORDS_FR` et `QUIZ_FR`. |
+| `i18n-src/ui/<langue>.json` | Traduction de chaque texte de l'interface (clé = texte français exact). |
+| `i18n-src/content/<langue>_words.json` | Mots et définitions par niveau (1 = facile … 5 = casse-tête). Mots en majuscules A-Z, sans accent, 3 à 14 lettres. |
+| `i18n-src/content/<langue>_quiz.json` | Questions par niveau : `["question", ["bonne réponse", "faux 1", "faux 2", "faux 3"]]`. |
+| `www/i18n/<langue>.js` | Fichiers générés, chargés par le jeu. **Ne pas modifier à la main.** |
+| `scripts/add-ios-languages.mjs` | Déclare les langues dans le projet iPhone (liste des langues sur l'App Store, message de suivi publicitaire traduit). Lancé automatiquement par Codemagic. |
+| `store/fiche-app-store-langues.md` | Textes de la fiche App Store dans chaque langue. |
+
+**Modifier un texte, ajouter des mots ou des questions :** modifiez le fichier JSON concerné, puis lancez `npm run i18n` dans le dossier `app`. Le script vérifie tout (traductions manquantes, mots invalides, 4 réponses différentes par question) avant de régénérer `www/i18n/`.
+
+**Ajouter un texte au jeu :** écrivez-le en français dans `index.html` sous la forme `L('Mon texte')` (ou `L('Il reste {0} vies', n)` avec une valeur), puis ajoutez sa traduction dans chaque `i18n-src/ui/<langue>.json`. `npm run i18n` signale les traductions manquantes.
+
+**Ajouter une langue** (avec l'alphabet latin) : créez `ui/xx.json`, `content/xx_words.json` et `content/xx_quiz.json`, ajoutez `xx` à `LANGS`, `LOC` et `KB_ROWS` en haut du script de `index.html`, ajoutez la ligne `<script src="i18n/xx.js">`, et ajoutez la langue dans `scripts/add-ios-languages.mjs`.

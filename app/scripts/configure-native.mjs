@@ -5,7 +5,7 @@ import fs from 'node:fs';
 
 const ADMOB_APP_ID_IOS = 'ca-app-pub-5323738460279716~9326598703';     // réel
 // Numéro de version affiché sur les stores (à augmenter à chaque nouvelle version)
-const APP_VERSION = '1.0.1';
+const APP_VERSION = '1.1.0';
 const ADMOB_APP_ID_ANDROID = 'ca-app-pub-5323738460279716~8876006710'; // réel
 
 // --- iOS : Info.plist ---
@@ -47,6 +47,15 @@ if (fs.existsSync(manifest)) {
   m = m.replace(/<activity(\s)/, '<activity android:screenOrientation="portrait"$1');
   fs.writeFileSync(manifest, m);
   console.log('✔ AndroidManifest.xml configuré');
+}
+
+// --- Android : numéro de version affiché sur Google Play ---
+const appGradle = 'android/app/build.gradle';
+if (fs.existsSync(appGradle)) {
+  let ag = fs.readFileSync(appGradle, 'utf8');
+  ag = ag.replace(/versionName "[^"]*"/, `versionName "${APP_VERSION}"`);
+  fs.writeFileSync(appGradle, ag);
+  console.log('✔ build.gradle : versionName ' + APP_VERSION);
 }
 
 // --- Android : version minimale Android 7 (SDK 24, exigée par la protection automatique Play) ---

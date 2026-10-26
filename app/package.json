@@ -1,11 +1,12 @@
 {
   "name": "blocaille",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
-  "description": "Blocaille – jeu de blocs coloré avec défis, mots et quiz",
+  "description": "Blocaille – jeu de blocs coloré avec défis, mots et quiz (6 langues)",
   "scripts": {
+    "i18n": "node i18n-src/tools/build_i18n.js",
     "assets": "capacitor-assets generate --iconBackgroundColor '#a43dff' --splashBackgroundColor '#a43dff'",
-    "add:ios": "cap add ios && node scripts/configure-native.mjs",
+    "add:ios": "cap add ios && node scripts/configure-native.mjs && node scripts/add-ios-languages.mjs",
     "add:android": "cap add android && node scripts/configure-native.mjs",
     "sync": "cap sync",
     "ios": "cap open ios",

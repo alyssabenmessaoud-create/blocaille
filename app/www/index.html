@@ -240,6 +240,7 @@ h1 span{display:inline-block;color:var(--c);text-shadow:0 3px 0 var(--deep),0 0 
 @media (max-width:400px){header{gap:7px}h1{font-size:1.3rem}.coinbtn{padding:0 5px 0 8px;font-size:.85rem}.icon-btn{width:38px}}
 button:focus-visible{outline:3px solid #fff;outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+#langBtn{display:block;margin:8px auto 0;padding:6px 16px;font-size:.85rem;background:rgba(0,212,255,.18);color:var(--deep);box-shadow:none;text-shadow:none;font-family:var(--ui);font-weight:600}.langlist{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:6px}.langlist .btn{flex:1 1 40%;margin:0;padding:8px;font-size:.9rem}
 </style>
 </head>
 <body>
@@ -254,16 +255,16 @@ button:focus-visible{outline:3px solid #fff;outline-offset:2px}
     <button class="icon-btn" id="pauseBtn" aria-label="Pause">❚❚</button>
   </header>
   <div class="stats">
-    <div class="stat s1"><span>Score</span><b id="score">0</b></div>
-    <div class="stat s2"><span>Niveau</span><b id="level">1</b></div>
-    <div class="stat s3"><span>Lignes</span><b id="lines">0</b></div>
+    <div class="stat s1"><span data-l>Score</span><b id="score">0</b></div>
+    <div class="stat s2"><span data-l>Niveau</span><b id="level">1</b></div>
+    <div class="stat s3"><span data-l>Lignes</span><b id="lines">0</b></div>
   </div>
-  <div class="challenge" id="chBox"><span class="tag">Défi</span><span class="txt" id="chTxt">—</span><span class="rw" id="chRw"></span></div>
+  <div class="challenge" id="chBox"><span class="tag" data-l>Défi</span><span class="txt" id="chTxt">—</span><span class="rw" id="chRw"></span></div>
   <div class="powers">
-    <button class="pw p1" id="holdBtn" aria-label="Réserve : mettre la pièce de côté"><small>Réserve</small><canvas id="holdCv"></canvas></button>
-    <div class="pw p2"><small>Suivante</small><canvas id="nextCv"></canvas></div>
-    <button class="pw p3" id="bombBtn" aria-label="Bombe"><small>Bombe 💣</small><b id="bombN">1</b></button>
-    <button class="pw p4" id="undoBtn" aria-label="Annuler le dernier coup"><small>Retour ↶</small><b id="undoN">2</b></button>
+    <button class="pw p1" id="holdBtn" aria-label="Réserve : mettre la pièce de côté"><small data-l>Réserve</small><canvas id="holdCv"></canvas></button>
+    <div class="pw p2"><small data-l>Suivante</small><canvas id="nextCv"></canvas></div>
+    <button class="pw p3" id="bombBtn" aria-label="Bombe"><small data-l>Bombe 💣</small><b id="bombN">1</b></button>
+    <button class="pw p4" id="undoBtn" aria-label="Annuler le dernier coup"><small data-l>Retour ↶</small><b id="undoN">2</b></button>
   </div>
   <div class="stage" id="stage">
     <div class="frame"><canvas id="board"></canvas></div>
@@ -272,33 +273,35 @@ button:focus-visible{outline:3px solid #fff;outline-offset:2px}
       <div class="card" id="card">
         <h2>Blocaille</h2>
         <ul>
-          <li><b>Glisser le doigt</b> : la pièce suit, même posée au fond, tant que tu n'as pas lâché.</li>
-          <li><b>Toucher</b> (ou un 2ᵉ doigt pendant le glissé) : tourner.</li>
-          <li><b>Lâcher</b> : la pièce se pose.</li>
-          <li><b>Réserve</b> : garde une pièce de côté et échange-la plus tard.</li>
-          <li><b>Bombe</b> : fait exploser un carré de 3×3 cases.</li>
-          <li><b>Retour</b> : annule ton dernier coup.</li>
+          <li data-l><b>Glisser le doigt</b> : la pièce suit, même posée au fond, tant que tu n'as pas lâché.</li>
+          <li data-l><b>Toucher</b> (ou un 2ᵉ doigt pendant le glissé) : tourner.</li>
+          <li data-l><b>Lâcher</b> : la pièce se pose.</li>
+          <li data-l><b>Réserve</b> : garde une pièce de côté et échange-la plus tard.</li>
+          <li data-l><b>Bombe</b> : fait exploser un carré de 3×3 cases.</li>
+          <li data-l><b>Retour</b> : annule ton dernier coup.</li>
         </ul>
-        <p id="best">Record : 0</p>
-        <button class="btn" id="startBtn">Jouer</button>
-        <button class="btn ghost" id="tryBonus">🎁 Essayer les jeux bonus</button>
-        <p style="font-size:.78rem">Tous les 5 niveaux, une pause bonus : mots à trouver ou quiz de culture générale pour gagner des bombes et des retours.</p>
+        <p id="best"></p>
+        <button class="btn" id="startBtn" data-l>Jouer</button>
+        <button class="btn ghost" id="tryBonus" data-l>🎁 Essayer les jeux bonus</button>
+        <button class="btn ghost" id="langBtn"></button>
+        <div id="langList" class="langlist" hidden></div>
+        <p style="font-size:.78rem" data-l>Tous les 5 niveaux, une pause bonus : mots à trouver ou quiz de culture générale pour gagner des bombes et des retours.</p>
       </div>
     </div>
   </div>
-  <div class="banner" id="bannerSlot"><b>PUB</b>Emplacement bannière</div>
+  <div class="banner" id="bannerSlot"><b data-l>PUB</b><span data-l>Emplacement bannière</span></div>
 </div>
 
 <div class="adscreen" id="adscreen" hidden>
-  <p>Publicité récompensée (simulation)</p>
-  <div class="fake">Votre pub ici</div>
+  <p data-l>Publicité récompensée (simulation)</p>
+  <div class="fake" data-l>Votre pub ici</div>
   <div class="count" id="adCount">5</div>
-  <p id="adReward">Récompense : 4 lignes du bas effacées</p>
+  <p id="adReward"></p>
 </div>
 
 <div class="mg" id="mg" hidden>
   <div class="mg-head">
-    <div class="mg-title" id="mgTitle">Pause bonus</div>
+    <div class="mg-title" id="mgTitle"></div>
     <div class="mg-bank"><span>🪙 <b class="coinN">0</b></span><span>💣 <b id="mgBomb">0</b></span><span>↶ <b id="mgUndo">0</b></span></div>
     <button class="mg-close" id="mgClose" aria-label="Retour au jeu">✕</button>
   </div>
@@ -307,9 +310,36 @@ button:focus-visible{outline:3px solid #fff;outline-offset:2px}
   <div class="mg-foot" id="mgFoot"></div>
 </div>
 
-<div class="shop" id="shop" hidden><div class="shop-card"><div class="shop-head"><span>Boutique</span><button class="mg-close" id="shopClose" aria-label="Fermer">✕</button></div><div class="shop-body" id="shopBody"></div></div></div>
+<div class="shop" id="shop" hidden><div class="shop-card"><div class="shop-head"><span data-l>Boutique</span><button class="mg-close" id="shopClose" aria-label="Fermer">✕</button></div><div class="shop-body" id="shopBody"></div></div></div>
+<script src="i18n/en.js"></script>
+<script src="i18n/es.js"></script>
+<script src="i18n/pt.js"></script>
+<script src="i18n/de.js"></script>
+<script src="i18n/it.js"></script>
 <script>
+// ================= LANGUES (i18n) =================
+// Langue : choix enregistré du joueur, sinon langue du téléphone, sinon anglais.
+const LANGS={fr:'Français',en:'English',es:'Español',pt:'Português',de:'Deutsch',it:'Italiano'};
+const LANG=(()=>{try{const s=JSON.parse(localStorage.getItem('blocaille_lang'));if(s&&LANGS[s])return s}catch(e){}
+  const list=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||'en'];
+  for(const l of list){const c=String(l).slice(0,2).toLowerCase();if(LANGS[c])return c}return 'en'})();
+const LOC={fr:'fr-FR',en:'en-US',es:'es-ES',pt:'pt-BR',de:'de-DE',it:'it-IT'}[LANG];
+const I18N=window.BLOCAILLE_I18N||{};
+const UI=(I18N[LANG]&&I18N[LANG].ui)||{};
+const i18nNorm=s=>String(s).replace(/\s+/g,' ').trim();
+// L('texte français {0}', valeur) -> texte dans la langue du joueur
+function L(s,...a){let t=LANG==='fr'?s:(UI[i18nNorm(s)]!=null?UI[i18nNorm(s)]:s);return a.length?t.replace(/\{(\d)\}/g,(_,i)=>a[i]):t}
+const F=n=>Number(n).toLocaleString(LOC);
+const KB_ROWS=LANG==='fr'?['AZERTYUIOP','QSDFGHJKLM','WXCVBN']:LANG==='de'?['QWERTZUIOP','ASDFGHJKL','YXCVBNM']:['QWERTYUIOP','ASDFGHJKL','ZXCVBNM'];
+document.documentElement.lang=LANG;
+function i18nStatic(){
+  document.querySelectorAll('[data-l]').forEach(el=>{el.innerHTML=L(el.innerHTML)});
+  document.querySelectorAll('[aria-label]').forEach(el=>{el.setAttribute('aria-label',L(el.getAttribute('aria-label')))});
+}
+function setLang(c){try{localStorage.setItem('blocaille_lang',JSON.stringify(c))}catch(e){}location.reload()}
+
 (function(){
+i18nStatic();
 const COLS=10, ROWS=20;
 const COLORS={I:'#00d4ff',O:'#ffd60a',T:'#a43dff',S:'#2ee66b',Z:'#ff3d8b',J:'#4a6bff',L:'#ff8a1f',B:'#2a1a3a'};
 const shade=(hex,f)=>{const n=parseInt(hex.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;const t=f<0?0:255,p=Math.abs(f);r=Math.round((t-r)*p+r);g=Math.round((t-g)*p+g);b=Math.round((t-b)*p+b);return`rgb(${r},${g},${b})`};
@@ -324,23 +354,23 @@ const SHAPES={
   B:[[1]]
 };
 const CHALLENGES=[
-  {txt:'Efface 1 ligne',rw:'bomb',ok:s=>s.lines>=1},
-  {txt:'Efface 2 lignes d\'un coup',rw:'undo',ok:s=>s.best>=2},
-  {txt:'Atteins 1 500 points',rw:'bomb',ok:s=>s.score>=1500},
-  {txt:'Fais exploser une bombe',rw:'undo',ok:s=>s.bombs>=1},
-  {txt:'Efface 3 lignes d\'un coup',rw:'bomb',ok:s=>s.best>=3},
-  {txt:'Efface 20 lignes au total',rw:'undo',ok:s=>s.lines>=20},
-  {txt:'Utilise la réserve 5 fois',rw:'bomb',ok:s=>s.holds>=5},
-  {txt:'Efface 4 lignes d\'un coup',rw:'bomb2',ok:s=>s.best>=4},
-  {txt:'Atteins le niveau 5',rw:'undo',ok:s=>s.level>=5}
+  {txt:L('Efface 1 ligne'),rw:'bomb',ok:s=>s.lines>=1},
+  {txt:L("Efface 2 lignes d'un coup"),rw:'undo',ok:s=>s.best>=2},
+  {txt:L('Atteins {0} points',F(1500)),rw:'bomb',ok:s=>s.score>=1500},
+  {txt:L('Fais exploser une bombe'),rw:'undo',ok:s=>s.bombs>=1},
+  {txt:L("Efface 3 lignes d'un coup"),rw:'bomb',ok:s=>s.best>=3},
+  {txt:L('Efface 20 lignes au total'),rw:'undo',ok:s=>s.lines>=20},
+  {txt:L('Utilise la réserve 5 fois'),rw:'bomb',ok:s=>s.holds>=5},
+  {txt:L("Efface 4 lignes d'un coup"),rw:'bomb2',ok:s=>s.best>=4},
+  {txt:L('Atteins le niveau 5'),rw:'undo',ok:s=>s.level>=5}
 ];
-const RW_LABEL={bomb:'+1 bombe',bomb2:'+2 bombes',undo:'+1 retour'};
+const RW_LABEL={bomb:L('+1 bombe'),bomb2:L('+2 bombes'),undo:L('+1 retour')};
 const $=id=>document.getElementById(id);
 const cv=$('board'), ctx=cv.getContext('2d');
 let grid, cur, next, hold, holdUsed, resume, bag=[], score, lines, level, bombs, undos, history, chIdx, stats;
 let best=0, state='menu', dropAcc=0, last=0, cell=20, usedReward=false, vis={x:0,y:0}, particles=[], flashes=[], floats=[], hint=null, bonusPending=false, carry={bomb:0,undo:0};
 try{best=+localStorage.getItem('blocaille_best')||0}catch(e){}
-$('best').textContent='Record : '+best;
+$('best').textContent=L('Record : {0}',F(best));
 
 const newGrid=()=>Array.from({length:ROWS},()=>Array(COLS).fill(null));
 const cloneGrid=g=>g.map(r=>r.slice());
@@ -394,7 +424,7 @@ function reset(){
   stats={lines:0,best:0,score:0,bombs:0,holds:0,level:1};usedReward=false;bag=[];
   recent=[];const first=make(smartPick(grid));next=make(smartPick(gridAfter(first)));setCur(first);hud();
 }
-function setCur(p){cur=p;vis.x=p.x;vis.y=p.y;dropAcc=0;hint=(p.t!=='B'&&Math.random()<1/3)?bestPlacement(p):null;if(hint)toast('★ Conseil : place-la sur l\'étoile');
+function setCur(p){cur=p;vis.x=p.x;vis.y=p.y;dropAcc=0;hint=(p.t!=='B'&&Math.random()<1/3)?bestPlacement(p):null;if(hint)toast(L("★ Conseil : place-la sur l'étoile"));
   if(!fits(cur.m,cur.x,cur.y))gameOver();}
 function spawn(){
   if(resume){setCur(make(resume));resume=null}
@@ -414,15 +444,15 @@ function lock(){
   let cleared=0;
   for(let r=ROWS-1;r>=0;r--){if(grid[r].every(Boolean)){burstRow(r);grid.splice(r,1);grid.unshift(Array(COLS).fill(null));cleared++;r++}}
   if(cleared){const pts=[0,100,300,500,800][cleared]*level;const lowest=placed.reduce((m,[,y])=>Math.max(m,y),0);
-    floatText(['','+'+pts,'DOUBLE !','TRIPLE !','MÉGA !'][cleared],Math.min(ROWS-2,lowest),Math.round(cell*(cleared>1?1.4:1)));if(cleared>1){shake();confetti(cleared*12)}
-    score+=pts;lines+=cleared;setCoins(coins+cleared*2,true);const nl=1+Math.floor(lines/10);if(nl>level&&Math.floor(nl/5)>Math.floor(level/5))bonusPending=true;if(nl>level){setTimeout(()=>{floatText('NIVEAU '+nl,8,Math.round(cell*1.2));confetti(40)},450)}level=nl;stats.best=Math.max(stats.best,cleared)}
+    floatText(['','+'+pts,L('DOUBLE !'),L('TRIPLE !'),L('MÉGA !')][cleared],Math.min(ROWS-2,lowest),Math.round(cell*(cleared>1?1.4:1)));if(cleared>1){shake();confetti(cleared*12)}
+    score+=pts;lines+=cleared;setCoins(coins+cleared*2,true);const nl=1+Math.floor(lines/10);if(nl>level&&Math.floor(nl/5)>Math.floor(level/5))bonusPending=true;if(nl>level){setTimeout(()=>{floatText(L('NIVEAU {0}',nl),8,Math.round(cell*1.2));confetti(40)},450)}level=nl;stats.best=Math.max(stats.best,cleared)}
   stats.lines=lines;stats.score=score;stats.level=level;
   checkChallenge();spawn();
   if(bonusPending&&state==='play'){bonusPending=false;state='bonus';touching=false;primary=null;mouseDown=false;setTimeout(()=>openChooser(Math.floor(level/5),false),1100)}
 }
 function explode(x,y){
   for(let r=y-1;r<=y+1;r++)for(let c=x-1;c<=x+1;c++){if(r>=0&&r<ROWS&&c>=0&&c<COLS){if(grid[r][c])addParticles(c,r,grid[r][c]==='B'?'#ffcf5a':COLORS[grid[r][c]],6);grid[r][c]=null}}
-  score+=50;shake();floatText('BOUM !',y,Math.round(cell*1.4));
+  score+=50;shake();floatText(L('BOUM !'),y,Math.round(cell*1.4));
 }
 function addParticles(c,r,col,n,big){for(let i=0;i<n;i++)particles.push({x:(c+.5)*cell,y:(r+.5)*cell,vx:(Math.random()-.5)*(big?10:7),vy:(Math.random()-.85)*(big?11:7),life:1,col,rot:Math.random()*6,vr:(Math.random()-.5)*.3,big})}
 const RAINBOW=['#ff3d8b','#ff8a1f','#ffd60a','#2ee66b','#00d4ff','#4a6bff','#a43dff'];
@@ -435,13 +465,13 @@ function checkChallenge(){
   const ch=currentCh();
   if(ch.ok(stats)){
     if(ch.rw==='bomb')bombs++;else if(ch.rw==='bomb2')bombs+=2;else undos++;
-    setCoins(coins+15,true);toast('🎉 Défi réussi ! '+RW_LABEL[ch.rw]+' +15 🪙');chIdx++;confetti(60);const bx=$('chBox');bx.classList.remove('done');void bx.offsetWidth;bx.classList.add('done');
+    setCoins(coins+15,true);toast(L('🎉 Défi réussi ! {0} +15 🪙',RW_LABEL[ch.rw]));chIdx++;confetti(60);const bx=$('chBox');bx.classList.remove('done');void bx.offsetWidth;bx.classList.add('done');
   }
 }
 function currentCh(){
   if(chIdx<CHALLENGES.length)return CHALLENGES[chIdx];
   const target=(chIdx-CHALLENGES.length+1)*5000+5000;
-  return{txt:'Atteins '+target.toLocaleString('fr-FR')+' points',rw:chIdx%2?'bomb':'undo',ok:s=>s.score>=target};
+  return{txt:L('Atteins {0} points',F(target)),rw:chIdx%2?'bomb':'undo',ok:s=>s.score>=target};
 }
 let toastT;function toast(t){const el=$('toast');el.textContent=t;el.hidden=false;el.style.opacity=1;el.classList.remove('show');void el.offsetWidth;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>{el.style.opacity=0;setTimeout(()=>el.hidden=true,300)},1800)}
 
@@ -459,22 +489,22 @@ function useHold(){
 }
 function useBomb(){
   if(state!=='play'||cur.t==='B')return;
-  if(bombs<=0){if(!pay(COST.bomb,'une bombe'))return;bombs++;toast('💣 Bombe achetée')}
-  bombs--;resume=cur.t;setCur(make('B'));hud();toast('💣 Vise n\'importe où, lâche pour exploser');
+  if(bombs<=0){if(!pay(COST.bomb,L('une bombe')))return;bombs++;toast(L('💣 Bombe achetée'))}
+  bombs--;resume=cur.t;setCur(make('B'));hud();toast(L("💣 Vise n'importe où, lâche pour exploser"));
 }
 function undo(){
   if(!history.length)return;
   if(state!=='play'&&state!=='over')return;
-  if(undos<=0){if(!pay(COST.undo,'un retour'))return;undos++}
+  if(undos<=0){if(!pay(COST.undo,L('un retour')))return;undos++}
   const h=history.pop();undos--;
   grid=h.grid;score=h.score;lines=h.lines;level=h.level;bag=h.bag;hold=h.hold;stats=h.stats;next=make(h.next);
   if(h.wasBomb){bombs++;}
   resume=null;holdUsed=false;
   state='play';$('overlay').hidden=true;
-  setCur(make(h.t));hud();toast('Coup annulé');
+  setCur(make(h.t));hud();toast(L('Coup annulé'));
 }
 
-let prevHud={};function setNum(id,v){const el=$(id);const t=typeof v==='number'?v.toLocaleString('fr-FR'):v;if(el.textContent!==String(t)){el.textContent=t;if(prevHud[id]!==undefined){el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}}prevHud[id]=t}
+let prevHud={};function setNum(id,v){const el=$(id);const t=typeof v==='number'?v.toLocaleString(LOC):v;if(el.textContent!==String(t)){el.textContent=t;if(prevHud[id]!==undefined){el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}}prevHud[id]=t}
 function hud(){
   setNum('score',score);setNum('level',level);setNum('lines',lines);
   $('bombN').textContent=bombs>0?bombs:COST.bomb+'🪙';$('undoN').textContent=undos>0?undos:COST.undo+'🪙';
@@ -569,14 +599,14 @@ function gameOver(){
   state='over';touching=false;
   if(score>best){best=score;try{localStorage.setItem('blocaille_best',best)}catch(e){}}
   const canUndo=history.length>0;
-  showCard('<h2>Partie terminée</h2><p>Score : <b>'+score.toLocaleString('fr-FR')+'</b><br>Record : '+best.toLocaleString('fr-FR')+'</p>'+
-    (canUndo?'<button class="btn undo" id="undoOver">↶ Annuler le dernier coup ('+(undos>0?undos:COST.undo+' 🪙')+')</button>':'')+
-    (usedReward?'':'<button class="btn reward" id="rewardBtn">▶ Regarder une pub pour continuer</button>')+
-    '<button class="btn" id="coinCont">🪙 Continuer · '+COST.cont+' 🪙</button>'+
-    '<button class="btn undo" id="overBonus">🎁 Jeux bonus</button>'+
-    '<button class="btn ghost" id="againBtn">Rejouer</button>');
+  showCard('<h2>'+L('Partie terminée')+'</h2><p>'+L('Score : {0}','<b>'+F(score)+'</b>')+'<br>'+L('Record : {0}',F(best))+'</p>'+
+    (canUndo?'<button class="btn undo" id="undoOver">'+L('↶ Annuler le dernier coup ({0})',(undos>0?undos:COST.undo+' 🪙'))+'</button>':'')+
+    (usedReward?'':'<button class="btn reward" id="rewardBtn">'+L('▶ Regarder une pub pour continuer')+'</button>')+
+    '<button class="btn" id="coinCont">'+L('🪙 Continuer')+' · '+COST.cont+' 🪙</button>'+
+    '<button class="btn undo" id="overBonus">'+L('🎁 Jeux bonus')+'</button>'+
+    '<button class="btn ghost" id="againBtn">'+L('Rejouer')+'</button>');
   $('overBonus').onclick=openBonusAnytime;
-  $('coinCont').onclick=()=>{if(pay(COST.cont,'continuer la partie'))clearForContinue()};
+  $('coinCont').onclick=()=>{if(pay(COST.cont,L('continuer la partie')))clearForContinue()};
   $('againBtn').onclick=start;
   const rb=$('rewardBtn');if(rb)rb.onclick=playRewarded;
   const ub=$('undoOver');if(ub)ub.onclick=undo;
@@ -633,14 +663,14 @@ function playRewarded(){
   usedReward=true;
   showRewardedAd().then(res=>{
     if(res===true){giveContinue();return}
-    if(res===false){toast('Pas de pub disponible : on te l\'offre !');giveContinue();return}
+    if(res===false){toast(L("Pas de pub disponible : on te l'offre !"));giveContinue();return}
     // navigateur : pub simulée
-    $('adReward').textContent='Récompense : 4 lignes du bas effacées';const scr=$('adscreen');scr.hidden=false;let n=5;$('adCount').textContent=n;
+    $('adReward').textContent=L('Récompense : {0}',L('4 lignes du bas effacées'));const scr=$('adscreen');scr.hidden=false;let n=5;$('adCount').textContent=n;
     const iv=setInterval(()=>{n--;$('adCount').textContent=n;if(n<=0){clearInterval(iv);scr.hidden=true;giveContinue()}},1000);
   });
 }
 function togglePause(){
-  if(state==='play'){state='pause';$('pauseBtn').textContent='▶';showCard('<h2>Pause</h2><button class="btn" id="resumeBtn">Reprendre</button><button class="btn undo" id="pauseBonus">🎁 Jeux bonus</button>');$('resumeBtn').onclick=togglePause;$('pauseBonus').onclick=openBonusAnytime}
+  if(state==='play'){state='pause';$('pauseBtn').textContent='▶';showCard('<h2>'+L('Pause')+'</h2><button class="btn" id="resumeBtn">'+L('Reprendre')+'</button><button class="btn undo" id="pauseBonus">'+L('🎁 Jeux bonus')+'</button>');$('resumeBtn').onclick=togglePause;$('pauseBonus').onclick=openBonusAnytime}
   else if(state==='pause'){state='play';$('pauseBtn').textContent='❚❚';$('overlay').hidden=true}
 }
 
@@ -716,34 +746,35 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='p
 window.addEventListener('resize',resize);
 
 // ================= BONUS MINI-GAMES =================
-const WORDS={
+const WORDS_FR={
 1:[["CHAT","Animal domestique qui ronronne"],["SOLEIL","Étoile qui éclaire la Terre"],["POMME","Fruit tombé sur la tête de Newton"],["LIVRE","On tourne ses pages pour le lire"],["TRAIN","Il roule sur des rails"],["PLAGE","Sable, serviettes et parasols"],["NEIGE","Elle tombe en flocons blancs"],["LUNE","Satellite naturel de la Terre"],["FLEUR","La rose et la tulipe en sont"],["PAIN","Le boulanger le sort du four"],["VELO","Deux roues, un guidon, des pédales"],["CHIEN","Le meilleur ami de l'homme"],["ECOLE","On y apprend à lire et à compter"],["FROMAGE","Le camembert en est un"],["OISEAU","Il a des plumes et un bec"],["ARBRE","Racines, tronc et branches"],["NUAGE","Il flotte dans le ciel et apporte la pluie"],["PIANO","Instrument à touches noires et blanches"],["MONTRE","On la porte au poignet pour lire l'heure"],["BALLON","On tape dedans au football"],["GATEAU","On souffle ses bougies à l'anniversaire"],["JARDIN","On y plante des légumes et des fleurs"],["LAIT","Boisson blanche donnée par la vache"],["TIGRE","Grand félin au pelage rayé"],["CITRON","Agrume jaune et acide"],["TOMATE","Fruit rouge de la sauce tomate"],["VACHE","Elle broute dans le pré et fait meuh"],["HIVER","La saison la plus froide"],["DOIGT","On en a cinq à chaque main"],["PORTE","On l'ouvre pour entrer dans une pièce"],["LAPIN","Longues oreilles et passion pour les carottes"],["BATEAU","Il flotte et navigue sur l'eau"],["SOUPE","Plat chaud de légumes qu'on mange à la cuillère"],["ETOILE","Elle brille dans le ciel la nuit"],["CHAPEAU","Il se porte sur la tête"],["ORANGE","Fruit et couleur à la fois"],["FUSEE","Elle décolle vers l'espace"],["CANARD","Il fait coin-coin"],["MIROIR","Il renvoie ton reflet"],["CROCODILE","Reptile aux grandes mâchoires qui vit près des fleuves"],["ABEILLE","Insecte qui fabrique le miel"],["FORET","Grand espace couvert d'arbres"],["CHAISE","Meuble pour s'asseoir"],["PIZZA","Plat italien rond garni de fromage"],["SINGE","Il adore grimper et manger des bananes"]],
 2:[["VOLCAN","Montagne qui crache de la lave"],["PYRAMIDE","Tombeau géant des pharaons"],["BOUSSOLE","Son aiguille indique le nord"],["ORCHESTRE","Musiciens dirigés par un chef"],["DAUPHIN","Mammifère marin réputé très intelligent"],["CACTUS","Plante piquante du désert"],["PHARE","Sa lumière guide les bateaux la nuit"],["ARCHIPEL","Groupe d'îles proches les unes des autres"],["MARATHON","Course à pied de 42,195 km"],["ESCARGOT","Il porte sa coquille sur le dos"],["TELESCOPE","Instrument pour observer les astres"],["GIRAFE","L'animal au plus long cou"],["CHATEAU","Demeure fortifiée d'un seigneur"],["SQUELETTE","Ensemble des os du corps"],["OASIS","Point d'eau et de verdure dans le désert"],["ALPHABET","Ensemble des lettres d'une langue"],["CERVEAU","Organe de la pensée"],["HORIZON","Ligne où le ciel semble toucher la terre"],["GLACIER","Fleuve de glace en montagne"],["TONNERRE","Grondement qui suit l'éclair"],["POUMON","Organe de la respiration"],["CARNAVAL","Fête où l'on défile déguisé"],["BOULANGER","Artisan qui fabrique le pain"],["SATELLITE","Objet qui tourne autour d'une planète"],["HERISSON","Petit animal couvert de piquants"],["TRESOR","Coffre rempli d'or que cherchent les pirates"],["MOUSTIQUE","Insecte qui pique surtout la nuit"],["CROISSANT","Viennoiserie en forme de lune"],["PARAPLUIE","On l'ouvre quand il pleut"],["DIAMANT","Pierre précieuse très dure"],["KANGOUROU","Animal australien qui porte son petit dans une poche"],["EQUATEUR","Ligne imaginaire qui coupe la Terre en deux"],["LABYRINTHE","Réseau de chemins où l'on se perd"],["CAMELEON","Lézard qui change de couleur"],["ASTRONAUTE","Il voyage dans l'espace"],["DICTIONNAIRE","Livre qui donne le sens des mots"],["MOLECULE","Assemblage d'atomes"],["AVALANCHE","Masse de neige qui dévale la montagne"],["BIBLIOTHEQUE","Lieu où l'on emprunte des livres"],["HELICOPTERE","Engin volant à hélice sur le dessus"],["PANTHERE","Félin noir et agile"],["CAPITALE","Ville où siège le gouvernement d'un pays"],["MONNAIE","L'euro en est une"],["PERROQUET","Oiseau coloré qui peut répéter des mots"],["SOUSMARIN","Navire qui plonge sous l'eau"]],
 3:[["PHOTOSYNTHESE","Procédé par lequel les plantes utilisent la lumière"],["STALACTITE","Concrétion qui pend du plafond d'une grotte"],["METAPHORE","Comparaison sans outil comme « comme »"],["PALINDROME","Mot qui se lit dans les deux sens, comme KAYAK"],["CHRYSALIDE","Étape entre la chenille et le papillon"],["HYPOTENUSE","Plus grand côté d'un triangle rectangle"],["ARCHEOLOGUE","Il fouille le sol pour étudier le passé"],["MERIDIEN","Ligne imaginaire qui relie les deux pôles"],["DEMOCRATIE","Régime où le pouvoir appartient au peuple"],["BAROMETRE","Il mesure la pression de l'air"],["EPHEMERE","Qui ne dure qu'un temps très court"],["ODYSSEE","Long voyage mouvementé, d'après Homère"],["SYLLABE","Groupe de sons prononcés d'une seule émission de voix"],["ANTONYME","Mot de sens contraire"],["CONSTELLATION","Groupe d'étoiles qui dessine une figure"],["MIGRATION","Grand voyage saisonnier des oiseaux"],["ALCHIMISTE","Il rêvait de changer le plomb en or"],["GRAVITATION","Force qui attire les corps entre eux"],["RENAISSANCE","Période artistique qui suit le Moyen Âge"],["PERIMETRE","Longueur du contour d'une figure"],["ELECTRON","Particule de charge négative"],["CATHEDRALE","Grande église où siège un évêque"],["MOUSSON","Saison des pluies torrentielles en Asie"],["IMPRIMERIE","Invention qui a rendu Gutenberg célèbre"],["HIEROGLYPHE","Signe d'écriture de l'Égypte ancienne"],["ANAGRAMME","Mot formé en mélangeant les lettres d'un autre"],["TSUNAMI","Vague géante causée par un séisme sous la mer"],["SOLSTICE","Jour le plus long ou le plus court de l'année"],["MYTHOLOGIE","Ensemble des récits sur les dieux et les héros"],["ONOMATOPEE","Mot qui imite un bruit, comme PLOUF"],["PARALLELE","Se dit de deux droites qui ne se croisent jamais"],["ECLIPSE","Quand un astre en cache un autre"],["FOSSILE","Trace d'un être vivant conservée dans la roche"],["ADJECTIF","Mot qui qualifie un nom"],["PHILOSOPHIE","Discipline de Socrate et de Platon"],["VOCABULAIRE","Ensemble des mots qu'on connaît"],["AQUEDUC","Pont romain qui transporte de l'eau"],["MOSAIQUE","Image faite de petits morceaux colorés"],["SYMPHONIE","Grande œuvre pour orchestre"],["LATITUDE","Distance angulaire par rapport à l'équateur"]]
 };
-const QUIZ={
+const QUIZ_FR={
 1:[["Quelle est la capitale de l'Italie ?",["Rome","Milan","Naples","Venise"]],["Combien de pattes a une araignée ?",["8","6","10","4"]],["Quel est le plus grand océan ?",["Pacifique","Atlantique","Indien","Arctique"]],["Bleu + jaune donne quelle couleur ?",["Vert","Violet","Orange","Marron"]],["Combien de jours dans une année non bissextile ?",["365","366","360","364"]],["Quel animal est surnommé le roi des animaux ?",["Le lion","Le tigre","L'éléphant","Le gorille"]],["Quelle planète est la plus proche du Soleil ?",["Mercure","Vénus","Mars","La Terre"]],["Combien de joueurs par équipe sur un terrain de football ?",["11","10","9","12"]],["Qui a peint la Joconde ?",["Léonard de Vinci","Michel-Ange","Picasso","Van Gogh"]],["Quelle est la monnaie du Japon ?",["Le yen","Le won","Le yuan","Le dollar"]],["Dans quelle ville se trouve la tour Eiffel ?",["Paris","Lyon","Marseille","Bordeaux"]],["Quel est le plus long fleuve de France ?",["La Loire","La Seine","Le Rhône","La Garonne"]],["Combien de côtés a un hexagone ?",["6","5","8","7"]],["Quel gaz respirons-nous pour vivre ?",["L'oxygène","L'hélium","Le méthane","L'hydrogène"]],["Combien de minutes dans une heure ?",["60","100","30","90"]],["Dans quel pays vivent les kangourous à l'état sauvage ?",["Australie","Afrique du Sud","Brésil","Inde"]],["Quelle est la capitale de l'Espagne ?",["Madrid","Barcelone","Séville","Valence"]],["À quelle température l'eau gèle-t-elle (en °C) ?",["0","10","-10","4"]],["Quelle planète est surnommée la planète rouge ?",["Mars","Jupiter","Saturne","Vénus"]],["Quel est le plus grand animal du monde ?",["La baleine bleue","L'éléphant","Le requin-baleine","La girafe"]],["Combien de couleurs dans un arc-en-ciel ?",["7","5","6","8"]],["Quel est le féminin de « cheval » ?",["Jument","Chevale","Pouliche","Ânesse"]],["Quel animal est à l'origine de la soie ?",["Une chenille","Une araignée","Une abeille","Une fourmi"]],["Combien de mois ont 31 jours ?",["7","6","5","8"]],["Quel sport se joue à Roland-Garros ?",["Le tennis","Le golf","Le rugby","Le cyclisme"]],["De quelle couleur est le cheval blanc d'Henri IV ?",["Blanc","Noir","Gris","Marron"]]],
 2:[["Qui a écrit « Les Misérables » ?",["Victor Hugo","Émile Zola","Honoré de Balzac","Gustave Flaubert"]],["En quelle année a eu lieu la prise de la Bastille ?",["1789","1815","1492","1914"]],["Quelle est la capitale du Canada ?",["Ottawa","Toronto","Montréal","Vancouver"]],["Quel est le symbole chimique de l'or ?",["Au","Ag","Or","Fe"]],["Quelle est la plus haute montagne du monde ?",["L'Everest","Le K2","Le mont Blanc","Le Kilimandjaro"]],["Combien d'os compte le squelette d'un adulte ?",["206","186","226","312"]],["Qui a composé « La Flûte enchantée » ?",["Mozart","Beethoven","Bach","Chopin"]],["Quel est le plus grand désert chaud du monde ?",["Le Sahara","Le Gobi","Le Kalahari","L'Atacama"]],["Qui a découvert la pénicilline ?",["Alexander Fleming","Louis Pasteur","Marie Curie","Robert Koch"]],["Quelle est la langue officielle du Brésil ?",["Le portugais","L'espagnol","L'anglais","Le français"]],["Quelle est la capitale de l'Australie ?",["Canberra","Sydney","Melbourne","Perth"]],["Combien de cœurs a une pieuvre ?",["3","1","2","8"]],["Qui a marché le premier sur la Lune ?",["Neil Armstrong","Buzz Aldrin","Youri Gagarine","Michael Collins"]],["Quel métal est liquide à température ambiante ?",["Le mercure","Le plomb","L'étain","Le zinc"]],["Qui a peint « La Nuit étoilée » ?",["Van Gogh","Monet","Gauguin","Cézanne"]],["Quel est le plus petit pays du monde ?",["Le Vatican","Monaco","Malte","Saint-Marin"]],["Quelle est la vitesse de la lumière, environ ?",["300 000 km/s","30 000 km/s","3 000 km/s","3 000 000 km/s"]],["Quel organe produit l'insuline ?",["Le pancréas","Le foie","Les reins","L'estomac"]],["Quelle est la capitale du Maroc ?",["Rabat","Casablanca","Marrakech","Fès"]],["Combien d'États composent les États-Unis ?",["50","52","48","51"]],["Qui a écrit « Le Petit Prince » ?",["Antoine de Saint-Exupéry","Albert Camus","Jacques Prévert","Marcel Pagnol"]],["Quelle mer borde Marseille ?",["La Méditerranée","La Manche","La mer du Nord","La mer Noire"]],["Combien de joueurs dans une équipe de rugby à XV sur le terrain ?",["15","13","11","12"]],["Quel pays a la forme d'une botte ?",["L'Italie","La Grèce","Le Portugal","La Croatie"]],["Quelle est la planète la plus grande du système solaire ?",["Jupiter","Saturne","Neptune","Uranus"]],["Qui était le premier empereur des Français ?",["Napoléon Ier","Louis XIV","Charlemagne","Napoléon III"]],["Dans quel pays se trouve le Machu Picchu ?",["Pérou","Mexique","Bolivie","Chili"]]],
 3:[["Quel est le plus grand organe du corps humain ?",["La peau","Le foie","Les poumons","L'intestin"]],["Qui a formulé la théorie de la relativité ?",["Albert Einstein","Isaac Newton","Niels Bohr","Max Planck"]],["Quelle est la capitale de la Mongolie ?",["Oulan-Bator","Astana","Bichkek","Tachkent"]],["Quel élément a pour symbole K ?",["Le potassium","Le krypton","Le calcium","Le cobalt"]],["En quelle année Charlemagne fut-il couronné empereur ?",["800","732","987","1066"]],["Qui a écrit « Je pense, donc je suis » ?",["Descartes","Pascal","Voltaire","Rousseau"]],["Sur quelle planète se trouve le volcan Olympus Mons ?",["Mars","Vénus","Jupiter","Mercure"]],["Qui a écrit « La Divine Comédie » ?",["Dante","Pétrarque","Boccace","Machiavel"]],["Quel est le plus long fleuve d'Europe ?",["La Volga","Le Danube","Le Rhin","Le Dniepr"]],["Quelle est l'unité de mesure de la fréquence ?",["Le hertz","Le watt","Le joule","Le newton"]],["Quelle est la capitale du Kenya ?",["Nairobi","Mombasa","Kampala","Addis-Abeba"]],["Qui a découvert la radioactivité naturelle en 1896 ?",["Henri Becquerel","Marie Curie","Ernest Rutherford","Wilhelm Röntgen"]],["Combien de cases compte un échiquier ?",["64","81","49","100"]],["Quel gaz est le plus abondant dans l'air ?",["L'azote","L'oxygène","Le CO₂","L'argon"]],["Quelle langue compte le plus de locuteurs natifs ?",["Le chinois mandarin","L'anglais","L'espagnol","L'hindi"]],["Avec qui Picasso a-t-il inventé le cubisme ?",["Georges Braque","Henri Matisse","Salvador Dalí","Joan Miró"]],["Quel traité a mis fin à la Première Guerre mondiale avec l'Allemagne ?",["Le traité de Versailles","Le traité de Rome","Le traité de Vienne","Le traité de Paris"]],["Quelle est la fosse océanique la plus profonde ?",["La fosse des Mariannes","La fosse de Porto Rico","La fosse des Tonga","La fosse du Japon"]],["Où se trouve la mer de la Tranquillité ?",["Sur la Lune","En Russie","Sur Mars","Au Canada"]],["Combien de symphonies Beethoven a-t-il composées ?",["9","5","12","7"]],["Quelle est la plus petite planète du système solaire ?",["Mercure","Mars","Vénus","Pluton"]],["Quel scientifique a énoncé les lois du mouvement et de la gravitation universelle ?",["Isaac Newton","Galilée","Kepler","Copernic"]],["Dans quelle ville ont eu lieu les premiers Jeux olympiques modernes en 1896 ?",["Athènes","Paris","Londres","Rome"]],["Quel est l'os le plus long du corps humain ?",["Le fémur","Le tibia","L'humérus","Le péroné"]],["Quel océan borde la côte est de l'Afrique ?",["L'océan Indien","L'Atlantique","Le Pacifique","L'Arctique"]],["Qui a écrit « Germinal » ?",["Émile Zola","Victor Hugo","Guy de Maupassant","Stendhal"]],["Combien de faces a un dodécaèdre ?",["12","10","20","8"]]]
 };
 // Niveaux 4 (expert) et 5 (casse-tête : mots rares et devinettes)
-WORDS[4]=[["QUINTESSENCE","Ce qu'il y a de plus pur, de plus parfait"],["PERSPICACE","Qui devine vite ce qui est caché"],["SERENDIPITE","Découverte heureuse faite par hasard"],["ATAVISME","Retour d'un trait hérité d'un ancêtre lointain"],["EPISTOLAIRE","Qui se fait par lettres, par correspondance"],["UBIQUITE","Le don d'être partout à la fois"],["OSTRACISME","Exclusion d'une personne par un groupe"],["PANACEE","Remède censé guérir tous les maux"],["SOPHISME","Raisonnement faux qui a l'air logique"],["ACRONYME","Sigle qui se prononce comme un mot, comme OVNI"],["EUPHEMISME","Façon adoucie de dire une chose déplaisante"],["HEMICYCLE","Salle en demi-cercle de l'Assemblée nationale"],["ICONOCLASTE","Qui s'attaque aux traditions et aux idées reçues"],["NOSTALGIE","Regret mélancolique du passé"],["PROCRASTINER","Remettre toujours au lendemain"],["CALLIGRAPHIE","L'art de bien former les lettres"],["MNEMOTECHNIQUE","Procédé qui aide à retenir"],["ANACHRONISME","Chose qui n'est pas de son époque"],["HYPOCONDRIAQUE","Qui s'inquiète sans cesse pour sa santé"],["PHILATELISTE","Collectionneur de timbres"],["SPELEOLOGUE","Explorateur des grottes et des gouffres"],["NUMISMATE","Collectionneur de pièces de monnaie"],["ORNITHOLOGUE","Spécialiste des oiseaux"],["PARCIMONIE","Grande économie dans l'usage de quelque chose"],["DIATRIBE","Critique violente, écrite ou orale"]];
-WORDS[5]=[["OXYMORE","Figure qui unit deux contraires, comme « obscure clarté »"],["ZEUGME","Figure qui attelle deux sens au même verbe : « vêtu de probité et de lin blanc »"],["SYZYGIE","Alignement de trois astres, comme le Soleil, la Terre et la Lune"],["PARONYME","Mot presque identique à un autre mais de sens différent"],["HAPAX","Mot qui n'apparaît qu'une seule fois dans un texte"],["LIPOGRAMME","Texte écrit sans une lettre, comme le roman de Perec sans E"],["PALIMPSESTE","Parchemin gratté puis réécrit"],["CHIASME","Figure en croisement : « manger pour vivre et non vivre pour manger »"],["BOUSTROPHEDON","Écriture qui change de sens à chaque ligne, comme un bœuf qui laboure"],["APOPHTEGME","Parole mémorable dite en peu de mots"],["OMBRE","Devinette : je te suis partout au soleil mais je disparais dans le noir"],["SECRET","Devinette : si tu me partages, je n'existe plus"],["SILENCE","Devinette : il suffit de dire mon nom pour me briser"],["EPONGE","Devinette : je suis pleine de trous mais je retiens l'eau"],["AVENIR","Devinette : je n'arrive jamais, car quand j'arrive je change de nom"],["TROU","Devinette : plus on m'enlève de matière, plus je grandis"],["ECHO","Devinette : je réponds sans qu'on me parle et je répète sans comprendre"],["BOUGIE","Devinette : plus je vis, plus je rapetisse"],["TIMBRE","Devinette : je fais le tour du monde en restant dans mon coin"],["PROMESSE","Devinette : on me fait, on me tient, on me brise"],["NOM","Devinette : il t'appartient, mais les autres l'utilisent plus que toi"],["CERCUEIL","Devinette : celui qui me fabrique me vend, celui qui m'achète ne s'en sert pas, celui qui s'en sert ne le sait pas"],["DEMAIN","Devinette : je suis toujours devant toi mais tu ne m'atteins jamais"],["RESPIRATION","Devinette : je suis plus léger qu'une plume, mais personne ne me retient plus de quelques minutes"]];
-QUIZ[4]=[["Quel est le symbole chimique du tungstène ?",["W","Tu","Tg","Wo"]],["Quelle est la capitale du Kazakhstan ?",["Astana","Almaty","Tachkent","Bichkek"]],["Qui a peint « Le Radeau de la Méduse » ?",["Géricault","Delacroix","David","Ingres"]],["En quelle année a eu lieu la bataille de Marignan ?",["1515","1415","1610","1214"]],["Quelle partie de la cellule produit son énergie ?",["La mitochondrie","Le noyau","Le ribosome","L'appareil de Golgi"]],["Qui a écrit « Cent ans de solitude » ?",["Gabriel García Márquez","Jorge Luis Borges","Pablo Neruda","Mario Vargas Llosa"]],["Combien de côtés a un ennéagone ?",["9","11","7","12"]],["Wellington est la capitale de quel pays ?",["La Nouvelle-Zélande","L'Australie","Le Canada","L'Afrique du Sud"]],["Quelle planète tourne couchée sur le côté ?",["Uranus","Neptune","Saturne","Vénus"]],["Qui a composé « Les Quatre Saisons » ?",["Vivaldi","Bach","Haendel","Mozart"]],["Quel philosophe fut le précepteur d'Alexandre le Grand ?",["Aristote","Platon","Socrate","Diogène"]],["En quelle année le mur de Berlin est-il tombé ?",["1989","1991","1985","1961"]],["Quel est l'élément le plus abondant dans l'Univers ?",["L'hydrogène","L'hélium","L'oxygène","Le carbone"]],["Combien de chromosomes compte une cellule humaine ?",["46","23","44","48"]],["Quel est le plus haut sommet d'Afrique ?",["Le Kilimandjaro","Le mont Kenya","Le Toubkal","Le mont Cameroun"]],["Qui a écrit « L'Étranger » ?",["Albert Camus","Jean-Paul Sartre","André Gide","Boris Vian"]],["Quelle est la capitale de la Turquie ?",["Ankara","Istanbul","Izmir","Antalya"]]];
-QUIZ[5]=[["Un fermier a 17 moutons. Tous meurent sauf 9. Combien en reste-t-il ?",["9","8","17","0"]],["Combien de mois de l'année ont 28 jours ?",["12","1","2","6"]],["Dans une course, tu doubles le deuxième. Tu es…",["Deuxième","Premier","Troisième","Dernier"]],["Une brique pèse 1 kg plus une demi-brique. Combien pèse la brique ?",["2 kg","1,5 kg","1 kg","3 kg"]],["Une batte et une balle coûtent 1,10 € en tout. La batte coûte 1 € de plus que la balle. Prix de la balle ?",["5 centimes","10 centimes","1 centime","15 centimes"]],["Le père de Marie a 5 filles : Lala, Lele, Lili, Lolo… Comment s'appelle la cinquième ?",["Marie","Lulu","Lyly","Lola"]],["Combien de fois peut-on soustraire 10 de 100 ?",["Une seule fois","10 fois","9 fois","100 fois"]],["Quel nombre, multiplié par n'importe quel autre, donne toujours le même résultat ?",["0","1","10","L'infini"]],["Combien d'animaux de chaque espèce Moïse a-t-il fait monter dans l'arche ?",["Aucun, c'était Noé","2","7","1"]],["Un avion s'écrase sur la frontière franco-espagnole. Où enterre-t-on les survivants ?",["Nulle part","En France","En Espagne","Dans leur pays"]],["5 machines font 5 objets en 5 minutes. Combien de temps pour que 100 machines fassent 100 objets ?",["5 minutes","100 minutes","20 minutes","1 minute"]],["Quel nombre vient ensuite : 1, 1, 2, 3, 5, 8… ?",["13","11","12","16"]],["Un nénuphar double chaque jour et couvre le lac en 48 jours. Quand couvre-t-il la moitié du lac ?",["Le 47ᵉ jour","Le 24ᵉ jour","Le 46ᵉ jour","Le 36ᵉ jour"]],["Qu'est-ce qui est à toi, mais que les autres utilisent plus que toi ?",["Ton prénom","Ton téléphone","Ta chaise","Ton vélo"]],["Je monte et je descends sans jamais bouger. Qui suis-je ?",["Un escalier","Un ascenseur","Une vague","Un yoyo"]],["Plus il y en a, moins on voit. Qu'est-ce que c'est ?",["L'obscurité","Le brouillard","La pluie","La neige"]],["Quel nombre vient ensuite : 2, 6, 12, 20, 30… ?",["42","40","36","44"]],["Un escargot monte un mur de 10 m : +3 m le jour, −2 m la nuit. En combien de jours atteint-il le sommet ?",["8 jours","10 jours","7 jours","9 jours"]]];
+WORDS_FR[4]=[["QUINTESSENCE","Ce qu'il y a de plus pur, de plus parfait"],["PERSPICACE","Qui devine vite ce qui est caché"],["SERENDIPITE","Découverte heureuse faite par hasard"],["ATAVISME","Retour d'un trait hérité d'un ancêtre lointain"],["EPISTOLAIRE","Qui se fait par lettres, par correspondance"],["UBIQUITE","Le don d'être partout à la fois"],["OSTRACISME","Exclusion d'une personne par un groupe"],["PANACEE","Remède censé guérir tous les maux"],["SOPHISME","Raisonnement faux qui a l'air logique"],["ACRONYME","Sigle qui se prononce comme un mot, comme OVNI"],["EUPHEMISME","Façon adoucie de dire une chose déplaisante"],["HEMICYCLE","Salle en demi-cercle de l'Assemblée nationale"],["ICONOCLASTE","Qui s'attaque aux traditions et aux idées reçues"],["NOSTALGIE","Regret mélancolique du passé"],["PROCRASTINER","Remettre toujours au lendemain"],["CALLIGRAPHIE","L'art de bien former les lettres"],["MNEMOTECHNIQUE","Procédé qui aide à retenir"],["ANACHRONISME","Chose qui n'est pas de son époque"],["HYPOCONDRIAQUE","Qui s'inquiète sans cesse pour sa santé"],["PHILATELISTE","Collectionneur de timbres"],["SPELEOLOGUE","Explorateur des grottes et des gouffres"],["NUMISMATE","Collectionneur de pièces de monnaie"],["ORNITHOLOGUE","Spécialiste des oiseaux"],["PARCIMONIE","Grande économie dans l'usage de quelque chose"],["DIATRIBE","Critique violente, écrite ou orale"]];
+WORDS_FR[5]=[["OXYMORE","Figure qui unit deux contraires, comme « obscure clarté »"],["ZEUGME","Figure qui attelle deux sens au même verbe : « vêtu de probité et de lin blanc »"],["SYZYGIE","Alignement de trois astres, comme le Soleil, la Terre et la Lune"],["PARONYME","Mot presque identique à un autre mais de sens différent"],["HAPAX","Mot qui n'apparaît qu'une seule fois dans un texte"],["LIPOGRAMME","Texte écrit sans une lettre, comme le roman de Perec sans E"],["PALIMPSESTE","Parchemin gratté puis réécrit"],["CHIASME","Figure en croisement : « manger pour vivre et non vivre pour manger »"],["BOUSTROPHEDON","Écriture qui change de sens à chaque ligne, comme un bœuf qui laboure"],["APOPHTEGME","Parole mémorable dite en peu de mots"],["OMBRE","Devinette : je te suis partout au soleil mais je disparais dans le noir"],["SECRET","Devinette : si tu me partages, je n'existe plus"],["SILENCE","Devinette : il suffit de dire mon nom pour me briser"],["EPONGE","Devinette : je suis pleine de trous mais je retiens l'eau"],["AVENIR","Devinette : je n'arrive jamais, car quand j'arrive je change de nom"],["TROU","Devinette : plus on m'enlève de matière, plus je grandis"],["ECHO","Devinette : je réponds sans qu'on me parle et je répète sans comprendre"],["BOUGIE","Devinette : plus je vis, plus je rapetisse"],["TIMBRE","Devinette : je fais le tour du monde en restant dans mon coin"],["PROMESSE","Devinette : on me fait, on me tient, on me brise"],["NOM","Devinette : il t'appartient, mais les autres l'utilisent plus que toi"],["CERCUEIL","Devinette : celui qui me fabrique me vend, celui qui m'achète ne s'en sert pas, celui qui s'en sert ne le sait pas"],["DEMAIN","Devinette : je suis toujours devant toi mais tu ne m'atteins jamais"],["RESPIRATION","Devinette : je suis plus léger qu'une plume, mais personne ne me retient plus de quelques minutes"]];
+QUIZ_FR[4]=[["Quel est le symbole chimique du tungstène ?",["W","Tu","Tg","Wo"]],["Quelle est la capitale du Kazakhstan ?",["Astana","Almaty","Tachkent","Bichkek"]],["Qui a peint « Le Radeau de la Méduse » ?",["Géricault","Delacroix","David","Ingres"]],["En quelle année a eu lieu la bataille de Marignan ?",["1515","1415","1610","1214"]],["Quelle partie de la cellule produit son énergie ?",["La mitochondrie","Le noyau","Le ribosome","L'appareil de Golgi"]],["Qui a écrit « Cent ans de solitude » ?",["Gabriel García Márquez","Jorge Luis Borges","Pablo Neruda","Mario Vargas Llosa"]],["Combien de côtés a un ennéagone ?",["9","11","7","12"]],["Wellington est la capitale de quel pays ?",["La Nouvelle-Zélande","L'Australie","Le Canada","L'Afrique du Sud"]],["Quelle planète tourne couchée sur le côté ?",["Uranus","Neptune","Saturne","Vénus"]],["Qui a composé « Les Quatre Saisons » ?",["Vivaldi","Bach","Haendel","Mozart"]],["Quel philosophe fut le précepteur d'Alexandre le Grand ?",["Aristote","Platon","Socrate","Diogène"]],["En quelle année le mur de Berlin est-il tombé ?",["1989","1991","1985","1961"]],["Quel est l'élément le plus abondant dans l'Univers ?",["L'hydrogène","L'hélium","L'oxygène","Le carbone"]],["Combien de chromosomes compte une cellule humaine ?",["46","23","44","48"]],["Quel est le plus haut sommet d'Afrique ?",["Le Kilimandjaro","Le mont Kenya","Le Toubkal","Le mont Cameroun"]],["Qui a écrit « L'Étranger » ?",["Albert Camus","Jean-Paul Sartre","André Gide","Boris Vian"]],["Quelle est la capitale de la Turquie ?",["Ankara","Istanbul","Izmir","Antalya"]]];
+QUIZ_FR[5]=[["Un fermier a 17 moutons. Tous meurent sauf 9. Combien en reste-t-il ?",["9","8","17","0"]],["Combien de mois de l'année ont 28 jours ?",["12","1","2","6"]],["Dans une course, tu doubles le deuxième. Tu es…",["Deuxième","Premier","Troisième","Dernier"]],["Une brique pèse 1 kg plus une demi-brique. Combien pèse la brique ?",["2 kg","1,5 kg","1 kg","3 kg"]],["Une batte et une balle coûtent 1,10 € en tout. La batte coûte 1 € de plus que la balle. Prix de la balle ?",["5 centimes","10 centimes","1 centime","15 centimes"]],["Le père de Marie a 5 filles : Lala, Lele, Lili, Lolo… Comment s'appelle la cinquième ?",["Marie","Lulu","Lyly","Lola"]],["Combien de fois peut-on soustraire 10 de 100 ?",["Une seule fois","10 fois","9 fois","100 fois"]],["Quel nombre, multiplié par n'importe quel autre, donne toujours le même résultat ?",["0","1","10","L'infini"]],["Combien d'animaux de chaque espèce Moïse a-t-il fait monter dans l'arche ?",["Aucun, c'était Noé","2","7","1"]],["Un avion s'écrase sur la frontière franco-espagnole. Où enterre-t-on les survivants ?",["Nulle part","En France","En Espagne","Dans leur pays"]],["5 machines font 5 objets en 5 minutes. Combien de temps pour que 100 machines fassent 100 objets ?",["5 minutes","100 minutes","20 minutes","1 minute"]],["Quel nombre vient ensuite : 1, 1, 2, 3, 5, 8… ?",["13","11","12","16"]],["Un nénuphar double chaque jour et couvre le lac en 48 jours. Quand couvre-t-il la moitié du lac ?",["Le 47ᵉ jour","Le 24ᵉ jour","Le 46ᵉ jour","Le 36ᵉ jour"]],["Qu'est-ce qui est à toi, mais que les autres utilisent plus que toi ?",["Ton prénom","Ton téléphone","Ta chaise","Ton vélo"]],["Je monte et je descends sans jamais bouger. Qui suis-je ?",["Un escalier","Un ascenseur","Une vague","Un yoyo"]],["Plus il y en a, moins on voit. Qu'est-ce que c'est ?",["L'obscurité","Le brouillard","La pluie","La neige"]],["Quel nombre vient ensuite : 2, 6, 12, 20, 30… ?",["42","40","36","44"]],["Un escargot monte un mur de 10 m : +3 m le jour, −2 m la nuit. En combien de jours atteint-il le sommet ?",["8 jours","10 jours","7 jours","9 jours"]]];
+const WORDS=(I18N[LANG]&&I18N[LANG].WORDS)||WORDS_FR, QUIZ=(I18N[LANG]&&I18N[LANG].QUIZ)||QUIZ_FR;
 const usedW={1:new Set(),2:new Set(),3:new Set(),4:new Set(),5:new Set()}, usedQ={1:new Set(),2:new Set(),3:new Set(),4:new Set(),5:new Set()};
-const TIER_LABEL={1:'Facile',2:'Moyen',3:'Difficile',4:'Expert',5:'🧩 Casse-tête'};
+const TIER_LABEL={1:L('Facile'),2:L('Moyen'),3:L('Difficile'),4:L('Expert'),5:'🧩 '+L('Casse-tête')};
 const TIER_COLOR={1:'var(--green)',2:'var(--cyan)',3:'var(--orange)',4:'var(--pink)',5:'var(--purple)'};
 function shuffleA(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a}
 function pickFrom(bank,used,n){let pool=bank.filter(x=>!used.has(x[0]));if(pool.length<n){used.clear();pool=bank.slice()}shuffleA(pool);const out=pool.slice(0,n);out.forEach(x=>used.add(x[0]));return out}
 // endless generated questions, harder with each difficulty level
 function genQ(st){
   const r=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),k=r(0,3),boost=Math.min(4,Math.floor(st/2));let q,ans;
-  if(st<=1){if(k<2){const a=r(5,40),b=r(5,40);q=`Combien font ${a} + ${b} ?`;ans=a+b}else{const a=r(2,9),b=r(2,9);q=`Combien font ${a} × ${b} ?`;ans=a*b}}
-  else if(st<=3){if(k===0){const a=r(11,19),b=r(3,9);q=`Combien font ${a} × ${b} ?`;ans=a*b}else if(k===1){const p=[10,20,25,50][r(0,3)],n=r(2,20)*20;q=`Combien font ${p} % de ${n} ?`;ans=n*p/100}else if(k===2){const w=r(2,9);q=`Combien de jours dans ${w} semaines ?`;ans=w*7}else{const h=r(2,6);q=`Combien de minutes dans ${h} heures ?`;ans=h*60}}
-  else{if(k===0){const a=r(12,25+boost*5),b=r(12,25+boost*5);q=`Combien font ${a} × ${b} ?`;ans=a*b}else if(k===1){const n=r(4,15+boost);q=`Combien fait ${n} au carré ?`;ans=n*n}else if(k===2){const p=[15,30,40,75][r(0,3)],n=r(2,20)*20;q=`Combien font ${p} % de ${n} ?`;ans=n*p/100}else{const h=r(2,9),m=r(1,5);q=`Combien de secondes dans ${h} min ${m*10} s ?`;ans=h*60+m*10}}
+  if(st<=1){if(k<2){const a=r(5,40),b=r(5,40);q=L('Combien font {0} + {1} ?',a,b);ans=a+b}else{const a=r(2,9),b=r(2,9);q=L('Combien font {0} × {1} ?',a,b);ans=a*b}}
+  else if(st<=3){if(k===0){const a=r(11,19),b=r(3,9);q=L('Combien font {0} × {1} ?',a,b);ans=a*b}else if(k===1){const p=[10,20,25,50][r(0,3)],n=r(2,20)*20;q=L('Combien font {0} % de {1} ?',p,n);ans=n*p/100}else if(k===2){const w=r(2,9);q=L('Combien de jours dans {0} semaines ?',w);ans=w*7}else{const h=r(2,6);q=L('Combien de minutes dans {0} heures ?',h);ans=h*60}}
+  else{if(k===0){const a=r(12,25+boost*5),b=r(12,25+boost*5);q=L('Combien font {0} × {1} ?',a,b);ans=a*b}else if(k===1){const n=r(4,15+boost);q=L('Combien fait {0} au carré ?',n);ans=n*n}else if(k===2){const p=[15,30,40,75][r(0,3)],n=r(2,20)*20;q=L('Combien font {0} % de {1} ?',p,n);ans=n*p/100}else{const h=r(2,9),m=r(1,5);q=L('Combien de secondes dans {0} min {1} s ?',h,m*10);ans=h*60+m*10}}
   const opts=new Set([ans]);let g=0;while(opts.size<4&&g<60){g++;const d=r(1,Math.max(3,Math.round(ans*.12)))*(Math.random()<.5?-1:1);if(ans+d>0)opts.add(ans+d)}
-  return[q,[...opts].map(n=>n.toLocaleString('fr-FR'))];
+  return[q,[...opts].map(n=>n.toLocaleString(LOC))];
 }
 // difficulty of the current round: starts from the bonus stage, +1 each extra round, max 5
 const roundDiff=()=>Math.min(5,mg.stage+mg.round);
@@ -758,7 +789,7 @@ function spend(type){if(mg.practice){if(carry[type]<=0)return false;carry[type]-
 function mgBank(popType){const b=bank();$('mgBomb').textContent=b.bomb;$('mgUndo').textContent=b.undo;
   if(popType){const el=$(popType==='bomb'?'mgBomb':'mgUndo');el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}}
 let mgMsgT;function mgMsg(t){const el=$('mgMsg');el.textContent=t;el.hidden=false;el.style.animation='none';void el.offsetWidth;el.style.animation='';clearTimeout(mgMsgT);mgMsgT=setTimeout(()=>el.hidden=true,2400)}
-function diffBar(d){return `<div class="diff">${[1,2,3,4,5].map(i=>`<i class="${i<=d?'on':''}" style="--c:${TIER_COLOR[i]}"></i>`).join('')}<span>Niveau ${d}/5 · ${TIER_LABEL[d].replace('🧩 ','')}</span></div>`}
+function diffBar(d){return `<div class="diff">${[1,2,3,4,5].map(i=>`<i class="${i<=d?'on':''}" style="--c:${TIER_COLOR[i]}"></i>`).join('')}<span>${L('Niveau {0}/5',d)} · ${TIER_LABEL[d].replace('🧩 ','')}</span></div>`}
 // reward for one success: easy items alternate, a brain teaser gives both
 function rewardFor(tier,n){const c=tier===5?15:5;setCoins(coins+c,true);return rewardFor0(tier,n)+' +'+c+' 🪙'}
 function rewardFor0(tier,n){if(tier===5){give('bomb');give('undo');return '+1 💣 +1 ↶'}const t=n%2?'bomb':'undo';give(t);return '+1 '+(t==='bomb'?'💣':'↶')}
@@ -766,20 +797,20 @@ function openChooser(stage,practice){
   stage=Math.max(1,stage);mg={stage,practice,round:0,won:{bomb:0,undo:0}};mgEl.hidden=false;mgBank();showChooser();
 }
 const GAMES=[
-  {id:'words',ic:'🔤',c:'var(--yellow)',name:'Mots en ligne',txt:'5 mots, du plus simple au casse-tête. Chaque mot trouvé débloque des lettres pour les suivants.',start:()=>startWords()},
-  {id:'quiz',ic:'🧠',c:'var(--cyan)',name:'Quiz culture G',txt:'5 questions chronométrées, de plus en plus dures, avec une énigme à la fin.',start:()=>startQuiz()},
-  {id:'maze',ic:'🗿',c:'var(--orange)',name:'Le temple perdu',txt:'Trouve la sortie du labyrinthe avant la fin du chrono. Plus loin, il fait de plus en plus sombre…',start:()=>startMaze()},
-  {id:'motus',ic:'🟥',c:'var(--pink)',name:'Mot mystère',txt:'Devine le mot caché en 6 essais. Rouge = bien placé, jaune = mal placé.',start:()=>startMotus()}
+  {id:'words',ic:'🔤',c:'var(--yellow)',name:L('Mots en ligne'),txt:L('5 mots, du plus simple au casse-tête. Chaque mot trouvé débloque des lettres pour les suivants.'),start:()=>startWords()},
+  {id:'quiz',ic:'🧠',c:'var(--cyan)',name:L('Quiz culture G'),txt:L('5 questions chronométrées, de plus en plus dures, avec une énigme à la fin.'),start:()=>startQuiz()},
+  {id:'maze',ic:'🗿',c:'var(--orange)',name:L('Le temple perdu'),txt:L('Trouve la sortie du labyrinthe avant la fin du chrono. Plus loin, il fait de plus en plus sombre…'),start:()=>startMaze()},
+  {id:'motus',ic:'🟥',c:'var(--pink)',name:L('Mot mystère'),txt:L('Devine le mot caché en 6 essais. Rouge = bien placé, jaune = mal placé.'),start:()=>startMotus()}
 ];
 function showChooser(){
   stopTimer();mg.type=null;
-  $('mgTitle').textContent=mg.practice?'Jeux bonus':'Pause bonus · Niveau '+level;
+  $('mgTitle').textContent=mg.practice?L('Jeux bonus'):L('Pause bonus · Niveau {0}',level);
   $('mgBody').onclick=null;
-  $('mgBody').innerHTML=`<div class="intro">${mg.round?'Choisis ton prochain jeu.':mg.practice?'Entraîne-toi ! Ce que tu gagnes ici sera ajouté à ta prochaine partie.':'Bravo, tu as atteint le niveau '+level+' ! Choisis un jeu pour gagner des bombes et des retours.'} Tu peux enchaîner autant de manches que tu veux : chacune est un peu plus difficile, jusqu'au niveau 5.</div>
+  $('mgBody').innerHTML=`<div class="intro">${mg.round?L('Choisis ton prochain jeu.'):mg.practice?L('Entraîne-toi ! Ce que tu gagnes ici sera ajouté à ta prochaine partie.'):L('Bravo, tu as atteint le niveau {0} ! Choisis un jeu pour gagner des bombes et des retours.',level)} ${L("Tu peux enchaîner autant de manches que tu veux : chacune est un peu plus difficile, jusqu'au niveau 5.")}</div>
     ${diffBar(roundDiff())}
     ${GAMES.map(g=>`<button class="choice" data-g="${g.id}"><span class="ic" style="--bgc:${g.c}">${g.ic}</span><span><b>${g.name}</b><span>${g.txt}</span></span></button>`).join('')}`;
   $('mgBody').querySelectorAll('.choice').forEach(b=>b.onclick=()=>GAMES.find(g=>g.id===b.dataset.g).start());
-  $('mgFoot').innerHTML=`<button class="btn ghost" id="mgSkip">${mg.practice?'Retour au menu':mg.round?'▶ Reprendre la partie':'Continuer sans bonus'}</button>`;
+  $('mgFoot').innerHTML=`<button class="btn ghost" id="mgSkip">${mg.practice?L('Retour au menu'):mg.round?L('▶ Reprendre la partie'):L('Continuer sans bonus')}</button>`;
   $('mgSkip').onclick=closeMini;
 }
 // generic countdown on the shared timer bar (real clock, keeps running if the player leaves)
@@ -792,10 +823,15 @@ const timerHTML='<div class="timer" id="timer"><div class="tbar" id="tbar"></div
 function closeMini(){
   stopTimer();mgEl.hidden=true;const was=mg;mg=null;
   if(was&&!was.practice){state='play';dropAcc=0;$('overlay').hidden=true;hud();
-    const n=was.won.bomb+was.won.undo;if(n)toast('🎁 Bonus ajoutés : +'+was.won.bomb+' 💣  +'+was.won.undo+' ↶');}
+    const n=was.won.bomb+was.won.undo;if(n)toast(L('🎁 Bonus ajoutés : {0}','+'+was.won.bomb+' 💣  +'+was.won.undo+' ↶'));}
 }
 $('mgClose').onclick=closeMini;
 $('tryBonus').onclick=()=>openChooser(1,true);
+// choix de la langue (écran d'accueil)
+$('langBtn').textContent='🌐 '+LANGS[LANG];
+$('langBtn').onclick=()=>{$('langList').hidden=!$('langList').hidden};
+$('langList').innerHTML=Object.entries(LANGS).map(([c,n])=>`<button class="btn ${c===LANG?'':'ghost'}" data-lang="${c}">${n}</button>`).join('');
+$('langList').querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{if(b.dataset.lang!==LANG)setLang(b.dataset.lang);else $('langList').hidden=true});
 
 // ---------- Mots en ligne ----------
 function startWords(){
@@ -804,26 +840,26 @@ function startWords(){
   mg.words=tiers.map(t=>{const [w,clue]=pickFrom(WORDS[t],usedW[t],1)[0];return{w,clue,t,cells:Array(w.length).fill(''),locked:Array(w.length).fill(false),found:false}});
   // easy words show their first letter
   mg.words.forEach(wd=>{if(wd.t===1){wd.cells[0]=wd.w[0];wd.locked[0]=true}});
-  $('mgTitle').textContent='🔤 Mots en ligne';
-  const rows=['AZERTYUIOP','QSDFGHJKLM','WXCVBN'];
-  $('mgFoot').innerHTML=`<div class="tools"><button class="btn" id="wHint"></button><button class="btn ghost" id="wDone">Retour au jeu</button></div>
-    <div class="kb">${rows.map((r,i)=>`<div class="kb-row">${r.split('').map(l=>`<button data-k="${l}">${l}</button>`).join('')}${i===2?'<button class="wide" data-k="DEL" aria-label="Effacer">⌫</button>':''}</div>`).join('')}</div>`;
+  $('mgTitle').textContent='🔤 '+L('Mots en ligne');
+  const rows=KB_ROWS;
+  $('mgFoot').innerHTML=`<div class="tools"><button class="btn" id="wHint"></button><button class="btn ghost" id="wDone">${L('Retour au jeu')}</button></div>
+    <div class="kb">${rows.map((r,i)=>`<div class="kb-row">${r.split('').map(l=>`<button data-k="${l}">${l}</button>`).join('')}${i===2?'<button class="wide" data-k="DEL" aria-label="'+L('Effacer')+'">⌫</button>':''}</div>`).join('')}</div>`;
   $('mgFoot').querySelector('.kb').addEventListener('click',e=>{const b=e.target.closest('button');if(b)b.dataset.k==='DEL'?wDel():wType(b.dataset.k)});
   $('wHint').onclick=wHint;$('wDone').onclick=closeMini;
   $('mgBody').onclick=e=>{const r=e.target.closest('.wrow');if(!r)return;const i=+r.dataset.i;if(!mg.words[i].found){mg.sel=i;renderWords()}};
-  renderWords();mgMsg('Touche une ligne, puis tape le mot');
+  renderWords();mgMsg(L('Touche une ligne, puis tape le mot'));
 }
 function renderWords(newCell){
   $('mgBody').innerHTML=diffBar(mg.d)+mg.words.map((wd,i)=>`<div class="wrow ${i===mg.sel&&!wd.found?'sel':''} ${wd.found?'found':''} ${wd.t===5?'teaser':''}" data-i="${i}" style="--bgc:${TIER_COLOR[wd.t]}">
-    <div class="clue"><span class="num">${i+1}</span><span><span class="tier">${TIER_LABEL[wd.t]}</span> ${wd.clue} <em>· ${wd.w.length} lettres</em></span></div>
+    <div class="clue"><span class="num">${i+1}</span><span><span class="tier">${TIER_LABEL[wd.t]}</span> ${wd.clue} <em>· ${L('{0} lettres',wd.w.length)}</em></span></div>
     <div class="cells" style="--n:${wd.w.length}">${wd.w.split('').map((_,j)=>`<span class="cell ${wd.locked[j]?'lk':''} ${newCell&&newCell[0]===i&&newCell[1]===j?'new':''}" style="--j:${j}">${wd.cells[j]}</span>`).join('')}</div></div>`).join('');
   const b=bank(),h=$('wHint');
-  if(h){if(mg.free>0){h.textContent=`💡 Lettre gratuite (${mg.free})`;h.disabled=false}else{h.textContent='💡 Lettre · '+COST.wLetter+' 🪙';h.disabled=false}}
+  if(h){if(mg.free>0){h.textContent=L('💡 Lettre gratuite ({0})',mg.free);h.disabled=false}else{h.textContent=L('💡 Lettre')+' · '+COST.wLetter+' 🪙';h.disabled=false}}
   const sel=$('mgBody').querySelector('.wrow.sel');if(sel)sel.scrollIntoView({block:'nearest',behavior:'smooth'});
 }
-function wType(L){
+function wType(ch){
   const wd=mg.words[mg.sel];if(!wd||wd.found)return;
-  const j=wd.cells.findIndex(c=>!c);if(j<0)return;wd.cells[j]=L;renderWords();
+  const j=wd.cells.findIndex(c=>!c);if(j<0)return;wd.cells[j]=ch;renderWords();
   if(wd.cells.every(Boolean))wCheck();
 }
 function wDel(){const wd=mg.words[mg.sel];if(!wd||wd.found)return;for(let j=wd.cells.length-1;j>=0;j--){if(wd.cells[j]&&!wd.locked[j]){wd.cells[j]='';break}}renderWords()}
@@ -835,9 +871,9 @@ function revealIn(i){
   return j;
 }
 function wonWord(i){
-  const wd=mg.words[i];mg.found++;let note=(wd.t===5?'🧩 Casse-tête résolu ! ':'Bravo ! ')+rewardFor(wd.t,mg.found),nc=null;
+  const wd=mg.words[i];mg.found++;let note=(wd.t===5?L('🧩 Casse-tête résolu !')+' ':L('Bravo !')+' ')+rewardFor(wd.t,mg.found),nc=null;
   if(mg.found>=2){const rest=mg.words.map((w,k)=>k).filter(k=>!mg.words[k].found);
-    if(rest.length){const k=rest[Math.random()*Math.min(2,rest.length)|0];const j=revealIn(k);if(j>=0){nc=[k,j];note+=` · lettre offerte au mot ${k+1}`}}}
+    if(rest.length){const k=rest[Math.random()*Math.min(2,rest.length)|0];const j=revealIn(k);if(j>=0){nc=[k,j];note+=' · '+L('lettre offerte au mot {0}',k+1)}}}
   if(wd.t===5)confettiMg();
   mgMsg(note);
   const nxt=mg.words.findIndex(w=>!w.found);
@@ -848,13 +884,13 @@ function wCheck(){
   const i=mg.sel,wd=mg.words[i];
   if(wd.cells.join('')===wd.w){wd.found=true;wonWord(i)}
   else{
-    const row=$('mgBody').querySelector(`.wrow[data-i="${i}"]`);row.classList.add('bad');mgMsg('Pas tout à fait… essaie encore');
+    const row=$('mgBody').querySelector(`.wrow[data-i="${i}"]`);row.classList.add('bad');mgMsg(L('Pas tout à fait… essaie encore'));
     setTimeout(()=>{wd.cells=wd.cells.map((c,k)=>wd.locked[k]?c:'');renderWords()},450);
   }
 }
 function wHint(){
   const wd=mg.words[mg.sel];if(!wd||wd.found)return;
-  if(mg.free>0)mg.free--;else if(!pay(COST.wLetter,'une lettre'))return;
+  if(mg.free>0)mg.free--;else if(!pay(COST.wLetter,L('une lettre')))return;
   const j=revealIn(mg.sel);
   if(wd.found){wonWord(mg.sel);return}
   renderWords(j>=0?[mg.sel,j]:null);
@@ -867,10 +903,10 @@ function startQuiz(){
   mg.type='quiz';mg.d=d;mg.qi=0;mg.res=[];mg.fifty=d>=4?2:1;
   // the 4th question is a generated calculation, so the quiz never runs dry
   mg.qs=tiers.map((t,i)=>{if(i===3&&t<5)return{t,qa:genQ(t<=1?1:t===2?2:3+d)};return{t,qa:pickFrom(QUIZ[t],usedQ[t],1)[0]}});
-  $('mgTitle').textContent='🧠 Quiz culture G';
-  $('mgFoot').innerHTML=`<div class="tools2"><button class="btn" id="q50"></button><button class="btn" id="qTime">⏱ +10 s · ${COST.qTime} 🪙</button></div><button class="btn ghost" id="qDone">Retour au jeu</button>`;
+  $('mgTitle').textContent='🧠 '+L('Quiz culture G');
+  $('mgFoot').innerHTML=`<div class="tools2"><button class="btn" id="q50"></button><button class="btn" id="qTime">⏱ +10 s · ${COST.qTime} 🪙</button></div><button class="btn ghost" id="qDone">${L('Retour au jeu')}</button>`;
   $('q50').onclick=q50;$('qDone').onclick=closeMini;
-  $('qTime').onclick=()=>{if(mg.cur&&!mg.cur.locked&&pay(COST.qTime,'du temps en plus')){mg.deadline+=10000;mgMsg('⏱ +10 secondes')}};
+  $('qTime').onclick=()=>{if(mg.cur&&!mg.cur.locked&&pay(COST.qTime,L('du temps en plus'))){mg.deadline+=10000;mgMsg(L('⏱ +{0} secondes',10))}};
   renderQ();
 }
 function renderQ(){
@@ -878,7 +914,7 @@ function renderQ(){
   mg.cur={correct,shown:shuffleA(opts.slice()),locked:false,t:item.t};
   $('mgBody').innerHTML=`${diffBar(mg.d)}<div class="dots">${mg.qs.map((_,k)=>`<i class="${k<mg.qi?(mg.res[k]?'ok':'ko'):k===mg.qi?'now':''}"></i>`).join('')}</div>
     <div class="timer" id="timer"><div class="tbar" id="tbar"></div><span class="tsec"><span id="tsec"></span> s</span></div>
-    <div class="qcard ${item.t===5?'teaser':''}"><div class="qn">Question ${mg.qi+1} / ${mg.qs.length} · <span style="color:${TIER_COLOR[item.t]}">${TIER_LABEL[item.t]}</span></div><h3>${q}</h3></div>
+    <div class="qcard ${item.t===5?'teaser':''}"><div class="qn">${L('Question {0} / {1}',mg.qi+1,mg.qs.length)} · <span style="color:${TIER_COLOR[item.t]}">${TIER_LABEL[item.t]}</span></div><h3>${q}</h3></div>
     <div class="answers">${mg.cur.shown.map((o,k)=>`<button class="ans c${k+1}" data-k="${k}">${o}</button>`).join('')}</div>`;
   $('mgBody').querySelectorAll('.ans').forEach(b=>b.onclick=()=>qAnswer(+b.dataset.k));
   q50Label();startTimer();
@@ -893,13 +929,13 @@ function startTimer(){stopTimer();const total=Q_TIME[mg.cur.t]*1000;mg.deadline=
   tick();mg.tmr=setInterval(tick,100)}
 function qTimeout(){stopTimer();if(mg.cur.locked)return;mg.cur.locked=true;mg.res.push(false);
   $('mgBody').querySelectorAll('.ans').forEach(b=>{b.disabled=true;if(b.textContent===mg.cur.correct)b.classList.add('ok')});
-  mgMsg('⏰ Temps écoulé ! Réponse : '+mg.cur.correct);q50Label();
-  setTimeout(()=>{if(!mg)return;mg.qi++;if(mg.qi>=mg.qs.length)finishMini();else renderQ()},1700)}
-function q50Label(){const b=$('q50');if(!b)return;if(mg.fifty>0){b.textContent=`✂️ 50/50 gratuit (${mg.fifty})`;b.disabled=false}else{b.textContent='✂️ 50/50 · '+COST.q50+' 🪙';b.disabled=false}
+  mgMsg(L('⏰ Temps écoulé ! Réponse : {0}',mg.cur.correct));q50Label();
+  setTimeout(()=>{if(!mg||mg.type!=='quiz')return;mg.qi++;if(mg.qi>=mg.qs.length)finishMini();else renderQ()},1700)}
+function q50Label(){const b=$('q50');if(!b)return;if(mg.fifty>0){b.textContent=L('✂️ 50/50 gratuit ({0})',mg.fifty);b.disabled=false}else{b.textContent='✂️ 50/50 · '+COST.q50+' 🪙';b.disabled=false}
   if(mg.cur&&(mg.cur.locked||mg.cur.cut))b.disabled=true}
 function q50(){
   if(!mg.cur||mg.cur.locked||mg.cur.cut)return;
-  if(mg.fifty>0)mg.fifty--;else if(!pay(COST.q50,'un 50/50'))return;
+  if(mg.fifty>0)mg.fifty--;else if(!pay(COST.q50,L('un 50/50')))return;
   mg.cur.cut=true;const wrong=[...$('mgBody').querySelectorAll('.ans')].filter(b=>b.textContent!==mg.cur.correct);
   shuffleA(wrong).slice(0,2).forEach(b=>b.classList.add('gone'));q50Label();
 }
@@ -908,10 +944,10 @@ function qAnswer(k){
   const ok=mg.cur.shown[k]===mg.cur.correct;mg.res.push(ok);
   btns.forEach(b=>{b.disabled=true;if(b.textContent===mg.cur.correct)b.classList.add('ok')});
   if(!ok)btns[k].classList.add('ko');
-  if(ok){const n=mg.res.filter(Boolean).length;const rw=rewardFor(mg.cur.t,n);mgMsg((mg.cur.t===5?'🧩 Énigme résolue ! ':'Bonne réponse ! ')+rw);if(mg.cur.t===5)confettiMg()}
-  else mgMsg('Raté ! La bonne réponse : '+mg.cur.correct);
+  if(ok){const n=mg.res.filter(Boolean).length;const rw=rewardFor(mg.cur.t,n);mgMsg((mg.cur.t===5?L('🧩 Énigme résolue !')+' ':L('Bonne réponse !')+' ')+rw);if(mg.cur.t===5)confettiMg()}
+  else mgMsg(L('Raté ! La bonne réponse : {0}',mg.cur.correct));
   q50Label();
-  setTimeout(()=>{if(!mg)return;mg.qi++;if(mg.qi>=mg.qs.length)finishMini();else renderQ()},ok?900:1700);
+  setTimeout(()=>{if(!mg||mg.type!=='quiz')return;mg.qi++;if(mg.qi>=mg.qs.length)finishMini();else renderQ()},ok?900:1700);
 }
 
 // ---------- Le temple perdu (labyrinthe chronométré) ----------
@@ -930,22 +966,22 @@ function startMaze(){
   stopTimer();const d=roundDiff(),n=5+d*2;
   mg.type='maze';mg.d=d;mg.mz={n,W:buildMaze(n),px:0,py:0,vx:0,vy:0,trail:new Set(['0,0']),dark:d>=4,radius:d>=5?1.6:2.6,done:false,won:false};
   const secs=[0,30,40,50,60,75][d];
-  $('mgTitle').textContent='🗿 Le temple perdu';
+  $('mgTitle').textContent='🗿 '+L('Le temple perdu');
   $('mgBody').onclick=null;
   $('mgBody').innerHTML=`${diffBar(d)}${timerHTML}
-    <div class="mzwrap"><canvas id="mzCv" aria-label="Labyrinthe : glisse le doigt pour avancer"></canvas></div>
-    <p class="mzhelp">Glisse le doigt dans une direction : l'explorateur court jusqu'au prochain croisement. Trouve le trésor 💎 !${d>=4?' Attention, le temple est plongé dans le noir : seule ta torche éclaire autour de toi.':''}</p>`;
-  $('mgFoot').innerHTML=`<div class="tools2"><button class="btn" id="mzComp">🧭 Boussole · ${COST.mzCompass} 🪙</button><button class="btn" id="mzTime">⏱ +15 s · ${COST.mzTime} 🪙</button></div><button class="btn ghost" id="mzDone">Retour au jeu</button>`;$('mzDone').onclick=closeMini;
-  $('mzComp').onclick=()=>{const m=mg.mz;if(!m.done&&pay(COST.mzCompass,'la boussole')){m.path=mzPath();m.pathUntil=performance.now()+3500;mgMsg('🧭 Suis les étoiles dorées !')}};
-  $('mzTime').onclick=()=>{if(!mg.mz.done&&pay(COST.mzTime,'du temps en plus')){mg.deadline+=15000;mgMsg('⏱ +15 secondes')}};
+    <div class="mzwrap"><canvas id="mzCv" aria-label="${L('Labyrinthe : glisse le doigt pour avancer')}"></canvas></div>
+    <p class="mzhelp">${L("Glisse le doigt dans une direction : l'explorateur court jusqu'au prochain croisement. Trouve le trésor 💎 !")}${d>=4?' '+L('Attention, le temple est plongé dans le noir : seule ta torche éclaire autour de toi.'):''}</p>`;
+  $('mgFoot').innerHTML=`<div class="tools2"><button class="btn" id="mzComp">🧭 ${L('Boussole')} · ${COST.mzCompass} 🪙</button><button class="btn" id="mzTime">⏱ +15 s · ${COST.mzTime} 🪙</button></div><button class="btn ghost" id="mzDone">${L('Retour au jeu')}</button>`;$('mzDone').onclick=closeMini;
+  $('mzComp').onclick=()=>{const m=mg.mz;if(!m.done&&pay(COST.mzCompass,L('la boussole'))){m.path=mzPath();m.pathUntil=performance.now()+3500;mgMsg(L('🧭 Suis les étoiles dorées !'))}};
+  $('mzTime').onclick=()=>{if(!mg.mz.done&&pay(COST.mzTime,L('du temps en plus'))){mg.deadline+=15000;mgMsg(L('⏱ +{0} secondes',15))}};
   const cv2=$('mzCv');sizeMaze();
   let tx=0,ty=0;
   cv2.addEventListener('touchstart',e=>{e.preventDefault();tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:false});
   cv2.addEventListener('touchmove',e=>{e.preventDefault();const t=e.touches[0],dx=t.clientX-tx,dy=t.clientY-ty;if(Math.hypot(dx,dy)>22){mzSwipe(dx,dy);tx=t.clientX;ty=t.clientY}},{passive:false});
   cv2.addEventListener('mousedown',e=>{tx=e.clientX;ty=e.clientY});
   cv2.addEventListener('mouseup',e=>{const dx=e.clientX-tx,dy=e.clientY-ty;if(Math.hypot(dx,dy)>15)mzSwipe(dx,dy)});
-  mgMsg('Trouve le trésor avant la fin du chrono !');
-  startClock(secs,()=>{if(mg.mz.done)return;mg.mz.done=true;mgMsg('⏰ Le temple s\'est refermé…');setTimeout(()=>{if(mg)finishMini()},1400)});
+  mgMsg(L('Trouve le trésor avant la fin du chrono !'));
+  startClock(secs,()=>{if(mg.mz.done)return;mg.mz.done=true;mgMsg(L("⏰ Le temple s'est refermé…"));setTimeout(()=>{if(mg)finishMini()},1400)});
   requestAnimationFrame(drawMaze);
 }
 // shortest route from the explorer to the treasure (breadth-first search)
@@ -964,7 +1000,7 @@ function mzSwipe(dx,dy){
     if(m.px===m.n-1&&m.py===m.n-1)break;
     const nc=m.W[m.py][m.px];const exits=['n','e','s','w'].filter(k=>!nc[k]).length;if(exits!==2||nc[dir])break;
   }
-  if(moved&&m.px===m.n-1&&m.py===m.n-1){m.done=true;m.won=true;stopTimer();const rw=rewardFor(mg.d>=5?5:mg.d,1);confettiMg();mgMsg('💎 Trésor trouvé ! '+rw);setTimeout(()=>{if(mg)finishMini()},1400)}
+  if(moved&&m.px===m.n-1&&m.py===m.n-1){m.done=true;m.won=true;stopTimer();const rw=rewardFor(mg.d>=5?5:mg.d,1);confettiMg();mgMsg(L('💎 Trésor trouvé !')+' '+rw);setTimeout(()=>{if(mg)finishMini()},1400)}
 }
 function drawMaze(){
   if(!mg||mg.type!=='maze')return;const m=mg.mz,cv2=$('mzCv');if(!cv2)return;const c=cv2.getContext('2d'),s=m.cs,n=m.n,now=performance.now();
@@ -994,49 +1030,49 @@ function motusPool(len){const all=[];for(const t of [1,2,3,4,5])for(const [w] of
 const usedM=new Set();
 function pickMotus(len){let pool=motusPool(len).filter(w=>!usedM.has(w));if(!pool.length){pool=motusPool(len);usedM.clear()}if(!pool.length)pool=motusPool(6);const w=pool[Math.random()*pool.length|0];usedM.add(w);return w}
 function startMotus(){
-  stopTimer();const d=roundDiff();const L=[0,5,6,7,8,9][d];
-  mg.type='motus';mg.d=d;mg.mo={words:[pickMotus(L),pickMotus(L),pickMotus(Math.min(10,L+2))],idx:0,found:0};
-  $('mgTitle').textContent='🟥 Mot mystère';
-  const rows=['AZERTYUIOP','QSDFGHJKLM','WXCVBN'];
-  $('mgFoot').innerHTML=`<div class="kb" id="moKb">${rows.map((r,i)=>`<div class="kb-row">${i===2?'<button class="wide ok" data-k="OK" aria-label="Valider">✓</button>':''}${r.split('').map(l=>`<button data-k="${l}">${l}</button>`).join('')}${i===2?'<button class="wide" data-k="DEL" aria-label="Effacer">⌫</button>':''}</div>`).join('')}</div>
-    <div class="tools2"><button class="btn" id="moLet">🔍 Lettre · ${COST.moLetter} 🪙</button><button class="btn" id="moClean">🧹 Clavier · ${COST.moClean} 🪙</button><button class="btn" id="moTry">➕ Essai · ${COST.moTry} 🪙</button></div>
-    <button class="btn ghost" id="moDone">Retour au jeu</button>`;
-  $('moLet').onclick=()=>{const mo=mg.mo;if(mo.over)return;const known=new Set([0,...mo.rev]);mo.rows.forEach(r=>r.res.forEach((x,i)=>{if(x==='ok')known.add(i)}));const opts=[...mo.w].map((_,i)=>i).filter(i=>!known.has(i));if(!opts.length){mgMsg('Toutes les lettres sont déjà connues');return}if(!pay(COST.moLetter,'une lettre'))return;mo.rev.push(opts[Math.random()*opts.length|0]);moRender();mgMsg('🔍 Une lettre révélée')};
-  $('moClean').onclick=()=>{const mo=mg.mo;if(mo.over)return;const absent=[...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'].filter(l=>!mo.w.includes(l)&&!mo.keys[l]);if(!absent.length){mgMsg('Le clavier est déjà propre');return}if(!pay(COST.moClean,'nettoyer le clavier'))return;shuffleA(absent).slice(0,6).forEach(l=>mo.keys[l]='no');moRender();mgMsg('🧹 6 lettres absentes grisées')};
-  $('moTry').onclick=()=>{const mo=mg.mo;if(mo.over||mo.max>=9)return;if(!pay(COST.moTry,'un essai en plus'))return;mo.max++;moRender();mgMsg('➕ Un essai en plus')};
+  stopTimer();const d=roundDiff();const LEN=[0,5,6,7,8,9][d];
+  mg.type='motus';mg.d=d;mg.mo={words:[pickMotus(LEN),pickMotus(LEN),pickMotus(Math.min(10,LEN+2))],idx:0,found:0};
+  $('mgTitle').textContent='🟥 '+L('Mot mystère');
+  const rows=KB_ROWS;
+  $('mgFoot').innerHTML=`<div class="kb" id="moKb">${rows.map((r,i)=>`<div class="kb-row">${i===2?'<button class="wide ok" data-k="OK" aria-label="'+L('Valider')+'">✓</button>':''}${r.split('').map(l=>`<button data-k="${l}">${l}</button>`).join('')}${i===2?'<button class="wide" data-k="DEL" aria-label="'+L('Effacer')+'">⌫</button>':''}</div>`).join('')}</div>
+    <div class="tools2"><button class="btn" id="moLet">🔍 ${L('Lettre')} · ${COST.moLetter} 🪙</button><button class="btn" id="moClean">🧹 ${L('Clavier')} · ${COST.moClean} 🪙</button><button class="btn" id="moTry">➕ ${L('Essai')} · ${COST.moTry} 🪙</button></div>
+    <button class="btn ghost" id="moDone">${L('Retour au jeu')}</button>`;
+  $('moLet').onclick=()=>{const mo=mg.mo;if(mo.over)return;const known=new Set([0,...mo.rev]);mo.rows.forEach(r=>r.res.forEach((x,i)=>{if(x==='ok')known.add(i)}));const opts=[...mo.w].map((_,i)=>i).filter(i=>!known.has(i));if(!opts.length){mgMsg(L('Toutes les lettres sont déjà connues'));return}if(!pay(COST.moLetter,L('une lettre')))return;mo.rev.push(opts[Math.random()*opts.length|0]);moRender();mgMsg(L('🔍 Une lettre révélée'))};
+  $('moClean').onclick=()=>{const mo=mg.mo;if(mo.over)return;const absent=[...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'].filter(l=>!mo.w.includes(l)&&!mo.keys[l]);if(!absent.length){mgMsg(L('Le clavier est déjà propre'));return}if(!pay(COST.moClean,L('nettoyer le clavier')))return;shuffleA(absent).slice(0,6).forEach(l=>mo.keys[l]='no');moRender();mgMsg(L('🧹 6 lettres absentes grisées'))};
+  $('moTry').onclick=()=>{const mo=mg.mo;if(mo.over||mo.max>=9)return;if(!pay(COST.moTry,L('un essai en plus')))return;mo.max++;moRender();mgMsg(L('➕ Un essai en plus'))};
   $('moKb').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const k=b.dataset.k;k==='OK'?moSubmit():k==='DEL'?moDel():moType(k)});
   $('moDone').onclick=closeMini;$('mgBody').onclick=null;
   moNext();
 }
 function moNext(){const mo=mg.mo,w=mo.words[mo.idx];mo.w=w;mo.max=6;mo.rev=[];mo.flip=-1;mo.rows=[];mo.cur=w[0];mo.keys={};mo.over=false;moRender();
-  mgMsg(`Mot ${mo.idx+1}/3 · ${w.length} lettres${mo.idx===2?' · 🧩 casse-tête':''}`)}
+  mgMsg(L('Mot {0}/3',mo.idx+1)+' · '+L('{0} lettres',w.length)+(mo.idx===2?' · 🧩 '+L('casse-tête'):''))}
 function moEval(g,w){const res=Array(w.length).fill('no'),left={};for(let i=0;i<w.length;i++){if(g[i]===w[i])res[i]='ok';else left[w[i]]=(left[w[i]]||0)+1}
   for(let i=0;i<w.length;i++){if(res[i]!=='ok'&&left[g[i]]){res[i]='mis';left[g[i]]--}}return res}
 function moRender(shake){
-  const mo=mg.mo,w=mo.w,L=w.length;
+  const mo=mg.mo,w=mo.w,LEN=w.length;
   // the first letter is always given, and every well-placed letter found so far is shown on the current line
-  const known=Array(L).fill('');known[0]=w[0];mo.rev.forEach(i=>known[i]=w[i]);mo.rows.forEach(r=>r.res.forEach((x,i)=>{if(x==='ok')known[i]=w[i]}));
-  const rowHTML=(letters,res,cls)=>`<div class="morow ${cls||''}" style="--n:${L}">${Array.from({length:L},(_,i)=>{const ch=letters[i]||'';const st=res?res[i]:'';return `<span class="mocell ${st}" style="--j:${i}"><b>${ch}</b></span>`}).join('')}</div>`;
+  const known=Array(LEN).fill('');known[0]=w[0];mo.rev.forEach(i=>known[i]=w[i]);mo.rows.forEach(r=>r.res.forEach((x,i)=>{if(x==='ok')known[i]=w[i]}));
+  const rowHTML=(letters,res,cls)=>`<div class="morow ${cls||''}" style="--n:${LEN}">${Array.from({length:LEN},(_,i)=>{const ch=letters[i]||'';const st=res?res[i]:'';return `<span class="mocell ${st}" style="--j:${i}"><b>${ch}</b></span>`}).join('')}</div>`;
   let html=diffBar(mg.d)+`<div class="motus"><div class="moscreen">`;
   mo.rows.forEach((r,i)=>html+=rowHTML(r.g,r.res,'done'+(i===mo.flip?' flip':'')));mo.flip=-1;
-  if(!mo.over&&mo.rows.length<mo.max){const letters=Array.from({length:L},(_,i)=>mo.cur[i]||(i>=mo.cur.length&&known[i]?'·'+known[i]:''));
-    html+=`<div class="morow cur ${shake?'bad':''}" style="--n:${L}">${letters.map((ch,i)=>`<span class="mocell ${ch.startsWith('·')?'hint':''}"><b>${ch.replace('·','')}</b></span>`).join('')}</div>`}
+  if(!mo.over&&mo.rows.length<mo.max){const letters=Array.from({length:LEN},(_,i)=>mo.cur[i]||(i>=mo.cur.length&&known[i]?'·'+known[i]:''));
+    html+=`<div class="morow cur ${shake?'bad':''}" style="--n:${LEN}">${letters.map((ch,i)=>`<span class="mocell ${ch.startsWith('·')?'hint':''}"><b>${ch.replace('·','')}</b></span>`).join('')}</div>`}
   for(let i=mo.rows.length+(mo.over?0:1);i<mo.max;i++)html+=rowHTML('',null,'empty');
-  const lastR=mo.rows[mo.rows.length-1];if(lastR){const okN=lastR.res.filter(x=>x==='ok').length,misN=lastR.res.filter(x=>x==='mis').length;html+=`</div></div><p class="mostat">Dernier essai : <span class="r">${okN} bien placée${okN>1?'s':''}</span> · <span class="y">${misN} mal placée${misN>1?'s':''}</span></p><div><div>`}
-  html+=`</div></div><p class="mzhelp">Mot ${mo.idx+1}/3 · essai ${Math.min(mo.max,mo.rows.length+1)}/${mo.max} · <span class="leg ok"></span> bien placé · <span class="leg mis"></span> mal placé</p>`;
+  const lastR=mo.rows[mo.rows.length-1];if(lastR){const okN=lastR.res.filter(x=>x==='ok').length,misN=lastR.res.filter(x=>x==='mis').length;html+=`</div></div><p class="mostat">${L('Dernier essai :')} <span class="r">${L(okN>1?'{0} bien placées':'{0} bien placée',okN)}</span> · <span class="y">${L(misN>1?'{0} mal placées':'{0} mal placée',misN)}</span></p><div><div>`}
+  html+=`</div></div><p class="mzhelp">${L('Mot {0}/3',mo.idx+1)} · ${L('essai {0}/{1}',Math.min(mo.max,mo.rows.length+1),mo.max)} · <span class="leg ok"></span> ${L('bien placé')} · <span class="leg mis"></span> ${L('mal placé')}</p>`;
   $('mgBody').innerHTML=html;
   $('moKb').querySelectorAll('button[data-k]').forEach(b=>{const s=mo.keys[b.dataset.k];b.className=(b.classList.contains('wide')?'wide ':'')+(b.dataset.k==='OK'?'ok ':'')+(s?'k'+s:'')});
 }
-function moType(L){const mo=mg.mo;if(mo.over||mo.cur.length>=mo.w.length)return;mo.cur+=L;moRender()}
+function moType(ch){const mo=mg.mo;if(mo.over||mo.cur.length>=mo.w.length)return;mo.cur+=ch;moRender()}
 function moDel(){const mo=mg.mo;if(mo.over||mo.cur.length<=1)return;mo.cur=mo.cur.slice(0,-1);moRender()}
 function moSubmit(){
-  const mo=mg.mo;if(mo.over)return;if(mo.cur.length<mo.w.length){mgMsg(`Il faut ${mo.w.length} lettres`);moRender(true);return}
+  const mo=mg.mo;if(mo.over)return;if(mo.cur.length<mo.w.length){mgMsg(L('Il faut {0} lettres',mo.w.length));moRender(true);return}
   const res=moEval(mo.cur,mo.w);mo.rows.push({g:mo.cur,res});mo.flip=mo.rows.length-1;
   mo.cur.split('').forEach((ch,i)=>{const r=res[i],p=mo.keys[ch];if(r==='ok'||(r==='mis'&&p!=='ok')||(!p))mo.keys[ch]=r});
   const won=mo.cur===mo.w;
   if(won||mo.rows.length>=mo.max){mo.over=true;moRender();
-    if(won){mo.found++;const t=mo.idx===2?5:Math.min(4,mg.d);const rw=rewardFor(t,mo.found);if(t===5)confettiMg();mgMsg(`Bravo ! Trouvé en ${mo.rows.length} essai${mo.rows.length>1?'s':''} · ${rw}`)}
-    else mgMsg('Perdu ! Le mot était '+mo.w);
+    if(won){mo.found++;const t=mo.idx===2?5:Math.min(4,mg.d);const rw=rewardFor(t,mo.found);if(t===5)confettiMg();mgMsg(L(mo.rows.length>1?'Bravo ! Trouvé en {0} essais':'Bravo ! Trouvé en {0} essai',mo.rows.length)+' · '+rw)}
+    else mgMsg(L('Perdu ! Le mot était {0}',mo.w));
     setTimeout(()=>{if(!mg)return;mo.idx++;if(mo.idx>=3)finishMini();else moNext()},won?1500:2200);return}
   mo.cur=mo.w[0];moRender();
 }
@@ -1052,12 +1088,12 @@ function finishMini(){
   const type=mg.type;mg.round++;const nd=roundDiff();const g=GAMES.find(x=>x.id===type);
   $('mgBody').onclick=null;
   $('mgBody').innerHTML=`<div class="summary"><div class="big">${type==='maze'?(score?'💎':'⏰'):score+' / '+total}</div>
-    <p>${type==='maze'?(score?'Tu es sorti du temple !':'Le chrono a gagné cette fois.'):score===total?'Sans faute ! Bonus parfait : +1 💣 et +1 ↶ en plus.':score>=total/2?'Bien joué !':'Tu feras mieux à la prochaine manche !'}</p>
-    <p>Gagné depuis le début de la pause : <b>+${mg.won.bomb} 💣</b> et <b>+${mg.won.undo} ↶</b>${mg.practice?' (pour ta prochaine partie)':''}</p></div>
+    <p>${type==='maze'?(score?L('Tu es sorti du temple !'):L('Le chrono a gagné cette fois.')):score===total?L('Sans faute ! Bonus parfait : +1 💣 et +1 ↶ en plus.'):score>=total/2?L('Bien joué !'):L('Tu feras mieux à la prochaine manche !')}</p>
+    <p>${L('Gagné depuis le début de la pause : {0} et {1}','<b>+'+mg.won.bomb+' 💣</b>','<b>+'+mg.won.undo+' ↶</b>')}${mg.practice?' '+L('(pour ta prochaine partie)'):''}</p></div>
     ${diffBar(nd)}`;
-  $('mgFoot').innerHTML=`<button class="btn" id="mgAgain">🔁 Encore une manche · niveau ${nd}/5</button>
-    <button class="btn undo" id="mgOther">🎲 Changer de jeu</button>
-    <button class="btn ghost" id="mgBack">${mg.practice?'Retour au menu':'▶ Reprendre la partie'}</button>`;
+  $('mgFoot').innerHTML=`<button class="btn" id="mgAgain">🔁 ${L('Encore une manche')} · ${L('niveau {0}/5',nd)}</button>
+    <button class="btn undo" id="mgOther">🎲 ${L('Changer de jeu')}</button>
+    <button class="btn ghost" id="mgBack">${mg.practice?L('Retour au menu'):L('▶ Reprendre la partie')}</button>`;
   $('mgAgain').onclick=g.start;
   $('mgOther').onclick=showChooser;
   $('mgBack').onclick=closeMini;
@@ -1076,10 +1112,10 @@ let coins=store.get('coins',50);
 const today=()=>new Date().toISOString().slice(0,10);
 // Prix affichés en clair. Les identifiants correspondent aux produits à créer dans App Store Connect.
 const PACKS=[
-  {id:'coins_200',coins:200,price:'0,99 €',label:'Petite bourse'},
-  {id:'coins_600',coins:600,price:'2,49 €',label:'Sac de pièces',tag:'+20 %'},
-  {id:'coins_1500',coins:1500,price:'4,99 €',label:'Coffre',tag:'+50 %'},
-  {id:'coins_4000',coins:4000,price:'9,99 €',label:'Trésor',tag:'+100 %'}
+  {id:'coins_200',coins:200,price:'0,99 €',label:L('Petite bourse')},
+  {id:'coins_600',coins:600,price:'2,49 €',label:L('Sac de pièces'),tag:'+20 %'},
+  {id:'coins_1500',coins:1500,price:'4,99 €',label:L('Coffre'),tag:'+50 %'},
+  {id:'coins_4000',coins:4000,price:'9,99 €',label:L('Trésor'),tag:'+100 %'}
 ];
 const STARTER={id:'starter_pack',price:'1,99 €',coins:500,bombs:3,undos:3};
 const NOADS={id:'no_ads',price:'3,99 €'};
@@ -1089,10 +1125,10 @@ const ADS_PER_DAY=5,AD_COINS=20;
 const IAP_ENABLED=false;
 const COST={bomb:30,undo:30,cont:100,wLetter:20,q50:20,qTime:15,mzCompass:25,mzTime:20,moLetter:20,moClean:15,moTry:30};
 
-function setCoins(v,gain){coins=Math.max(0,v);store.set('coins',coins);document.querySelectorAll('.coinN').forEach(el=>{el.textContent=coins.toLocaleString('fr-FR');if(gain){el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}})}
+function setCoins(v,gain){coins=Math.max(0,v);store.set('coins',coins);document.querySelectorAll('.coinN').forEach(el=>{el.textContent=coins.toLocaleString(LOC);if(gain){el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}})}
 function earn(n,why){setCoins(coins+n,true);if(why)coinToast('+'+n+' 🪙 '+why)}
 // returns true if paid; otherwise opens the shop with what is missing
-function pay(n,what){if(coins>=n){setCoins(coins-n);return true}openShop(`Il te manque ${n-coins} 🪙 pour ${what}.`);return false}
+function pay(n,what){if(coins>=n){setCoins(coins-n);return true}openShop(L('Il te manque {0} 🪙 pour {1}.',n-coins,what));return false}
 function coinToast(t){if(mg&&!mgEl.hidden)mgMsg(t);else toast(t)}
 
 // ---- simulated purchase (in the App Store version, replace by the real in-app purchase) ----
@@ -1109,10 +1145,10 @@ function shopConfirm(id,onDone){
 function adsLeft(){const a=store.get('adsday',{d:'',n:0});return a.d===today()?ADS_PER_DAY-a.n:ADS_PER_DAY}
 function watchAdFor(text,onReward){
   const done=()=>{const a=store.get('adsday',{d:'',n:0});store.set('adsday',a.d===today()?{d:a.d,n:a.n+1}:{d:today(),n:1});onReward()};
-  if(typeof showRewardedAd==='function'){showRewardedAd().then(r=>{if(r===true)done();else if(r===null)simulateAd(text,done);else{toast('Pas de pub disponible : on te l\'offre !');done()}});return}
+  if(typeof showRewardedAd==='function'){showRewardedAd().then(r=>{if(r===true)done();else if(r===null)simulateAd(text,done);else{toast(L("Pas de pub disponible : on te l'offre !"));done()}});return}
   simulateAd(text,done);
 }
-function simulateAd(text,cb){const scr=$('adscreen');$('adReward').textContent='Récompense : '+text;scr.hidden=false;let n=5;$('adCount').textContent=n;
+function simulateAd(text,cb){const scr=$('adscreen');$('adReward').textContent=L('Récompense : {0}',text);scr.hidden=false;let n=5;$('adCount').textContent=n;
   const iv=setInterval(()=>{n--;$('adCount').textContent=n;if(n<=0){clearInterval(iv);scr.hidden=true;cb()}},1000)}
 
 let shopMsg='';
@@ -1121,23 +1157,23 @@ function closeShop(){$('shop').hidden=true}
 function renderShop(){
   const starterDone=store.get('starter',false),noAds=store.get('noads',false),left=adsLeft();
   $('shopBody').innerHTML=`${shopMsg?`<div class="shopmsg">${shopMsg}</div>`:''}
-    <div class="shopbal"><span>Tes pièces</span><b class="coinN">${coins.toLocaleString('fr-FR')}</b><span>🪙</span></div>
-    <button class="shopad" id="shAd" ${left<=0?'disabled':''}><span class="ic">▶</span><span><b>Pièces gratuites</b><span>${left>0?`Regarde une pub : +${AD_COINS} 🪙 (encore ${left} aujourd'hui)`:'Reviens demain pour d\'autres pièces gratuites'}</span></span></button>
-    ${starterDone?'':`<button class="pack starter" data-id="${STARTER.id}"><span class="ic">🎁</span><span class="nm"><b>Pack de départ</b><span>${STARTER.coins} 🪙 + ${STARTER.bombs} 💣 + ${STARTER.undos} ↶ · une seule fois</span></span><span class="pr">${STARTER.price}</span></button>`}
-    <div class="packs">${PACKS.map(p=>`<button class="pack" data-id="${p.id}">${p.tag?`<i class="tag">${p.tag}</i>`:''}<span class="ic">🪙</span><b>${p.coins.toLocaleString('fr-FR')}</b><span class="nm2">${p.label}</span><span class="pr">${p.price}</span></button>`).join('')}</div>
-    ${noAds?'<p class="shopnote">✓ Version sans publicité activée. Merci !</p>':`<button class="pack noads" data-id="${NOADS.id}"><span class="ic">🚫</span><span class="nm"><b>Sans publicité</b><span>Retire la pub plein écran pour toujours</span></span><span class="pr">${NOADS.price}</span></button>`}
-    <div class="shopcost"><b>À quoi servent les pièces ?</b><span>💣 Bombe ${COST.bomb} · ↶ Retour ${COST.undo} · Continuer après une défaite ${COST.cont}</span><span>Jeux bonus : lettres, 50/50, temps en plus, boussole, essai en plus…</span></div>
-    <p class="shopnote">Les prix sont en euros, TTC. Les achats sont facultatifs : tout le jeu se joue sans payer.</p>
-    <button class="btn ghost" id="shRestore" style="font-size:.85rem;padding:9px">Restaurer mes achats</button>`;
+    <div class="shopbal"><span>${L('Tes pièces')}</span><b class="coinN">${coins.toLocaleString(LOC)}</b><span>🪙</span></div>
+    <button class="shopad" id="shAd" ${left<=0?'disabled':''}><span class="ic">▶</span><span><b>${L('Pièces gratuites')}</b><span>${left>0?L("Regarde une pub : +{0} 🪙 (encore {1} aujourd'hui)",AD_COINS,left):L("Reviens demain pour d'autres pièces gratuites")}</span></span></button>
+    ${starterDone?'':`<button class="pack starter" data-id="${STARTER.id}"><span class="ic">🎁</span><span class="nm"><b>${L('Pack de départ')}</b><span>${STARTER.coins} 🪙 + ${STARTER.bombs} 💣 + ${STARTER.undos} ↶ · ${L('une seule fois')}</span></span><span class="pr">${STARTER.price}</span></button>`}
+    <div class="packs">${PACKS.map(p=>`<button class="pack" data-id="${p.id}">${p.tag?`<i class="tag">${p.tag}</i>`:''}<span class="ic">🪙</span><b>${p.coins.toLocaleString(LOC)}</b><span class="nm2">${p.label}</span><span class="pr">${p.price}</span></button>`).join('')}</div>
+    ${noAds?'<p class="shopnote">'+L('✓ Version sans publicité activée. Merci !')+'</p>':`<button class="pack noads" data-id="${NOADS.id}"><span class="ic">🚫</span><span class="nm"><b>${L('Sans publicité')}</b><span>${L('Retire la pub plein écran pour toujours')}</span></span><span class="pr">${NOADS.price}</span></button>`}
+    <div class="shopcost"><b>${L('À quoi servent les pièces ?')}</b><span>💣 ${L('Bombe')} ${COST.bomb} · ↶ ${L('Retour')} ${COST.undo} · ${L('Continuer après une défaite')} ${COST.cont}</span><span>${L('Jeux bonus : lettres, 50/50, temps en plus, boussole, essai en plus…')}</span></div>
+    <p class="shopnote">${L('Les achats sont facultatifs : tout le jeu se joue sans payer.')}</p>
+    <button class="btn ghost" id="shRestore" style="font-size:.85rem;padding:9px">${L('Restaurer mes achats')}</button>`;
   // Achats intégrés désactivés pour la 1re version : seules les pièces gagnées en jouant et les pubs sont proposées
-  if(!IAP_ENABLED){$('shopBody').querySelectorAll('.pack,.packs,#shRestore').forEach(e=>e.remove());const n=$('shopBody').querySelector('.shopnote:last-of-type');if(n)n.textContent='Gagne des pièces en jouant, avec le cadeau du jour, les défis et les jeux bonus.'}
-  const rs=$('shRestore');if(rs)rs.onclick=()=>{if(typeof window.restorePurchases==='function')window.restorePurchases().then(()=>{shopMsg='Achats restaurés.';renderShop()});else{shopMsg='Rien à restaurer dans ce prototype.';renderShop()}};
+  if(!IAP_ENABLED){$('shopBody').querySelectorAll('.pack,.packs,#shRestore').forEach(e=>e.remove());const n=$('shopBody').querySelector('.shopnote:last-of-type');if(n)n.textContent=L('Gagne des pièces en jouant, avec le cadeau du jour, les défis et les jeux bonus.')}
+  const rs=$('shRestore');if(rs)rs.onclick=()=>{if(typeof window.restorePurchases==='function')window.restorePurchases().then(()=>{shopMsg=L('Achats restaurés.');renderShop()});else{shopMsg=L('Rien à restaurer.');renderShop()}};
   const ad=$('shAd');if(ad)ad.onclick=()=>watchAdFor(`+${AD_COINS} 🪙`,()=>{earn(AD_COINS);renderShop()});
   $('shopBody').querySelectorAll('.pack').forEach(b=>b.onclick=()=>{const id=b.dataset.id;
     purchase(id,()=>{
-      if(id===STARTER.id){store.set('starter',true);setCoins(coins+STARTER.coins,true);store.set('pendingBonus',{b:STARTER.bombs,u:STARTER.undos});applyPending();shopMsg='🎁 Pack de départ ajouté !'}
-      else if(id===NOADS.id){store.set('noads',true);applyNoAds();shopMsg='🚫 Pub plein écran retirée.'}
-      else{const p=PACKS.find(x=>x.id===id);setCoins(coins+p.coins,true);shopMsg=`+${p.coins.toLocaleString('fr-FR')} 🪙 ajoutées !`}
+      if(id===STARTER.id){store.set('starter',true);setCoins(coins+STARTER.coins,true);store.set('pendingBonus',{b:STARTER.bombs,u:STARTER.undos});applyPending();shopMsg=L('🎁 Pack de départ ajouté !')}
+      else if(id===NOADS.id){store.set('noads',true);applyNoAds();shopMsg=L('🚫 Pub plein écran retirée.')}
+      else{const p=PACKS.find(x=>x.id===id);setCoins(coins+p.coins,true);shopMsg=L('+{0} 🪙 ajoutées !',F(p.coins))}
     })});
 }
 // bombs/undos bought outside a game wait for the next game
@@ -1151,9 +1187,9 @@ function checkDaily(){
   const y=new Date(Date.now()-864e5).toISOString().slice(0,10);
   const streak=d.last===y?d.streak%7+1:1;
   $('shop').hidden=false;
-  $('shopBody').innerHTML=`<div class="daily"><div class="big">🎁</div><h3>Cadeau du jour</h3><p>Reviens chaque jour pour des cadeaux de plus en plus gros. Un jour manqué, et le calendrier repart au jour 1.</p>
-    <div class="cal">${DAILY.map((c,i)=>`<div class="day ${i+1<streak?'got':i+1===streak?'now':''}"><span>J${i+1}</span><b>${c}</b><span>🪙</span></div>`).join('')}</div>
-    <button class="btn reward" id="dGet">Récupérer ${DAILY[streak-1]} 🪙</button></div>`;
+  $('shopBody').innerHTML=`<div class="daily"><div class="big">🎁</div><h3>${L('Cadeau du jour')}</h3><p>${L('Reviens chaque jour pour des cadeaux de plus en plus gros. Un jour manqué, et le calendrier repart au jour 1.')}</p>
+    <div class="cal">${DAILY.map((c,i)=>`<div class="day ${i+1<streak?'got':i+1===streak?'now':''}"><span>${L('J{0}',i+1)}</span><b>${c}</b><span>🪙</span></div>`).join('')}</div>
+    <button class="btn reward" id="dGet">${L('Récupérer {0}',DAILY[streak-1])} 🪙</button></div>`;
   $('dGet').onclick=()=>{store.set('daily',{last:t,streak});earn(DAILY[streak-1]);closeShop()};
 }
 

@@ -1,0 +1,10 @@
+# La fonction de traduction s'appelle L : on renomme les variables locales L du jeu pour éviter le conflit.
+R("const d=roundDiff();const L=[0,5,6,7,8,9][d];","const d=roundDiff();const LEN=[0,5,6,7,8,9][d];")
+R("mg.mo={words:[pickMotus(L),pickMotus(L),pickMotus(Math.min(10,L+2))]","mg.mo={words:[pickMotus(LEN),pickMotus(LEN),pickMotus(Math.min(10,LEN+2))]")
+R("w=mo.w,L=w.length","w=mo.w,LEN=w.length")
+R('style="--n:${L}"','style="--n:${LEN}"',2)
+R("{length:L}","{length:LEN}",2)
+R("function moType(L){const mo=mg.mo;if(mo.over||mo.cur.length>=mo.w.length)return;mo.cur+=L;moRender()}","function moType(ch){const mo=mg.mo;if(mo.over||mo.cur.length>=mo.w.length)return;mo.cur+=ch;moRender()}")
+R("Array(L).fill('')","Array(LEN).fill('')")
+R("function wType(L){","function wType(ch){")
+R("wd.cells[j]=L;renderWords();","wd.cells[j]=ch;renderWords();")

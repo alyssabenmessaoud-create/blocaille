@@ -25,6 +25,7 @@ workflows:
           cd app
           [ -d ios ] || npx cap add ios
           node scripts/configure-native.mjs
+          node scripts/add-ios-languages.mjs
           npx capacitor-assets generate --ios --iconBackgroundColor '#a43dff' --splashBackgroundColor '#a43dff'
           npx cap sync ios
       - name: Signature
