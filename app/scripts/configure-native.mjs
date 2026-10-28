@@ -5,7 +5,7 @@ import fs from 'node:fs';
 
 const ADMOB_APP_ID_IOS = 'ca-app-pub-5323738460279716~9326598703';     // réel
 // Numéro de version affiché sur les stores (à augmenter à chaque nouvelle version)
-const APP_VERSION = '1.2.0';
+const APP_VERSION = '1.3.0';
 const ADMOB_APP_ID_ANDROID = 'ca-app-pub-5323738460279716~8876006710'; // réel
 
 // --- iOS : Info.plist ---

@@ -649,7 +649,7 @@ function loop(t){
 function showCard(html){$('card').innerHTML=html;$('overlay').hidden=false}
 function start(){reset();state='play';$('overlay').hidden=true;$('pauseBtn').textContent='❚❚'}
 // écran d'accueil : choisir entre les blocs et les jeux bonus
-function showHome(){state='menu';grid=newGrid();hint=null;$('pauseBtn').textContent='❚❚';showCard(HOME_HTML);bindHome()}
+function showHome(){setTimeout(maybeInterstitial,800);state='menu';grid=newGrid();hint=null;$('pauseBtn').textContent='❚❚';showCard(HOME_HTML);bindHome()}
 function bindHome(){
   $('best').textContent=L('Record : {0}',F(best));
   $('startBtn').onclick=start;
@@ -661,7 +661,7 @@ function bindHome(){
   $('langList').querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{if(b.dataset.lang!==LANG)setLang(b.dataset.lang);else $('langList').hidden=true});
 }
 function gameOver(){
-  state='over';touching=false;
+  state='over';touching=false;setTimeout(maybeInterstitial,800);
   if(score>best){best=score;try{localStorage.setItem('blocaille_best',best)}catch(e){}}
   const canUndo=history.length>0;
   showCard('<h2>'+L('Partie terminée')+'</h2><p>'+L('Score : {0}','<b>'+F(score)+'</b>')+'<br>'+L('Record : {0}',F(best))+'</p>'+
@@ -683,8 +683,8 @@ function gameOver(){
 // Remplacez les identifiants de TEST ci-dessous par les vôtres (console AdMob) avant la publication.
 const ADS_CONFIG={
   testing:false, // ← remettre true pour tester sans risque
-  ios:{banner:'ca-app-pub-5323738460279716/5387353691',rewarded:'ca-app-pub-5323738460279716/7638287527'},
-  android:{banner:'ca-app-pub-5323738460279716/7779467330',rewarded:'ca-app-pub-5323738460279716/8413892153'}
+  ios:{banner:'ca-app-pub-5323738460279716/5387353691',rewarded:'ca-app-pub-5323738460279716/7638287527',interstitial:'ca-app-pub-5323738460279716/9756236281',rewardedInterstitial:'ca-app-pub-5323738460279716/3391968481'},
+  android:{banner:'ca-app-pub-5323738460279716/7779467330',rewarded:'ca-app-pub-5323738460279716/8413892153',interstitial:'ca-app-pub-5323738460279716/9694984548',rewardedInterstitial:'ca-app-pub-5323738460279716/3275634598'}
 };
 const Cap=window.Capacitor;
 const AdMob=Cap&&Cap.isNativePlatform&&Cap.isNativePlatform()&&Cap.Plugins&&Cap.Plugins.AdMob;
@@ -712,14 +712,31 @@ async function initAds(){
     await AdMob.showBanner({adId:adIds.banner,adSize:'BANNER',position:'BOTTOM_CENTER',margin:0,isTesting:ADS_CONFIG.testing});
   }catch(e){console.warn('Pub indisponible',e);document.documentElement.style.setProperty('--nad','0px')}
 }
-async function showRewardedAd(){
+async function showRewardedAd(alt){
   if(!AdMob)return null; // null = navigateur, on simule
   if(!adsReady)return false;
   try{
+    if(alt){
+      try{
+        await AdMob.prepareRewardInterstitialAd({adId:adIds.rewardedInterstitial,isTesting:ADS_CONFIG.testing});
+        const r=await AdMob.showRewardInterstitialAd();
+        lastInter=Date.now();
+        return !!r;
+      }catch(e){console.warn('Interstitiel récompensé indisponible, vidéo à la place',e)}
+    }
     await AdMob.prepareRewardVideoAd({adId:adIds.rewarded,isTesting:ADS_CONFIG.testing});
     const reward=await AdMob.showRewardVideoAd();
+    lastInter=Date.now();
     return !!reward;
   }catch(e){console.warn(e);return false}
+}
+// pub plein écran toutes les 3 minutes, seulement à un moment calme (fin de partie, retour à l'accueil)
+let lastInter=Date.now(),rewardedCount=0;
+const INTER_EVERY=180000;
+async function maybeInterstitial(){
+  if(!AdMob||!adsReady||window.noAds||Date.now()-lastInter<INTER_EVERY)return;
+  lastInter=Date.now();
+  try{await AdMob.prepareInterstitial({adId:adIds.interstitial,isTesting:ADS_CONFIG.testing});await AdMob.showInterstitial()}catch(e){console.warn('Interstitiel indisponible',e)}
 }
 initAds();
 function giveContinue(){
@@ -1217,7 +1234,7 @@ function shopConfirm(id,onDone){
 function adsLeft(){const a=store.get('adsday',{d:'',n:0});return a.d===today()?ADS_PER_DAY-a.n:ADS_PER_DAY}
 function watchAdFor(text,onReward){
   const done=()=>{const a=store.get('adsday',{d:'',n:0});store.set('adsday',a.d===today()?{d:a.d,n:a.n+1}:{d:today(),n:1});onReward()};
-  if(typeof showRewardedAd==='function'){showRewardedAd().then(r=>{if(r===true)done();else if(r===null)simulateAd(text,done);else{toast(L("Pas de pub disponible : on te l'offre !"));done()}});return}
+  if(typeof showRewardedAd==='function'){showRewardedAd(++rewardedCount%2===0).then(r=>{if(r===true)done();else if(r===null)simulateAd(text,done);else{toast(L("Pas de pub disponible : on te l'offre !"));done()}});return}
   simulateAd(text,done);
 }
 function simulateAd(text,cb){const scr=$('adscreen');$('adReward').textContent=L('Récompense : {0}',text);scr.hidden=false;let n=5;$('adCount').textContent=n;
