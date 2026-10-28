@@ -187,5 +187,21 @@
 "Boutique":"Shop",
 "Réserve : mettre la pièce de côté":"Hold: set the piece aside",
 "Annuler le dernier coup":"Undo last move",
-"Fermer":"Close"
+"Fermer":"Close",
+"Vitesse de descente : x{0}":"Drop speed: x{0}",
+"💣 {0} lignes : une bombe offerte !":"💣 {0} lines: free bomb!",
+"💣 Bombe rangée":"💣 Bomb put away",
+"💣 Vise avec le doigt, lâche pour exploser":"💣 Aim with your finger, let go to explode",
+"🏠 Menu":"🏠 Menu",
+"💣 Touche la grille pour viser":"💣 Touch the grid to aim",
+"Jouer aux blocs":"Play blocks",
+"Vitesse":"Speed",
+"Empile les pièces et efface des lignes.":"Stack the pieces and clear lines.",
+"Mots, quiz, labyrinthe et mot mystère.":"Words, quiz, maze and mystery word.",
+"❓ Comment jouer":"❓ How to play",
+"<b>Rester appuyé</b> sans bouger : la pièce descend à toute vitesse.":"<b>Press and hold</b> without moving: the piece drops at full speed.",
+"<b>Vitesse</b> : touche x1 pour faire tomber les pièces 2 ou 3 fois plus vite.":"<b>Speed</b>: tap x1 to make pieces fall 2 or 3 times faster.",
+"<b>Bombe</b> : vise avec le doigt et lâche pour faire exploser toute la zone rouge. Une bombe offerte à 60, 120 et 160 lignes.":"<b>Bomb</b>: aim with your finger and let go to blow up the whole red area. A free bomb at 60, 120 and 160 lines.",
+"<b>🎁</b> : passe aux jeux bonus à tout moment, puis reprends ta partie.":"<b>🎁</b>: switch to the bonus games at any time, then resume your game.",
+"Vitesse de descente":"Drop speed"
 }

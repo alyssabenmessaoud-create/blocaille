@@ -187,5 +187,21 @@
 "Boutique":"Loja",
 "Réserve : mettre la pièce de côté":"Reserva: guardar a peça",
 "Annuler le dernier coup":"Desfazer a última jogada",
-"Fermer":"Fechar"
+"Fermer":"Fechar",
+"Vitesse de descente : x{0}":"Velocidade de queda: x{0}",
+"💣 {0} lignes : une bombe offerte !":"💣 {0} linhas: bomba de presente!",
+"💣 Bombe rangée":"💣 Bomba guardada",
+"💣 Vise avec le doigt, lâche pour exploser":"💣 Mire com o dedo e solte para explodir",
+"🏠 Menu":"🏠 Menu",
+"💣 Touche la grille pour viser":"💣 Toque na grade para mirar",
+"Jouer aux blocs":"Jogar com os blocos",
+"Vitesse":"Velocidade",
+"Empile les pièces et efface des lignes.":"Empilhe as peças e apague linhas.",
+"Mots, quiz, labyrinthe et mot mystère.":"Palavras, quiz, labirinto e palavra secreta.",
+"❓ Comment jouer":"❓ Como jogar",
+"<b>Rester appuyé</b> sans bouger : la pièce descend à toute vitesse.":"<b>Segure</b> sem mexer: a peça desce a toda velocidade.",
+"<b>Vitesse</b> : touche x1 pour faire tomber les pièces 2 ou 3 fois plus vite.":"<b>Velocidade</b>: toque em x1 para as peças caírem 2 ou 3 vezes mais rápido.",
+"<b>Bombe</b> : vise avec le doigt et lâche pour faire exploser toute la zone rouge. Une bombe offerte à 60, 120 et 160 lignes.":"<b>Bomba</b>: mire com o dedo e solte para explodir toda a zona vermelha. Uma bomba de presente com 60, 120 e 160 linhas.",
+"<b>🎁</b> : passe aux jeux bonus à tout moment, puis reprends ta partie.":"<b>🎁</b>: vá para os jogos bônus quando quiser e depois volte à sua partida.",
+"Vitesse de descente":"Velocidade de queda"
 }

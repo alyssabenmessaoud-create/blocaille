@@ -187,5 +187,21 @@
 "Boutique":"Negozio",
 "Réserve : mettre la pièce de côté":"Riserva: metti da parte il pezzo",
 "Annuler le dernier coup":"Annulla l'ultima mossa",
-"Fermer":"Chiudi"
+"Fermer":"Chiudi",
+"Vitesse de descente : x{0}":"Velocità di caduta: x{0}",
+"💣 {0} lignes : une bombe offerte !":"💣 {0} righe: bomba in regalo!",
+"💣 Bombe rangée":"💣 Bomba rimessa via",
+"💣 Vise avec le doigt, lâche pour exploser":"💣 Mira con il dito, lascia per farla esplodere",
+"🏠 Menu":"🏠 Menu",
+"💣 Touche la grille pour viser":"💣 Tocca la griglia per mirare",
+"Jouer aux blocs":"Gioca ai blocchi",
+"Vitesse":"Velocità",
+"Empile les pièces et efface des lignes.":"Impila i pezzi e cancella le righe.",
+"Mots, quiz, labyrinthe et mot mystère.":"Parole, quiz, labirinto e parola misteriosa.",
+"❓ Comment jouer":"❓ Come si gioca",
+"<b>Rester appuyé</b> sans bouger : la pièce descend à toute vitesse.":"<b>Tieni premuto</b> senza muoverti: il pezzo scende a tutta velocità.",
+"<b>Vitesse</b> : touche x1 pour faire tomber les pièces 2 ou 3 fois plus vite.":"<b>Velocità</b>: tocca x1 per far cadere i pezzi 2 o 3 volte più veloci.",
+"<b>Bombe</b> : vise avec le doigt et lâche pour faire exploser toute la zone rouge. Une bombe offerte à 60, 120 et 160 lignes.":"<b>Bomba</b>: mira con il dito e lascia per far esplodere tutta la zona rossa. Una bomba in regalo a 60, 120 e 160 righe.",
+"<b>🎁</b> : passe aux jeux bonus à tout moment, puis reprends ta partie.":"<b>🎁</b>: passa ai giochi bonus quando vuoi, poi riprendi la partita.",
+"Vitesse de descente":"Velocità di caduta"
 }

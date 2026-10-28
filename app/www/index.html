@@ -34,13 +34,16 @@ h1 span{display:inline-block;color:var(--c);text-shadow:0 3px 0 var(--deep),0 0 
 @keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-5px) rotate(3deg)}}
 .icon-btn{background:var(--yellow);border:0;color:var(--deep);border-radius:14px;width:42px;height:42px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 0 #b88f00;transition:transform .1s}
 .icon-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #b88f00}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.stats{display:grid;grid-template-columns:1.45fr 1fr 1fr .85fr;gap:6px}
 .stat{border-radius:14px;padding:5px 10px;background:var(--bgc);box-shadow:0 4px 0 var(--sh),inset 0 2px 0 rgba(255,255,255,.4);text-shadow:0 2px 0 rgba(0,0,0,.2)}
 .stat span{display:block;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;opacity:.9}
 .stat b{font-family:var(--display);font-weight:400;font-size:1.15rem;font-variant-numeric:tabular-nums;display:inline-block}
 .stat b.pop{animation:pop .35s ease}
 @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.35) rotate(-4deg)}100%{transform:scale(1)}}
-.s1{--bgc:var(--pink);--sh:#b0145a}.s2{--bgc:var(--orange);--sh:#b35800}.s3{--bgc:var(--cyan);--sh:#0089a8}
+.s1{--bgc:var(--pink);--sh:#b0145a}.s2{--bgc:var(--orange);--sh:#b35800}.s3{--bgc:var(--cyan);--sh:#0089a8}.s4{--bgc:var(--green);--sh:#139c42}
+button.stat{border:0;color:inherit;font-family:inherit;text-align:left;cursor:pointer;transition:transform .1s}
+button.stat:active{transform:translateY(3px);box-shadow:0 1px 0 var(--sh)}
+.spd.x2{--bgc:var(--orange);--sh:#b35800}.spd.x3{--bgc:#ff3d3d;--sh:#a31010}
 .challenge{position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;background:#fff;color:var(--deep);border-radius:14px;padding:7px 10px;font-size:.88rem;font-weight:600;box-shadow:0 4px 0 rgba(42,10,74,.35)}
 .challenge::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-50%;background:linear-gradient(100deg,transparent,rgba(255,214,10,.55),transparent);animation:shine 3s ease-in-out infinite}
 @keyframes shine{0%{left:-50%}60%,100%{left:120%}}
@@ -77,7 +80,12 @@ h1 span{display:inline-block;color:var(--c);text-shadow:0 3px 0 var(--deep),0 0 
 .card li b{color:var(--pink);font-weight:600}
 .btn{font-family:var(--display);font-weight:400;font-size:1rem;border:0;border-radius:14px;padding:13px 16px;cursor:pointer;background:var(--orange);color:#fff;box-shadow:0 5px 0 #b35800;text-shadow:0 2px 0 rgba(0,0,0,.2);transition:transform .1s}
 .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #b35800}
-#startBtn{animation:pulse 1.2s ease-in-out infinite}
+#startBtn{animation:pulse 1.6s ease-in-out infinite}
+.card .choice{padding:12px;gap:12px;box-shadow:0 5px 0 rgba(42,10,74,.25),0 0 0 2px #eadcff}
+.card .choice .ic{width:50px;height:50px;font-size:1.9rem}
+.card .choice b{font-size:1rem}.card .choice span{font-size:.8rem}
+#rulesBtn{padding:8px 14px;font-size:.85rem;font-family:var(--ui);font-weight:600}
+.overlay .card{max-height:calc(100% - 8px);overflow-y:auto;touch-action:pan-y}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
 .btn.ghost{background:var(--cyan);box-shadow:0 5px 0 #0089a8}
 .btn.reward{background:var(--green);box-shadow:0 5px 0 #139c42}
@@ -258,6 +266,7 @@ button:focus-visible{outline:3px solid #fff;outline-offset:2px}
     <div class="stat s1"><span data-l>Score</span><b id="score">0</b></div>
     <div class="stat s2"><span data-l>Niveau</span><b id="level">1</b></div>
     <div class="stat s3"><span data-l>Lignes</span><b id="lines">0</b></div>
+    <button class="stat s4 spd" id="spdBtn" aria-label="Vitesse de descente"><span data-l>Vitesse</span><b id="spdN">x1</b></button>
   </div>
   <div class="challenge" id="chBox"><span class="tag" data-l>Défi</span><span class="txt" id="chTxt">—</span><span class="rw" id="chRw"></span></div>
   <div class="powers">
@@ -272,17 +281,21 @@ button:focus-visible{outline:3px solid #fff;outline-offset:2px}
     <div class="overlay" id="overlay">
       <div class="card" id="card">
         <h2>Blocaille</h2>
-        <ul>
+        <p id="best"></p>
+        <button class="choice" id="startBtn"><span class="ic" style="--bgc:var(--purple)">🧱</span><span><b data-l>Jouer aux blocs</b><span data-l>Empile les pièces et efface des lignes.</span></span></button>
+        <button class="choice" id="tryBonus"><span class="ic" style="--bgc:var(--pink)">🎁</span><span><b data-l>Jeux bonus</b><span data-l>Mots, quiz, labyrinthe et mot mystère.</span></span></button>
+        <button class="btn ghost" id="rulesBtn" data-l>❓ Comment jouer</button>
+        <ul class="rules" id="rules" hidden>
           <li data-l><b>Glisser le doigt</b> : la pièce suit, même posée au fond, tant que tu n'as pas lâché.</li>
+          <li data-l><b>Rester appuyé</b> sans bouger : la pièce descend à toute vitesse.</li>
           <li data-l><b>Toucher</b> (ou un 2ᵉ doigt pendant le glissé) : tourner.</li>
           <li data-l><b>Lâcher</b> : la pièce se pose.</li>
+          <li data-l><b>Vitesse</b> : touche x1 pour faire tomber les pièces 2 ou 3 fois plus vite.</li>
           <li data-l><b>Réserve</b> : garde une pièce de côté et échange-la plus tard.</li>
-          <li data-l><b>Bombe</b> : fait exploser un carré de 3×3 cases.</li>
+          <li data-l><b>Bombe</b> : vise avec le doigt et lâche pour faire exploser toute la zone rouge. Une bombe offerte à 60, 120 et 160 lignes.</li>
           <li data-l><b>Retour</b> : annule ton dernier coup.</li>
+          <li data-l><b>🎁</b> : passe aux jeux bonus à tout moment, puis reprends ta partie.</li>
         </ul>
-        <p id="best"></p>
-        <button class="btn" id="startBtn" data-l>Jouer</button>
-        <button class="btn ghost" id="tryBonus" data-l>🎁 Essayer les jeux bonus</button>
         <button class="btn ghost" id="langBtn"></button>
         <div id="langList" class="langlist" hidden></div>
         <p style="font-size:.78rem" data-l>Tous les 5 niveaux, une pause bonus : mots à trouver ou quiz de culture générale pour gagner des bombes et des retours.</p>
@@ -368,9 +381,14 @@ const RW_LABEL={bomb:L('+1 bombe'),bomb2:L('+2 bombes'),undo:L('+1 retour')};
 const $=id=>document.getElementById(id);
 const cv=$('board'), ctx=cv.getContext('2d');
 let grid, cur, next, hold, holdUsed, resume, bag=[], score, lines, level, bombs, undos, history, chIdx, stats;
+let bombGifts=new Set();
 let best=0, state='menu', dropAcc=0, last=0, cell=20, usedReward=false, vis={x:0,y:0}, particles=[], flashes=[], floats=[], hint=null, bonusPending=false, carry={bomb:0,undo:0};
 try{best=+localStorage.getItem('blocaille_best')||0}catch(e){}
-$('best').textContent=L('Record : {0}',F(best));
+const HOME_HTML=$('card').innerHTML;
+// bombe : explose dans un rond de 5×5 cases (sans les 4 coins) autour de la case visée
+const BLAST=[];for(let r=-2;r<=2;r++)for(let c=-2;c<=2;c++)if(Math.abs(r)+Math.abs(c)<4)BLAST.push([c,r]);
+// une bombe offerte quand le total de lignes atteint ces paliers
+const BOMB_AT=[60,120,160];
 
 const newGrid=()=>Array.from({length:ROWS},()=>Array(COLS).fill(null));
 const cloneGrid=g=>g.map(r=>r.slice());
@@ -397,7 +415,13 @@ function bestPlacement(p){
   }
   return best;
 }
-const speed=()=>Math.max(140,1000-(level-1)*55);
+// vitesse de descente choisie par le joueur (x1 = normale), gardée d'une partie à l'autre
+const SPEEDS=[1,2,3];let speedMul=1;
+try{const v=+localStorage.getItem('blocaille_speed');if(SPEEDS.includes(v))speedMul=v}catch(e){}
+const speed=()=>Math.max(140,1000-(level-1)*55)/speedMul;
+function setSpeed(n){speedMul=n;try{localStorage.setItem('blocaille_speed',n)}catch(e){}
+  const b=$('spdBtn');b.classList.toggle('x2',n===2);b.classList.toggle('x3',n===3);$('spdN').textContent='x'+n}
+function cycleSpeed(){setSpeed(SPEEDS[(SPEEDS.indexOf(speedMul)+1)%SPEEDS.length]);toast(L('Vitesse de descente : x{0}',speedMul))}
 // Friendly piece picker: score every piece type on a grid and pick among the ones that fit best
 let recent=[];
 function smartPick(g){
@@ -421,7 +445,7 @@ function gridAfter(p){
 
 function reset(){
   grid=newGrid();score=0;lines=0;level=1;bombs=1+carry.bomb;undos=2+carry.undo;carry={bomb:0,undo:0};bonusPending=false;history=[];chIdx=0;hold=null;holdUsed=false;resume=null;
-  stats={lines:0,best:0,score:0,bombs:0,holds:0,level:1};usedReward=false;bag=[];
+  stats={lines:0,best:0,score:0,bombs:0,holds:0,level:1};usedReward=false;bag=[];bombGifts=new Set();
   recent=[];const first=make(smartPick(grid));next=make(smartPick(gridAfter(first)));setCur(first);hud();
 }
 function setCur(p){cur=p;vis.x=p.x;vis.y=p.y;dropAcc=0;hint=(p.t!=='B'&&Math.random()<1/3)?bestPlacement(p):null;if(hint)toast(L("★ Conseil : place-la sur l'étoile"));
@@ -441,17 +465,18 @@ function lock(){
   cur.m.forEach((row,r)=>row.forEach((v,c)=>{if(v){placed.push([cur.x+c,cur.y+r]);if(cur.y+r>=0)grid[cur.y+r][cur.x+c]=cur.t}}));
   if(placed.some(([,y])=>y<0)){gameOver();return}
   if(cur.t==='B'){explode(cur.x,cur.y);stats.bombs++}
-  let cleared=0;
+  let cleared=0;const prevLines=lines;
   for(let r=ROWS-1;r>=0;r--){if(grid[r].every(Boolean)){burstRow(r);grid.splice(r,1);grid.unshift(Array(COLS).fill(null));cleared++;r++}}
   if(cleared){const pts=[0,100,300,500,800][cleared]*level;const lowest=placed.reduce((m,[,y])=>Math.max(m,y),0);
     floatText(['','+'+pts,L('DOUBLE !'),L('TRIPLE !'),L('MÉGA !')][cleared],Math.min(ROWS-2,lowest),Math.round(cell*(cleared>1?1.4:1)));if(cleared>1){shake();confetti(cleared*12)}
     score+=pts;lines+=cleared;setCoins(coins+cleared*2,true);const nl=1+Math.floor(lines/10);if(nl>level&&Math.floor(nl/5)>Math.floor(level/5))bonusPending=true;if(nl>level){setTimeout(()=>{floatText(L('NIVEAU {0}',nl),8,Math.round(cell*1.2));confetti(40)},450)}level=nl;stats.best=Math.max(stats.best,cleared)}
   stats.lines=lines;stats.score=score;stats.level=level;
+  for(const m of BOMB_AT)if(prevLines<m&&lines>=m&&!bombGifts.has(m)){bombGifts.add(m);bombs++;confetti(30);setTimeout(()=>toast(L('💣 {0} lignes : une bombe offerte !',m)),900)}
   checkChallenge();spawn();
   if(bonusPending&&state==='play'){bonusPending=false;state='bonus';touching=false;primary=null;mouseDown=false;setTimeout(()=>openChooser(Math.floor(level/5),false),1100)}
 }
 function explode(x,y){
-  for(let r=y-1;r<=y+1;r++)for(let c=x-1;c<=x+1;c++){if(r>=0&&r<ROWS&&c>=0&&c<COLS){if(grid[r][c])addParticles(c,r,grid[r][c]==='B'?'#ffcf5a':COLORS[grid[r][c]],6);grid[r][c]=null}}
+  for(const [dc,dr] of BLAST){const r=y+dr,c=x+dc;if(r>=0&&r<ROWS&&c>=0&&c<COLS){if(grid[r][c])addParticles(c,r,grid[r][c]==='B'?'#ffcf5a':COLORS[grid[r][c]],6);grid[r][c]=null}}
   score+=50;shake();floatText(L('BOUM !'),y,Math.round(cell*1.4));
 }
 function addParticles(c,r,col,n,big){for(let i=0;i<n;i++)particles.push({x:(c+.5)*cell,y:(r+.5)*cell,vx:(Math.random()-.5)*(big?10:7),vy:(Math.random()-.85)*(big?11:7),life:1,col,rot:Math.random()*6,vr:(Math.random()-.5)*.3,big})}
@@ -475,9 +500,9 @@ function currentCh(){
 }
 let toastT;function toast(t){const el=$('toast');el.textContent=t;el.hidden=false;el.style.opacity=1;el.classList.remove('show');void el.offsetWidth;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>{el.style.opacity=0;setTimeout(()=>el.hidden=true,300)},1800)}
 
-function move(dx){if(state==='play'&&fits(cur.m,cur.x+dx,cur.y))cur.x+=dx}
-function rotate(){if(state!=='play'||cur.t==='O'||cur.t==='B')return;const m=rot(cur.m);for(const k of [0,-1,1,-2,2]){if(fits(m,cur.x+k,cur.y)){cur.m=m;cur.x+=k;return}}}
-function soft(){if(state!=='play')return;if(fits(cur.m,cur.x,cur.y+1)){cur.y++;score+=1;hud()}}
+function move(dx){if(state!=='play')return;if(cur.t==='B'){cur.x=Math.max(0,Math.min(COLS-1,cur.x+dx));cur.aimed=true}else if(fits(cur.m,cur.x+dx,cur.y))cur.x+=dx}
+function rotate(){if(state!=='play'||cur.t==='O')return;if(cur.t==='B'){cur.y=Math.max(0,cur.y-1);return}const m=rot(cur.m);for(const k of [0,-1,1,-2,2]){if(fits(m,cur.x+k,cur.y)){cur.m=m;cur.x+=k;return}}}
+function soft(){if(state!=='play')return;if(cur.t==='B'){cur.y=Math.min(ROWS-1,cur.y+1);return}if(fits(cur.m,cur.x,cur.y+1)){cur.y++;score+=1;hud()}}
 function hard(){if(state!=='play')return;if(cur.t==='B'){lock();return}let d=0;while(fits(cur.m,cur.x,cur.y+1)){cur.y++;d++}score+=d*2;vis.y=cur.y;lock()}
 function ghostY(){let y=cur.y;while(fits(cur.m,cur.x,y+1))y++;return y}
 
@@ -488,9 +513,11 @@ function useHold(){
   holdUsed=true;checkChallenge();hud();
 }
 function useBomb(){
-  if(state!=='play'||cur.t==='B')return;
+  if(state!=='play')return;
+  // toucher le bouton une 2e fois range la bombe
+  if(cur.t==='B'){bombs++;const t=resume;resume=null;setCur(make(t));hud();toast(L('💣 Bombe rangée'));return}
   if(bombs<=0){if(!pay(COST.bomb,L('une bombe')))return;bombs++;toast(L('💣 Bombe achetée'))}
-  bombs--;resume=cur.t;setCur(make('B'));hud();toast(L("💣 Vise n'importe où, lâche pour exploser"));
+  bombs--;resume=cur.t;setCur(make('B'));hud();toast(L('💣 Vise avec le doigt, lâche pour exploser'));
 }
 function undo(){
   if(!history.length)return;
@@ -561,7 +588,10 @@ function render(dt){
     }
     ctx.strokeStyle=COLORS[cur.t];ctx.lineWidth=2;ctx.globalAlpha=.55+.25*Math.sin(performance.now()/200);
     if(cur.t!=='B')cur.m.forEach((row,r)=>row.forEach((v,c)=>{if(v&&gy+r>=0){ctx.beginPath();ctx.roundRect((cur.x+c)*cell+3,(gy+r)*cell+3,cell-6,cell-6,cell*.2);ctx.stroke()}}));ctx.globalAlpha=1;
-    if(cur.t==='B'){ctx.strokeStyle='rgba(255,138,138,.5)';ctx.lineWidth=2;ctx.setLineDash([4,4]);ctx.strokeRect((cur.x-1)*cell+1,(cur.y-1)*cell+1,cell*3-2,cell*3-2);ctx.setLineDash([])}
+    if(cur.t==='B'){const pz=.5+.5*Math.sin(performance.now()/150);
+      ctx.fillStyle=`rgba(255,61,61,${.22+.14*pz})`;ctx.strokeStyle='rgba(255,170,170,.9)';ctx.lineWidth=2;ctx.setLineDash([4,3]);
+      for(const [dc,dr] of BLAST){const c=cur.x+dc,r=cur.y+dr;if(r>=0&&r<ROWS&&c>=0&&c<COLS){ctx.beginPath();ctx.roundRect(c*cell+1,r*cell+1,cell-2,cell-2,cell*.2);ctx.fill();ctx.stroke()}}
+      ctx.setLineDash([])}
     ctx.save();ctx.shadowColor=cur.t==='B'?'#ff8a1f':COLORS[cur.t];ctx.shadowBlur=touching?22:12;
     const sc=touching?1.06:1;
     cur.m.forEach((row,r)=>row.forEach((v,c)=>{if(v&&vis.y+r>-1){const bx=(vis.x+c)*cell,by=(vis.y+r)*cell;ctx.save();ctx.translate(bx+cell/2,by+cell/2);ctx.scale(sc,sc);block(ctx,-cell/2,-cell/2,cell,cur.t);ctx.restore()}}));
@@ -583,11 +613,17 @@ function resize(){
 function loop(t){
   const dt=Math.min(50,t-(last||t));last=t;
   if(state==='play'){
-    dropAcc+=dt;
-    if(dropAcc>=speed()){dropAcc=0;
-      if(cur.t==='B'){/* bombs hover until the player aims and releases */}
-      else if(fits(cur.m,cur.x,cur.y+1)){cur.y++;if(touching){oy++}}
-      else if(!touching)lock();
+    if(holdingStill()){
+      // doigt appuyé sans bouger : la pièce descend à toute vitesse
+      dropAcc=0;fastAcc+=dt;
+      while(fastAcc>=FAST_STEP){fastAcc-=FAST_STEP;if(fits(cur.m,cur.x,cur.y+1)){cur.y++;oy++;score+=1;fastDrop=true;hud()}else{fastAcc=0;break}}
+    }else{
+      fastAcc=0;dropAcc+=dt;
+      if(dropAcc>=speed()){dropAcc=0;
+        if(cur.t==='B'){/* bombs hover until the player aims and releases */}
+        else if(fits(cur.m,cur.x,cur.y+1)){cur.y++;if(touching){oy++}}
+        else if(!touching)lock();
+      }
     }
   }
   render(dt);requestAnimationFrame(loop);
@@ -595,6 +631,18 @@ function loop(t){
 
 function showCard(html){$('card').innerHTML=html;$('overlay').hidden=false}
 function start(){reset();state='play';$('overlay').hidden=true;$('pauseBtn').textContent='❚❚'}
+// écran d'accueil : choisir entre les blocs et les jeux bonus
+function showHome(){state='menu';grid=newGrid();hint=null;$('pauseBtn').textContent='❚❚';showCard(HOME_HTML);bindHome()}
+function bindHome(){
+  $('best').textContent=L('Record : {0}',F(best));
+  $('startBtn').onclick=start;
+  $('tryBonus').onclick=()=>openChooser(1,true);
+  $('rulesBtn').onclick=()=>{$('rules').hidden=!$('rules').hidden};
+  $('langBtn').textContent='🌐 '+LANGS[LANG];
+  $('langBtn').onclick=()=>{$('langList').hidden=!$('langList').hidden};
+  $('langList').innerHTML=Object.entries(LANGS).map(([c,n])=>`<button class="btn ${c===LANG?'':'ghost'}" data-lang="${c}">${n}</button>`).join('');
+  $('langList').querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{if(b.dataset.lang!==LANG)setLang(b.dataset.lang);else $('langList').hidden=true});
+}
 function gameOver(){
   state='over';touching=false;
   if(score>best){best=score;try{localStorage.setItem('blocaille_best',best)}catch(e){}}
@@ -604,8 +652,9 @@ function gameOver(){
     (usedReward?'':'<button class="btn reward" id="rewardBtn">'+L('▶ Regarder une pub pour continuer')+'</button>')+
     '<button class="btn" id="coinCont">'+L('🪙 Continuer')+' · '+COST.cont+' 🪙</button>'+
     '<button class="btn undo" id="overBonus">'+L('🎁 Jeux bonus')+'</button>'+
-    '<button class="btn ghost" id="againBtn">'+L('Rejouer')+'</button>');
-  $('overBonus').onclick=openBonusAnytime;
+    '<button class="btn ghost" id="againBtn">'+L('Rejouer')+'</button>'+
+    '<button class="btn ghost" id="overHome">'+L('🏠 Menu')+'</button>');
+  $('overBonus').onclick=openBonusAnytime;$('overHome').onclick=showHome;
   $('coinCont').onclick=()=>{if(pay(COST.cont,L('continuer la partie')))clearForContinue()};
   $('againBtn').onclick=start;
   const rb=$('rewardBtn');if(rb)rb.onclick=playRewarded;
@@ -674,8 +723,8 @@ function togglePause(){
   else if(state==='pause'){state='play';$('pauseBtn').textContent='❚❚';$('overlay').hidden=true}
 }
 
-$('startBtn').onclick=start;
 $('pauseBtn').onclick=togglePause;
+$('spdBtn').onclick=cycleSpeed;
 $('holdBtn').onclick=useHold;
 $('bombBtn').onclick=useBomb;
 $('undoBtn').onclick=undo;
@@ -683,12 +732,18 @@ $('undoBtn').onclick=undo;
 // ---- Touch: drag to steer (works even when resting on the bottom), tap = rotate,
 // second finger while dragging = rotate, fast flick down = drop.
 let touching=false,primary=null,sx,sy,ox,oy,t0,dragging=false,lx=0,ly=0;
+// appui long : au bout de 0,3 s sans bouger (0,6 s après un glissé), la pièce accélère
+let stillX=0,stillY=0,stillT=0,fastAcc=0,fastDrop=false;const FAST_STEP=35;
+const holdingStill=()=>touching&&cur&&cur.t!=='B'&&performance.now()-stillT>=(dragging?600:300);
 const ignore=t=>t.closest&&t.closest('button,.card,.adscreen,.banner,.pw,.mg,.shop');
-function down(x,y){sx=x;sy=y;lx=x;ly=y;ox=cur.x;oy=cur.y;t0=performance.now();dragging=false;touching=true;if(cur.t==='B')aimBomb(x,y)}
-// bomb aims freely through blocks; target sits a bit above the finger so it stays visible
-function aimBomb(x,y){const r=cv.getBoundingClientRect();cur.x=Math.max(0,Math.min(COLS-1,Math.floor((x-r.left)/cell)));cur.y=Math.max(0,Math.min(ROWS-1,Math.floor((y-r.top)/cell-1.5)))}
+function down(x,y){sx=x;sy=y;lx=x;ly=y;ox=cur.x;oy=cur.y;t0=performance.now();dragging=false;touching=true;stillX=x;stillY=y;stillT=t0;fastAcc=0;fastDrop=false;if(cur.t==='B')aimBomb(x,y)}
+// la bombe vise la case sous le doigt, à travers les blocs ; hors de la grille, elle ne vise rien
+function aimBomb(x,y){const r=cv.getBoundingClientRect(),m=cell*.5;
+  if(x<r.left-m||x>r.right+m||y<r.top-m||y>r.bottom+m){cur.aimed=false;return}
+  cur.x=Math.max(0,Math.min(COLS-1,Math.floor((x-r.left)/cell)));cur.y=Math.max(0,Math.min(ROWS-1,Math.floor((y-r.top)/cell)));vis.x=cur.x;vis.y=cur.y;cur.aimed=true}
 function drag(x,y){
   lx=x;ly=y;
+  if(Math.hypot(x-stillX,y-stillY)>cell*.6){stillX=x;stillY=y;stillT=performance.now()}
   if(cur.t==='B'){aimBomb(x,y);return}
   const dx=x-sx,dy=y-sy;
   if(!dragging&&Math.hypot(dx,dy)>6)dragging=true;
@@ -711,7 +766,8 @@ function up(x,y){
   if(!touching)return;touching=false;
   const dy=y-sy,dt=performance.now()-t0;
   if(state!=='play')return;
-  if(cur.t==='B'){lock();return}
+  if(cur.t==='B'){if(cur.aimed)lock();else toast(L('💣 Touche la grille pour viser'));return}
+  if(fastDrop&&!fits(cur.m,cur.x,cur.y+1)){hard();return}
   if(!dragging&&dt<300)rotate();
   else if(dragging&&dy>cell*3&&dt<200)hard();
   else dropAcc=Math.max(0,speed()-350); // short grace before it settles
@@ -810,8 +866,8 @@ function showChooser(){
     ${diffBar(roundDiff())}
     ${GAMES.map(g=>`<button class="choice" data-g="${g.id}"><span class="ic" style="--bgc:${g.c}">${g.ic}</span><span><b>${g.name}</b><span>${g.txt}</span></span></button>`).join('')}`;
   $('mgBody').querySelectorAll('.choice').forEach(b=>b.onclick=()=>GAMES.find(g=>g.id===b.dataset.g).start());
-  $('mgFoot').innerHTML=`<button class="btn ghost" id="mgSkip">${mg.practice?L('Retour au menu'):mg.round?L('▶ Reprendre la partie'):L('Continuer sans bonus')}</button>`;
-  $('mgSkip').onclick=closeMini;
+  $('mgFoot').innerHTML=`${mg.practice?playBlocksHTML():''}<button class="btn ghost" id="mgSkip">${mg.practice?L('Retour au menu'):mg.round?L('▶ Reprendre la partie'):L('Continuer sans bonus')}</button>`;
+  $('mgSkip').onclick=closeMini;bindPlayBlocks();
 }
 // generic countdown on the shared timer bar (real clock, keeps running if the player leaves)
 function startClock(sec,onEnd){stopTimer();const total=sec*1000;mg.deadline=Date.now()+total;
@@ -826,12 +882,9 @@ function closeMini(){
     const n=was.won.bomb+was.won.undo;if(n)toast(L('🎁 Bonus ajoutés : {0}','+'+was.won.bomb+' 💣  +'+was.won.undo+' ↶'));}
 }
 $('mgClose').onclick=closeMini;
-$('tryBonus').onclick=()=>openChooser(1,true);
-// choix de la langue (écran d'accueil)
-$('langBtn').textContent='🌐 '+LANGS[LANG];
-$('langBtn').onclick=()=>{$('langList').hidden=!$('langList').hidden};
-$('langList').innerHTML=Object.entries(LANGS).map(([c,n])=>`<button class="btn ${c===LANG?'':'ghost'}" data-lang="${c}">${n}</button>`).join('');
-$('langList').querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{if(b.dataset.lang!==LANG)setLang(b.dataset.lang);else $('langList').hidden=true});
+// depuis les jeux bonus hors partie : lancer directement une partie de blocs
+const playBlocksHTML=()=>`<button class="btn" id="mgPlay">🧱 ${L('Jouer aux blocs')}</button>`;
+function bindPlayBlocks(){const b=$('mgPlay');if(b)b.onclick=()=>{closeMini();start()}}
 
 // ---------- Mots en ligne ----------
 function startWords(){
@@ -1093,7 +1146,7 @@ function finishMini(){
     ${diffBar(nd)}`;
   $('mgFoot').innerHTML=`<button class="btn" id="mgAgain">🔁 ${L('Encore une manche')} · ${L('niveau {0}/5',nd)}</button>
     <button class="btn undo" id="mgOther">🎲 ${L('Changer de jeu')}</button>
-    <button class="btn ghost" id="mgBack">${mg.practice?L('Retour au menu'):L('▶ Reprendre la partie')}</button>`;
+    ${mg.practice?playBlocksHTML():''}<button class="btn ghost" id="mgBack">${mg.practice?L('Retour au menu'):L('▶ Reprendre la partie')}</button>`;bindPlayBlocks();
   $('mgAgain').onclick=g.start;
   $('mgOther').onclick=showChooser;
   $('mgBack').onclick=closeMini;
@@ -1207,6 +1260,7 @@ function bgDraw(){bctx.clearRect(0,0,innerWidth,innerHeight);shapesBg.forEach(o=
   if(!matchMedia('(prefers-reduced-motion: reduce)').matches)requestAnimationFrame(bgDraw)}
 bgResize();bgDraw();window.addEventListener('resize',bgResize);
 grid=newGrid();bombs=1;undos=2;history=[];chIdx=0;stats={};next=make(draw7());hud();resize();requestAnimationFrame(loop);
+bindHome();setSpeed(speedMul);
 // recalcule la grille dès que sa place change : marges de l'iPhone connues après le lancement, polices, rotation…
 if(window.ResizeObserver)new ResizeObserver(resize).observe($('stage'));
 setCoins(coins);applyNoAds();$('coinBtn').onclick=()=>openShop();$('giftBtn').onclick=openBonusAnytime;$('shopClose').onclick=closeShop;setTimeout(checkDaily,600);

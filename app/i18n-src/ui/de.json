@@ -187,5 +187,21 @@
 "Boutique":"Shop",
 "Réserve : mettre la pièce de côté":"Ablage: Stein beiseitelegen",
 "Annuler le dernier coup":"Letzten Zug rückgängig machen",
-"Fermer":"Schließen"
+"Fermer":"Schließen",
+"Vitesse de descente : x{0}":"Fallgeschwindigkeit: x{0}",
+"💣 {0} lignes : une bombe offerte !":"💣 {0} Reihen: Gratis-Bombe!",
+"💣 Bombe rangée":"💣 Bombe weggelegt",
+"💣 Vise avec le doigt, lâche pour exploser":"💣 Mit dem Finger zielen, loslassen zum Zünden",
+"🏠 Menu":"🏠 Menü",
+"💣 Touche la grille pour viser":"💣 Tippe aufs Spielfeld, um zu zielen",
+"Jouer aux blocs":"Blöcke spielen",
+"Vitesse":"Tempo",
+"Empile les pièces et efface des lignes.":"Staple die Steine und räume Reihen ab.",
+"Mots, quiz, labyrinthe et mot mystère.":"Wörter, Quiz, Labyrinth und Geheimwort.",
+"❓ Comment jouer":"❓ So wird gespielt",
+"<b>Rester appuyé</b> sans bouger : la pièce descend à toute vitesse.":"<b>Gedrückt halten</b> ohne Bewegung: Der Stein fällt mit voller Geschwindigkeit.",
+"<b>Vitesse</b> : touche x1 pour faire tomber les pièces 2 ou 3 fois plus vite.":"<b>Tempo</b>: Tippe auf x1, damit die Steine 2- oder 3-mal so schnell fallen.",
+"<b>Bombe</b> : vise avec le doigt et lâche pour faire exploser toute la zone rouge. Une bombe offerte à 60, 120 et 160 lignes.":"<b>Bombe</b>: Ziel mit dem Finger und lass los, um die ganze rote Zone zu sprengen. Eine Gratis-Bombe bei 60, 120 und 160 Reihen.",
+"<b>🎁</b> : passe aux jeux bonus à tout moment, puis reprends ta partie.":"<b>🎁</b>: Wechsle jederzeit zu den Bonusspielen und spiel danach weiter.",
+"Vitesse de descente":"Fallgeschwindigkeit"
 }
