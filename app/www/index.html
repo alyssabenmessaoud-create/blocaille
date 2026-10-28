@@ -34,13 +34,16 @@ h1 span{display:inline-block;color:var(--c);text-shadow:0 3px 0 var(--deep),0 0 
 @keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-5px) rotate(3deg)}}
 .icon-btn{background:var(--yellow);border:0;color:var(--deep);border-radius:14px;width:42px;height:42px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 0 #b88f00;transition:transform .1s}
 .icon-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #b88f00}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.stats{display:grid;grid-template-columns:1.45fr 1fr 1fr .85fr;gap:6px}
 .stat{border-radius:14px;padding:5px 10px;background:var(--bgc);box-shadow:0 4px 0 var(--sh),inset 0 2px 0 rgba(255,255,255,.4);text-shadow:0 2px 0 rgba(0,0,0,.2)}
 .stat span{display:block;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;opacity:.9}
 .stat b{font-family:var(--display);font-weight:400;font-size:1.15rem;font-variant-numeric:tabular-nums;display:inline-block}
 .stat b.pop{animation:pop .35s ease}
 @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.35) rotate(-4deg)}100%{transform:scale(1)}}
-.s1{--bgc:var(--pink);--sh:#b0145a}.s2{--bgc:var(--orange);--sh:#b35800}.s3{--bgc:var(--cyan);--sh:#0089a8}
+.s1{--bgc:var(--pink);--sh:#b0145a}.s2{--bgc:var(--orange);--sh:#b35800}.s3{--bgc:var(--cyan);--sh:#0089a8}.s4{--bgc:var(--green);--sh:#139c42}
+button.stat{border:0;color:inherit;font-family:inherit;text-align:left;cursor:pointer;transition:transform .1s}
+button.stat:active{transform:translateY(3px);box-shadow:0 1px 0 var(--sh)}
+.spd.x2{--bgc:var(--orange);--sh:#b35800}.spd.x3{--bgc:#ff3d3d;--sh:#a31010}
 .challenge{position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;background:#fff;color:var(--deep);border-radius:14px;padding:7px 10px;font-size:.88rem;font-weight:600;box-shadow:0 4px 0 rgba(42,10,74,.35)}
 .challenge::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-50%;background:linear-gradient(100deg,transparent,rgba(255,214,10,.55),transparent);animation:shine 3s ease-in-out infinite}
 @keyframes shine{0%{left:-50%}60%,100%{left:120%}}
@@ -77,7 +80,12 @@ h1 span{display:inline-block;color:var(--c);text-shadow:0 3px 0 var(--deep),0 0 
 .card li b{color:var(--pink);font-weight:600}
 .btn{font-family:var(--display);font-weight:400;font-size:1rem;border:0;border-radius:14px;padding:13px 16px;cursor:pointer;background:var(--orange);color:#fff;box-shadow:0 5px 0 #b35800;text-shadow:0 2px 0 rgba(0,0,0,.2);transition:transform .1s}
 .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #b35800}
-#startBtn{animation:pulse 1.2s ease-in-out infinite}
+#startBtn{animation:pulse 1.6s ease-in-out infinite}
+.card .choice{padding:12px;gap:12px;box-shadow:0 5px 0 rgba(42,10,74,.25),0 0 0 2px #eadcff}
+.card .choice .ic{width:50px;height:50px;font-size:1.9rem}
+.card .choice b{font-size:1rem}.card .choice span{font-size:.8rem}
+#rulesBtn{padding:8px 14px;font-size:.85rem;font-family:var(--ui);font-weight:600}
+.overlay .card{max-height:calc(100% - 8px);overflow-y:auto;touch-action:pan-y}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
 .btn.ghost{background:var(--cyan);box-shadow:0 5px 0 #0089a8}
 .btn.reward{background:var(--green);box-shadow:0 5px 0 #139c42}
@@ -94,7 +102,7 @@ h1 span{display:inline-block;color:var(--c);text-shadow:0 3px 0 var(--deep),0 0 
 .adscreen p{color:#e4d4ff;margin:0}
 .count{font-family:var(--display);font-size:2.6rem;color:var(--yellow)}
 
-.mg{position:fixed;inset:0;z-index:15;display:flex;flex-direction:column;gap:8px;background:linear-gradient(160deg,#6a12b8,#a43dff 35%,#ff3d8b 75%,#ff8a1f);padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px));padding-top:calc(10px + env(safe-area-inset-top,0px));padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));box-sizing:border-box;animation:mgin .45s cubic-bezier(.2,1.4,.4,1)}
+.mg{position:fixed;inset:0;z-index:15;display:flex;flex-direction:column;gap:8px;background:linear-gradient(160deg,#6a12b8,#a43dff 35%,#ff3d8b 75%,#ff8a1f);padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px));padding-top:calc(10px + env(safe-area-inset-top,0px));padding-bottom:calc(10px + env(safe-area-inset-bottom,0px) + var(--nad,0px));box-sizing:border-box;animation:mgin .45s cubic-bezier(.2,1.4,.4,1)}
 @keyframes mgin{from{transform:translateY(40px) scale(.95);opacity:0}to{transform:none;opacity:1}}
 .mg-head{display:flex;align-items:center;gap:10px;max-width:560px;width:100%;margin:0 auto}
 .mg-title{font-family:var(--display);font-size:1.15rem;flex:1;text-shadow:0 3px 0 var(--deep);line-height:1.1}
@@ -196,7 +204,7 @@ h1 span{display:inline-block;color:var(--c);text-shadow:0 3px 0 var(--deep),0 0 
 .coinbtn i{font-style:normal;font-family:var(--ui);font-weight:700;background:var(--green);color:#fff;border-radius:8px;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;margin-left:2px}
 .coinbtn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(42,10,74,.35)}
 .coinN{display:inline-block}.coinN.pop{animation:pop .4s ease}
-.shop{position:fixed;inset:0;z-index:18;background:rgba(42,10,74,.55);display:flex;align-items:center;justify-content:center;padding:16px;padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.shop{position:fixed;inset:0;z-index:18;background:rgba(42,10,74,.55);display:flex;align-items:center;justify-content:center;padding:16px;padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(16px + env(safe-area-inset-bottom,0px) + var(--nad,0px))}
 .shop-card{background:#fff;color:var(--deep);border-radius:24px;width:100%;max-width:420px;max-height:100%;display:flex;flex-direction:column;box-shadow:0 8px 0 rgba(42,10,74,.35);animation:cardin .45s cubic-bezier(.2,1.6,.4,1);overflow:hidden}
 .shop-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:linear-gradient(90deg,var(--yellow),var(--orange));font-family:var(--display);font-size:1.15rem}
 .shop-head .mg-close{box-shadow:0 3px 0 rgba(42,10,74,.25)}
@@ -236,8 +244,10 @@ h1 span{display:inline-block;color:var(--c);text-shadow:0 3px 0 var(--deep),0 0 
 .day:last-child{grid-column:span 1;background:linear-gradient(135deg,#ffe36b,#ffb072)}
 .tools2{display:flex;gap:6px}
 .tools2 .btn{flex:1;font-size:.78rem;padding:9px 4px;font-family:var(--ui);font-weight:700}
+.gamesbtn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;height:42px;min-width:46px;border:0;border-radius:14px;padding:0 6px;background:var(--pink);color:#fff;font-family:var(--ui);font-weight:700;font-size:.62rem;letter-spacing:.04em;text-transform:uppercase;line-height:1;box-shadow:0 4px 0 #b0145a;cursor:pointer;text-shadow:0 1px 0 rgba(0,0,0,.25);animation:glow 2s ease-in-out infinite}
+.gamesbtn span{font-size:1.2rem;line-height:1.1}.gamesbtn:active{transform:translateY(3px);box-shadow:0 1px 0 #b0145a}
 .icon-btn.gift{background:var(--pink);box-shadow:0 4px 0 #b0145a;font-size:1.15rem;animation:glow 2s ease-in-out infinite}
-@media (max-width:400px){header{gap:7px}h1{font-size:1.3rem}.coinbtn{padding:0 5px 0 8px;font-size:.85rem}.icon-btn{width:38px}}
+@media (max-width:400px){header{gap:6px}h1{font-size:1.12rem}.coinbtn{padding:0 5px 0 8px;font-size:.85rem}.icon-btn{width:38px}.gamesbtn{padding:0 4px;min-width:42px}}
 button:focus-visible{outline:3px solid #fff;outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 #langBtn{display:block;margin:8px auto 0;padding:6px 16px;font-size:.85rem;background:rgba(0,212,255,.18);color:var(--deep);box-shadow:none;text-shadow:none;font-family:var(--ui);font-weight:600}.langlist{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:6px}.langlist .btn{flex:1 1 40%;margin:0;padding:8px;font-size:.9rem}
@@ -251,13 +261,14 @@ button:focus-visible{outline:3px solid #fff;outline-offset:2px}
   <header>
     <h1 aria-label="Blocaille"><span style="--i:0;--c:#ff3d8b">B</span><span style="--i:1;--c:#ff8a1f">l</span><span style="--i:2;--c:#ffd60a">o</span><span style="--i:3;--c:#2ee66b">c</span><span style="--i:4;--c:#00d4ff">a</span><span style="--i:5;--c:#4a6bff">i</span><span style="--i:6;--c:#a43dff">l</span><span style="--i:7;--c:#ff3d8b">l</span><span style="--i:8;--c:#ffd60a">e</span></h1>
     <button class="coinbtn" id="coinBtn" aria-label="Boutique"><span>🪙</span><b class="coinN">0</b><i>+</i></button>
-    <button class="icon-btn gift" id="giftBtn" aria-label="Jeux bonus">🎁</button>
+    <button class="gamesbtn" id="giftBtn" aria-label="Jeux bonus"><span>🎮</span><b data-l>Jeux</b></button>
     <button class="icon-btn" id="pauseBtn" aria-label="Pause">❚❚</button>
   </header>
   <div class="stats">
     <div class="stat s1"><span data-l>Score</span><b id="score">0</b></div>
     <div class="stat s2"><span data-l>Niveau</span><b id="level">1</b></div>
     <div class="stat s3"><span data-l>Lignes</span><b id="lines">0</b></div>
+    <button class="stat s4 spd" id="spdBtn" aria-label="Vitesse de descente"><span data-l>Vitesse</span><b id="spdN">x1</b></button>
   </div>
   <div class="challenge" id="chBox"><span class="tag" data-l>Défi</span><span class="txt" id="chTxt">—</span><span class="rw" id="chRw"></span></div>
   <div class="powers">
@@ -272,17 +283,22 @@ button:focus-visible{outline:3px solid #fff;outline-offset:2px}
     <div class="overlay" id="overlay">
       <div class="card" id="card">
         <h2>Blocaille</h2>
-        <ul>
+        <p id="best"></p>
+        <button class="choice" id="startBtn"><span class="ic" style="--bgc:var(--purple)">🧱</span><span><b data-l>Jouer aux blocs</b><span data-l>Empile les pièces et efface des lignes.</span></span></button>
+        <button class="choice" id="tryBonus"><span class="ic" style="--bgc:var(--pink)">🎮</span><span><b data-l>Jeux bonus</b><span data-l>Mots, quiz, labyrinthe et mot mystère.</span></span></button>
+        <button class="btn ghost" id="rulesBtn" data-l>❓ Comment jouer</button>
+        <ul class="rules" id="rules" hidden>
           <li data-l><b>Glisser le doigt</b> : la pièce suit, même posée au fond, tant que tu n'as pas lâché.</li>
+          <li data-l><b>Rester appuyé</b> sans bouger : la pièce descend à toute vitesse.</li>
           <li data-l><b>Toucher</b> (ou un 2ᵉ doigt pendant le glissé) : tourner.</li>
           <li data-l><b>Lâcher</b> : la pièce se pose.</li>
+          <li data-l><b>Vitesse</b> : touche x1 pour faire tomber les pièces 2 ou 3 fois plus vite.</li>
           <li data-l><b>Réserve</b> : garde une pièce de côté et échange-la plus tard.</li>
-          <li data-l><b>Bombe</b> : fait exploser un carré de 3×3 cases.</li>
+          <li data-l><b>Bombe</b> : vise avec le doigt et lâche pour faire exploser toute la zone rouge. 3 bombes à acheter par partie : 60, puis 120, puis 160 🪙.</li>
+          <li data-l><b>Le sol monte</b> tous les 4 000 points : la grille rétrécit, accroche-toi !</li>
           <li data-l><b>Retour</b> : annule ton dernier coup.</li>
+          <li data-l><b>🎮 Jeux</b> : passe aux jeux bonus à tout moment, puis reprends ta partie.</li>
         </ul>
-        <p id="best"></p>
-        <button class="btn" id="startBtn" data-l>Jouer</button>
-        <button class="btn ghost" id="tryBonus" data-l>🎁 Essayer les jeux bonus</button>
         <button class="btn ghost" id="langBtn"></button>
         <div id="langList" class="langlist" hidden></div>
         <p style="font-size:.78rem" data-l>Tous les 5 niveaux, une pause bonus : mots à trouver ou quiz de culture générale pour gagner des bombes et des retours.</p>
@@ -341,7 +357,7 @@ function setLang(c){try{localStorage.setItem('blocaille_lang',JSON.stringify(c))
 (function(){
 i18nStatic();
 const COLS=10, ROWS=20;
-const COLORS={I:'#00d4ff',O:'#ffd60a',T:'#a43dff',S:'#2ee66b',Z:'#ff3d8b',J:'#4a6bff',L:'#ff8a1f',B:'#2a1a3a'};
+const COLORS={I:'#00d4ff',O:'#ffd60a',T:'#a43dff',S:'#2ee66b',Z:'#ff3d8b',J:'#4a6bff',L:'#ff8a1f',B:'#2a1a3a',X:'#6a5a80'};
 const shade=(hex,f)=>{const n=parseInt(hex.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;const t=f<0?0:255,p=Math.abs(f);r=Math.round((t-r)*p+r);g=Math.round((t-g)*p+g);b=Math.round((t-b)*p+b);return`rgb(${r},${g},${b})`};
 const SHAPES={
   I:[[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]],
@@ -368,9 +384,19 @@ const RW_LABEL={bomb:L('+1 bombe'),bomb2:L('+2 bombes'),undo:L('+1 retour')};
 const $=id=>document.getElementById(id);
 const cv=$('board'), ctx=cv.getContext('2d');
 let grid, cur, next, hold, holdUsed, resume, bag=[], score, lines, level, bombs, undos, history, chIdx, stats;
+let bombsBought=0,floorN=0;
 let best=0, state='menu', dropAcc=0, last=0, cell=20, usedReward=false, vis={x:0,y:0}, particles=[], flashes=[], floats=[], hint=null, bonusPending=false, carry={bomb:0,undo:0};
 try{best=+localStorage.getItem('blocaille_best')||0}catch(e){}
-$('best').textContent=L('Record : {0}',F(best));
+const HOME_HTML=$('card').innerHTML;
+// bombe : explose dans un rond de 5×5 cases (sans les 4 coins) autour de la case visée
+const BLAST=[];for(let r=-2;r<=2;r++)for(let c=-2;c<=2;c++)if(Math.abs(r)+Math.abs(c)<4)BLAST.push([c,r]);
+// prix des bombes achetées dans une partie : 3 au maximum
+const BOMB_PRICES=[60,120,160];
+const bombPrice=()=>BOMB_PRICES[bombsBought];
+// difficulté : tous les FLOOR_STEP points, une rangée de pierre monte du fond (au plus FLOOR_MAX)
+const FLOOR_STEP=4000,FLOOR_MAX=6;
+// ligne complète à effacer (les rangées de pierre du fond ne s'effacent jamais)
+const isLine=row=>row.every(Boolean)&&!row.includes('X');
 
 const newGrid=()=>Array.from({length:ROWS},()=>Array(COLS).fill(null));
 const cloneGrid=g=>g.map(r=>r.slice());
@@ -387,7 +413,7 @@ function bestPlacement(p){
       const g=grid.map(r=>r.map(Boolean));let over=false;
       m.forEach((row,r)=>row.forEach((v,c)=>{if(v){if(y+r<0)over=true;else g[y+r][x+c]=true}}));
       if(over)continue;
-      let cl=0;for(let r=ROWS-1;r>=0;r--){if(g[r].every(Boolean)){g.splice(r,1);g.unshift(Array(COLS).fill(false));cl++;r++}}
+      let cl=0;for(let r=ROWS-1-floorN;r>=0;r--){if(g[r].every(Boolean)){g.splice(r,1);g.unshift(Array(COLS).fill(false));cl++;r++}}
       let agg=0,holes=0,bump=0,prev=-1;
       for(let c=0;c<COLS;c++){let h=0,seen=false;for(let r=0;r<ROWS;r++){if(g[r][c]){if(!seen){h=ROWS-r;seen=true}}else if(seen)holes++}agg+=h;if(prev>=0)bump+=Math.abs(h-prev);prev=h}
       const sc=-.51*agg+.76*cl-.36*holes-.18*bump;
@@ -397,7 +423,13 @@ function bestPlacement(p){
   }
   return best;
 }
-const speed=()=>Math.max(140,1000-(level-1)*55);
+// vitesse de descente choisie par le joueur (x1 = normale), gardée d'une partie à l'autre
+const SPEEDS=[1,2,3];let speedMul=1;
+try{const v=+localStorage.getItem('blocaille_speed');if(SPEEDS.includes(v))speedMul=v}catch(e){}
+const speed=()=>Math.max(140,1000-(level-1)*55)/speedMul;
+function setSpeed(n){speedMul=n;try{localStorage.setItem('blocaille_speed',n)}catch(e){}
+  const b=$('spdBtn');b.classList.toggle('x2',n===2);b.classList.toggle('x3',n===3);$('spdN').textContent='x'+n}
+function cycleSpeed(){setSpeed(SPEEDS[(SPEEDS.indexOf(speedMul)+1)%SPEEDS.length]);toast(L('Vitesse de descente : x{0}',speedMul))}
 // Friendly piece picker: score every piece type on a grid and pick among the ones that fit best
 let recent=[];
 function smartPick(g){
@@ -415,13 +447,13 @@ function smartPick(g){
 function gridAfter(p){
   const b=bestPlacement(p),g=cloneGrid(grid);if(!b)return g;
   b.m.forEach((row,r)=>row.forEach((v,c)=>{if(v&&b.y+r>=0)g[b.y+r][b.x+c]=p.t}));
-  for(let r=ROWS-1;r>=0;r--){if(g[r].every(Boolean)){g.splice(r,1);g.unshift(Array(COLS).fill(null));r++}}
+  for(let r=ROWS-1;r>=0;r--){if(isLine(g[r])){g.splice(r,1);g.unshift(Array(COLS).fill(null));r++}}
   return g;
 }
 
 function reset(){
   grid=newGrid();score=0;lines=0;level=1;bombs=1+carry.bomb;undos=2+carry.undo;carry={bomb:0,undo:0};bonusPending=false;history=[];chIdx=0;hold=null;holdUsed=false;resume=null;
-  stats={lines:0,best:0,score:0,bombs:0,holds:0,level:1};usedReward=false;bag=[];
+  stats={lines:0,best:0,score:0,bombs:0,holds:0,level:1};usedReward=false;bag=[];bombsBought=0;floorN=0;
   recent=[];const first=make(smartPick(grid));next=make(smartPick(gridAfter(first)));setCur(first);hud();
 }
 function setCur(p){cur=p;vis.x=p.x;vis.y=p.y;dropAcc=0;hint=(p.t!=='B'&&Math.random()<1/3)?bestPlacement(p):null;if(hint)toast(L("★ Conseil : place-la sur l'étoile"));
@@ -432,7 +464,7 @@ function spawn(){
   holdUsed=false;hud();
 }
 function snapshot(){
-  history.push({grid:cloneGrid(grid),score,lines,level,t:cur.t==='B'?resume||cur.t:cur.t,wasBomb:cur.t==='B',next:next.t,bag:bag.slice(),hold,stats:{...stats}});
+  history.push({grid:cloneGrid(grid),score,lines,level,t:cur.t==='B'?resume||cur.t:cur.t,wasBomb:cur.t==='B',next:next.t,bag:bag.slice(),hold,floorN,stats:{...stats}});
   if(history.length>10)history.shift();
 }
 function lock(){
@@ -442,16 +474,24 @@ function lock(){
   if(placed.some(([,y])=>y<0)){gameOver();return}
   if(cur.t==='B'){explode(cur.x,cur.y);stats.bombs++}
   let cleared=0;
-  for(let r=ROWS-1;r>=0;r--){if(grid[r].every(Boolean)){burstRow(r);grid.splice(r,1);grid.unshift(Array(COLS).fill(null));cleared++;r++}}
+  for(let r=ROWS-1;r>=0;r--){if(isLine(grid[r])){burstRow(r);grid.splice(r,1);grid.unshift(Array(COLS).fill(null));cleared++;r++}}
   if(cleared){const pts=[0,100,300,500,800][cleared]*level;const lowest=placed.reduce((m,[,y])=>Math.max(m,y),0);
     floatText(['','+'+pts,L('DOUBLE !'),L('TRIPLE !'),L('MÉGA !')][cleared],Math.min(ROWS-2,lowest),Math.round(cell*(cleared>1?1.4:1)));if(cleared>1){shake();confetti(cleared*12)}
     score+=pts;lines+=cleared;setCoins(coins+cleared*2,true);const nl=1+Math.floor(lines/10);if(nl>level&&Math.floor(nl/5)>Math.floor(level/5))bonusPending=true;if(nl>level){setTimeout(()=>{floatText(L('NIVEAU {0}',nl),8,Math.round(cell*1.2));confetti(40)},450)}level=nl;stats.best=Math.max(stats.best,cleared)}
   stats.lines=lines;stats.score=score;stats.level=level;
+  if(!raiseFloor())return;
   checkChallenge();spawn();
   if(bonusPending&&state==='play'){bonusPending=false;state='bonus';touching=false;primary=null;mouseDown=false;setTimeout(()=>openChooser(Math.floor(level/5),false),1100)}
 }
+// fait monter le sol de pierre si le score a passé un palier ; false si la partie est finie
+function raiseFloor(){
+  const target=Math.min(FLOOR_MAX,Math.floor(score/FLOOR_STEP));let up=0;
+  while(floorN<target){if(grid[0].some(Boolean)){gameOver();return false}grid.shift();grid.push(Array(COLS).fill('X'));floorN++;up++}
+  if(up){shake();toast(L('⚠️ Le sol monte ! Plus que {0} lignes',ROWS-floorN))}
+  return true;
+}
 function explode(x,y){
-  for(let r=y-1;r<=y+1;r++)for(let c=x-1;c<=x+1;c++){if(r>=0&&r<ROWS&&c>=0&&c<COLS){if(grid[r][c])addParticles(c,r,grid[r][c]==='B'?'#ffcf5a':COLORS[grid[r][c]],6);grid[r][c]=null}}
+  for(const [dc,dr] of BLAST){const r=y+dr,c=x+dc;if(r>=0&&r<ROWS&&c>=0&&c<COLS&&grid[r][c]!=='X'){if(grid[r][c])addParticles(c,r,grid[r][c]==='B'?'#ffcf5a':COLORS[grid[r][c]],6);grid[r][c]=null}}
   score+=50;shake();floatText(L('BOUM !'),y,Math.round(cell*1.4));
 }
 function addParticles(c,r,col,n,big){for(let i=0;i<n;i++)particles.push({x:(c+.5)*cell,y:(r+.5)*cell,vx:(Math.random()-.5)*(big?10:7),vy:(Math.random()-.85)*(big?11:7),life:1,col,rot:Math.random()*6,vr:(Math.random()-.5)*.3,big})}
@@ -475,9 +515,9 @@ function currentCh(){
 }
 let toastT;function toast(t){const el=$('toast');el.textContent=t;el.hidden=false;el.style.opacity=1;el.classList.remove('show');void el.offsetWidth;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>{el.style.opacity=0;setTimeout(()=>el.hidden=true,300)},1800)}
 
-function move(dx){if(state==='play'&&fits(cur.m,cur.x+dx,cur.y))cur.x+=dx}
-function rotate(){if(state!=='play'||cur.t==='O'||cur.t==='B')return;const m=rot(cur.m);for(const k of [0,-1,1,-2,2]){if(fits(m,cur.x+k,cur.y)){cur.m=m;cur.x+=k;return}}}
-function soft(){if(state!=='play')return;if(fits(cur.m,cur.x,cur.y+1)){cur.y++;score+=1;hud()}}
+function move(dx){if(state!=='play')return;if(cur.t==='B'){cur.x=Math.max(0,Math.min(COLS-1,cur.x+dx));cur.aimed=true}else if(fits(cur.m,cur.x+dx,cur.y))cur.x+=dx}
+function rotate(){if(state!=='play'||cur.t==='O')return;if(cur.t==='B'){cur.y=Math.max(0,cur.y-1);return}const m=rot(cur.m);for(const k of [0,-1,1,-2,2]){if(fits(m,cur.x+k,cur.y)){cur.m=m;cur.x+=k;return}}}
+function soft(){if(state!=='play')return;if(cur.t==='B'){cur.y=Math.min(ROWS-1,cur.y+1);return}if(fits(cur.m,cur.x,cur.y+1)){cur.y++;score+=1;hud()}}
 function hard(){if(state!=='play')return;if(cur.t==='B'){lock();return}let d=0;while(fits(cur.m,cur.x,cur.y+1)){cur.y++;d++}score+=d*2;vis.y=cur.y;lock()}
 function ghostY(){let y=cur.y;while(fits(cur.m,cur.x,y+1))y++;return y}
 
@@ -488,16 +528,20 @@ function useHold(){
   holdUsed=true;checkChallenge();hud();
 }
 function useBomb(){
-  if(state!=='play'||cur.t==='B')return;
-  if(bombs<=0){if(!pay(COST.bomb,L('une bombe')))return;bombs++;toast(L('💣 Bombe achetée'))}
-  bombs--;resume=cur.t;setCur(make('B'));hud();toast(L("💣 Vise n'importe où, lâche pour exploser"));
+  if(state!=='play')return;
+  // toucher le bouton une 2e fois range la bombe
+  if(cur.t==='B'){bombs++;const t=resume;resume=null;setCur(make(t));hud();toast(L('💣 Bombe rangée'));return}
+  if(bombs<=0){
+    if(bombsBought>=BOMB_PRICES.length){toast(L('💣 Plus de bombe à acheter dans cette partie'));return}
+    if(!pay(bombPrice(),L('une bombe')))return;bombsBought++;bombs++;toast(L('💣 Bombe achetée'))}
+  bombs--;resume=cur.t;setCur(make('B'));hud();toast(L('💣 Vise avec le doigt, lâche pour exploser'));
 }
 function undo(){
   if(!history.length)return;
   if(state!=='play'&&state!=='over')return;
   if(undos<=0){if(!pay(COST.undo,L('un retour')))return;undos++}
   const h=history.pop();undos--;
-  grid=h.grid;score=h.score;lines=h.lines;level=h.level;bag=h.bag;hold=h.hold;stats=h.stats;next=make(h.next);
+  grid=h.grid;floorN=h.floorN;score=h.score;lines=h.lines;level=h.level;bag=h.bag;hold=h.hold;stats=h.stats;next=make(h.next);
   if(h.wasBomb){bombs++;}
   resume=null;holdUsed=false;
   state='play';$('overlay').hidden=true;
@@ -507,7 +551,7 @@ function undo(){
 let prevHud={};function setNum(id,v){const el=$(id);const t=typeof v==='number'?v.toLocaleString(LOC):v;if(el.textContent!==String(t)){el.textContent=t;if(prevHud[id]!==undefined){el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}}prevHud[id]=t}
 function hud(){
   setNum('score',score);setNum('level',level);setNum('lines',lines);
-  $('bombN').textContent=bombs>0?bombs:COST.bomb+'🪙';$('undoN').textContent=undos>0?undos:COST.undo+'🪙';
+  $('bombN').textContent=bombs>0?bombs:bombsBought<BOMB_PRICES.length?bombPrice()+'🪙':'0';$('undoN').textContent=undos>0?undos:COST.undo+'🪙';
   $('bombBtn').disabled=false;$('undoBtn').disabled=!history.length;
   $('bombBtn').classList.toggle('armed',!!(cur&&cur.t==='B'));$('bombBtn').classList.toggle('ready',bombs>0&&!(cur&&cur.t==='B'));$('undoBtn').classList.toggle('ready',undos>0&&history.length>0);
   $('holdBtn').disabled=holdUsed;
@@ -561,7 +605,10 @@ function render(dt){
     }
     ctx.strokeStyle=COLORS[cur.t];ctx.lineWidth=2;ctx.globalAlpha=.55+.25*Math.sin(performance.now()/200);
     if(cur.t!=='B')cur.m.forEach((row,r)=>row.forEach((v,c)=>{if(v&&gy+r>=0){ctx.beginPath();ctx.roundRect((cur.x+c)*cell+3,(gy+r)*cell+3,cell-6,cell-6,cell*.2);ctx.stroke()}}));ctx.globalAlpha=1;
-    if(cur.t==='B'){ctx.strokeStyle='rgba(255,138,138,.5)';ctx.lineWidth=2;ctx.setLineDash([4,4]);ctx.strokeRect((cur.x-1)*cell+1,(cur.y-1)*cell+1,cell*3-2,cell*3-2);ctx.setLineDash([])}
+    if(cur.t==='B'){const pz=.5+.5*Math.sin(performance.now()/150);
+      ctx.fillStyle=`rgba(255,61,61,${.22+.14*pz})`;ctx.strokeStyle='rgba(255,170,170,.9)';ctx.lineWidth=2;ctx.setLineDash([4,3]);
+      for(const [dc,dr] of BLAST){const c=cur.x+dc,r=cur.y+dr;if(r>=0&&r<ROWS&&c>=0&&c<COLS){ctx.beginPath();ctx.roundRect(c*cell+1,r*cell+1,cell-2,cell-2,cell*.2);ctx.fill();ctx.stroke()}}
+      ctx.setLineDash([])}
     ctx.save();ctx.shadowColor=cur.t==='B'?'#ff8a1f':COLORS[cur.t];ctx.shadowBlur=touching?22:12;
     const sc=touching?1.06:1;
     cur.m.forEach((row,r)=>row.forEach((v,c)=>{if(v&&vis.y+r>-1){const bx=(vis.x+c)*cell,by=(vis.y+r)*cell;ctx.save();ctx.translate(bx+cell/2,by+cell/2);ctx.scale(sc,sc);block(ctx,-cell/2,-cell/2,cell,cur.t);ctx.restore()}}));
@@ -583,11 +630,17 @@ function resize(){
 function loop(t){
   const dt=Math.min(50,t-(last||t));last=t;
   if(state==='play'){
-    dropAcc+=dt;
-    if(dropAcc>=speed()){dropAcc=0;
-      if(cur.t==='B'){/* bombs hover until the player aims and releases */}
-      else if(fits(cur.m,cur.x,cur.y+1)){cur.y++;if(touching){oy++}}
-      else if(!touching)lock();
+    if(holdingStill()){
+      // doigt appuyé sans bouger : la pièce descend à toute vitesse
+      dropAcc=0;fastAcc+=dt;
+      while(fastAcc>=FAST_STEP){fastAcc-=FAST_STEP;if(fits(cur.m,cur.x,cur.y+1)){cur.y++;oy++;score+=1;fastDrop=true;hud()}else{fastAcc=0;break}}
+    }else{
+      fastAcc=0;dropAcc+=dt;
+      if(dropAcc>=speed()){dropAcc=0;
+        if(cur.t==='B'){/* bombs hover until the player aims and releases */}
+        else if(fits(cur.m,cur.x,cur.y+1)){cur.y++;if(touching){oy++}}
+        else if(!touching)lock();
+      }
     }
   }
   render(dt);requestAnimationFrame(loop);
@@ -595,6 +648,18 @@ function loop(t){
 
 function showCard(html){$('card').innerHTML=html;$('overlay').hidden=false}
 function start(){reset();state='play';$('overlay').hidden=true;$('pauseBtn').textContent='❚❚'}
+// écran d'accueil : choisir entre les blocs et les jeux bonus
+function showHome(){state='menu';grid=newGrid();hint=null;$('pauseBtn').textContent='❚❚';showCard(HOME_HTML);bindHome()}
+function bindHome(){
+  $('best').textContent=L('Record : {0}',F(best));
+  $('startBtn').onclick=start;
+  $('tryBonus').onclick=()=>openChooser(1,true);
+  $('rulesBtn').onclick=()=>{$('rules').hidden=!$('rules').hidden};
+  $('langBtn').textContent='🌐 '+LANGS[LANG];
+  $('langBtn').onclick=()=>{$('langList').hidden=!$('langList').hidden};
+  $('langList').innerHTML=Object.entries(LANGS).map(([c,n])=>`<button class="btn ${c===LANG?'':'ghost'}" data-lang="${c}">${n}</button>`).join('');
+  $('langList').querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{if(b.dataset.lang!==LANG)setLang(b.dataset.lang);else $('langList').hidden=true});
+}
 function gameOver(){
   state='over';touching=false;
   if(score>best){best=score;try{localStorage.setItem('blocaille_best',best)}catch(e){}}
@@ -603,9 +668,10 @@ function gameOver(){
     (canUndo?'<button class="btn undo" id="undoOver">'+L('↶ Annuler le dernier coup ({0})',(undos>0?undos:COST.undo+' 🪙'))+'</button>':'')+
     (usedReward?'':'<button class="btn reward" id="rewardBtn">'+L('▶ Regarder une pub pour continuer')+'</button>')+
     '<button class="btn" id="coinCont">'+L('🪙 Continuer')+' · '+COST.cont+' 🪙</button>'+
-    '<button class="btn undo" id="overBonus">'+L('🎁 Jeux bonus')+'</button>'+
-    '<button class="btn ghost" id="againBtn">'+L('Rejouer')+'</button>');
-  $('overBonus').onclick=openBonusAnytime;
+    '<button class="btn undo" id="overBonus">'+L('🎮 Jeux bonus')+'</button>'+
+    '<button class="btn ghost" id="againBtn">'+L('Rejouer')+'</button>'+
+    '<button class="btn ghost" id="overHome">'+L('🏠 Menu')+'</button>');
+  $('overBonus').onclick=openBonusAnytime;$('overHome').onclick=showHome;
   $('coinCont').onclick=()=>{if(pay(COST.cont,L('continuer la partie')))clearForContinue()};
   $('againBtn').onclick=start;
   const rb=$('rewardBtn');if(rb)rb.onclick=playRewarded;
@@ -629,7 +695,8 @@ async function initAds(){
   if(!AdMob)return;
   // dans l'appli, on cache tout de suite l'encart de démonstration : la vraie bannière s'affiche par-dessus quand elle est chargée
   document.getElementById('bannerSlot').classList.add('native');
-  document.documentElement.style.setProperty('--ad-h','0px');setTimeout(()=>{try{resize()}catch(e){}},0);
+  // --nad : place laissée à la vraie bannière (qui reste par-dessus tout) en bas des jeux bonus et de la boutique
+  document.documentElement.style.setProperty('--ad-h','0px');document.documentElement.style.setProperty('--nad','50px');setTimeout(()=>{try{resize()}catch(e){}},0);
   try{
     await AdMob.initialize({});
     if(platform==='ios'){
@@ -640,9 +707,10 @@ async function initAds(){
     if(c&&c.isConsentFormAvailable&&c.status==='REQUIRED')await AdMob.showConsentForm();
     adsReady=true;
     // réserve exactement la hauteur de la vraie bannière, pour qu'elle ne cache jamais le bas de la grille
-    AdMob.addListener('bannerAdSizeChanged',s=>{if(s&&s.height>0){document.documentElement.style.setProperty('--ad-h',Math.ceil(s.height)+'px');resize()}});
+    AdMob.addListener('bannerAdSizeChanged',s=>{if(s&&s.height>0){document.documentElement.style.setProperty('--ad-h',Math.ceil(s.height)+'px');document.documentElement.style.setProperty('--nad',Math.ceil(s.height)+'px');resize()}});
+    AdMob.addListener('bannerAdFailedToLoad',()=>document.documentElement.style.setProperty('--nad','0px'));
     await AdMob.showBanner({adId:adIds.banner,adSize:'BANNER',position:'BOTTOM_CENTER',margin:0,isTesting:ADS_CONFIG.testing});
-  }catch(e){console.warn('Pub indisponible',e)}
+  }catch(e){console.warn('Pub indisponible',e);document.documentElement.style.setProperty('--nad','0px')}
 }
 async function showRewardedAd(){
   if(!AdMob)return null; // null = navigateur, on simule
@@ -655,7 +723,7 @@ async function showRewardedAd(){
 }
 initAds();
 function giveContinue(){
-  grid.splice(ROWS-4,4);for(let i=0;i<4;i++)grid.unshift(Array(COLS).fill(null));
+  grid.splice(ROWS-floorN-4,4);for(let i=0;i<4;i++)grid.unshift(Array(COLS).fill(null));
   for(let r=0;r<4;r++)grid[r]=Array(COLS).fill(null);
   state='play';$('overlay').hidden=true;resume=null;spawn();
 }
@@ -670,12 +738,12 @@ function playRewarded(){
   });
 }
 function togglePause(){
-  if(state==='play'){state='pause';$('pauseBtn').textContent='▶';showCard('<h2>'+L('Pause')+'</h2><button class="btn" id="resumeBtn">'+L('Reprendre')+'</button><button class="btn undo" id="pauseBonus">'+L('🎁 Jeux bonus')+'</button>');$('resumeBtn').onclick=togglePause;$('pauseBonus').onclick=openBonusAnytime}
+  if(state==='play'){state='pause';$('pauseBtn').textContent='▶';showCard('<h2>'+L('Pause')+'</h2><button class="btn" id="resumeBtn">'+L('Reprendre')+'</button><button class="btn undo" id="pauseBonus">'+L('🎮 Jeux bonus')+'</button>');$('resumeBtn').onclick=togglePause;$('pauseBonus').onclick=openBonusAnytime}
   else if(state==='pause'){state='play';$('pauseBtn').textContent='❚❚';$('overlay').hidden=true}
 }
 
-$('startBtn').onclick=start;
 $('pauseBtn').onclick=togglePause;
+$('spdBtn').onclick=cycleSpeed;
 $('holdBtn').onclick=useHold;
 $('bombBtn').onclick=useBomb;
 $('undoBtn').onclick=undo;
@@ -683,12 +751,18 @@ $('undoBtn').onclick=undo;
 // ---- Touch: drag to steer (works even when resting on the bottom), tap = rotate,
 // second finger while dragging = rotate, fast flick down = drop.
 let touching=false,primary=null,sx,sy,ox,oy,t0,dragging=false,lx=0,ly=0;
+// appui long : au bout de 0,3 s sans bouger (0,6 s après un glissé), la pièce accélère
+let stillX=0,stillY=0,stillT=0,fastAcc=0,fastDrop=false;const FAST_STEP=35;
+const holdingStill=()=>touching&&cur&&cur.t!=='B'&&performance.now()-stillT>=(dragging?600:300);
 const ignore=t=>t.closest&&t.closest('button,.card,.adscreen,.banner,.pw,.mg,.shop');
-function down(x,y){sx=x;sy=y;lx=x;ly=y;ox=cur.x;oy=cur.y;t0=performance.now();dragging=false;touching=true;if(cur.t==='B')aimBomb(x,y)}
-// bomb aims freely through blocks; target sits a bit above the finger so it stays visible
-function aimBomb(x,y){const r=cv.getBoundingClientRect();cur.x=Math.max(0,Math.min(COLS-1,Math.floor((x-r.left)/cell)));cur.y=Math.max(0,Math.min(ROWS-1,Math.floor((y-r.top)/cell-1.5)))}
+function down(x,y){sx=x;sy=y;lx=x;ly=y;ox=cur.x;oy=cur.y;t0=performance.now();dragging=false;touching=true;stillX=x;stillY=y;stillT=t0;fastAcc=0;fastDrop=false;if(cur.t==='B')aimBomb(x,y)}
+// la bombe vise la case sous le doigt, à travers les blocs ; hors de la grille, elle ne vise rien
+function aimBomb(x,y){const r=cv.getBoundingClientRect(),m=cell*.5;
+  if(x<r.left-m||x>r.right+m||y<r.top-m||y>r.bottom+m){cur.aimed=false;return}
+  cur.x=Math.max(0,Math.min(COLS-1,Math.floor((x-r.left)/cell)));cur.y=Math.max(0,Math.min(ROWS-1,Math.floor((y-r.top)/cell)));vis.x=cur.x;vis.y=cur.y;cur.aimed=true}
 function drag(x,y){
   lx=x;ly=y;
+  if(Math.hypot(x-stillX,y-stillY)>cell*.6){stillX=x;stillY=y;stillT=performance.now()}
   if(cur.t==='B'){aimBomb(x,y);return}
   const dx=x-sx,dy=y-sy;
   if(!dragging&&Math.hypot(dx,dy)>6)dragging=true;
@@ -711,7 +785,8 @@ function up(x,y){
   if(!touching)return;touching=false;
   const dy=y-sy,dt=performance.now()-t0;
   if(state!=='play')return;
-  if(cur.t==='B'){lock();return}
+  if(cur.t==='B'){if(cur.aimed)lock();else toast(L('💣 Touche la grille pour viser'));return}
+  if(fastDrop&&!fits(cur.m,cur.x,cur.y+1)){hard();return}
   if(!dragging&&dt<300)rotate();
   else if(dragging&&dy>cell*3&&dt<200)hard();
   else dropAcc=Math.max(0,speed()-350); // short grace before it settles
@@ -810,8 +885,8 @@ function showChooser(){
     ${diffBar(roundDiff())}
     ${GAMES.map(g=>`<button class="choice" data-g="${g.id}"><span class="ic" style="--bgc:${g.c}">${g.ic}</span><span><b>${g.name}</b><span>${g.txt}</span></span></button>`).join('')}`;
   $('mgBody').querySelectorAll('.choice').forEach(b=>b.onclick=()=>GAMES.find(g=>g.id===b.dataset.g).start());
-  $('mgFoot').innerHTML=`<button class="btn ghost" id="mgSkip">${mg.practice?L('Retour au menu'):mg.round?L('▶ Reprendre la partie'):L('Continuer sans bonus')}</button>`;
-  $('mgSkip').onclick=closeMini;
+  $('mgFoot').innerHTML=`${mg.practice?playBlocksHTML():''}<button class="btn ghost" id="mgSkip">${mg.practice?L('Retour au menu'):mg.round?L('▶ Reprendre la partie'):L('Continuer sans bonus')}</button>`;
+  $('mgSkip').onclick=closeMini;bindPlayBlocks();
 }
 // generic countdown on the shared timer bar (real clock, keeps running if the player leaves)
 function startClock(sec,onEnd){stopTimer();const total=sec*1000;mg.deadline=Date.now()+total;
@@ -826,12 +901,9 @@ function closeMini(){
     const n=was.won.bomb+was.won.undo;if(n)toast(L('🎁 Bonus ajoutés : {0}','+'+was.won.bomb+' 💣  +'+was.won.undo+' ↶'));}
 }
 $('mgClose').onclick=closeMini;
-$('tryBonus').onclick=()=>openChooser(1,true);
-// choix de la langue (écran d'accueil)
-$('langBtn').textContent='🌐 '+LANGS[LANG];
-$('langBtn').onclick=()=>{$('langList').hidden=!$('langList').hidden};
-$('langList').innerHTML=Object.entries(LANGS).map(([c,n])=>`<button class="btn ${c===LANG?'':'ghost'}" data-lang="${c}">${n}</button>`).join('');
-$('langList').querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{if(b.dataset.lang!==LANG)setLang(b.dataset.lang);else $('langList').hidden=true});
+// depuis les jeux bonus hors partie : lancer directement une partie de blocs
+const playBlocksHTML=()=>`<button class="btn" id="mgPlay">🧱 ${L('Jouer aux blocs')}</button>`;
+function bindPlayBlocks(){const b=$('mgPlay');if(b)b.onclick=()=>{closeMini();start()}}
 
 // ---------- Mots en ligne ----------
 function startWords(){
@@ -1093,7 +1165,7 @@ function finishMini(){
     ${diffBar(nd)}`;
   $('mgFoot').innerHTML=`<button class="btn" id="mgAgain">🔁 ${L('Encore une manche')} · ${L('niveau {0}/5',nd)}</button>
     <button class="btn undo" id="mgOther">🎲 ${L('Changer de jeu')}</button>
-    <button class="btn ghost" id="mgBack">${mg.practice?L('Retour au menu'):L('▶ Reprendre la partie')}</button>`;
+    ${mg.practice?playBlocksHTML():''}<button class="btn ghost" id="mgBack">${mg.practice?L('Retour au menu'):L('▶ Reprendre la partie')}</button>`;bindPlayBlocks();
   $('mgAgain').onclick=g.start;
   $('mgOther').onclick=showChooser;
   $('mgBack').onclick=closeMini;
@@ -1123,7 +1195,7 @@ const DAILY=[20,30,40,50,60,80,150];
 const ADS_PER_DAY=5,AD_COINS=20;
 // Passer à true quand les achats intégrés sont configurés dans App Store Connect et branchés (window.buyProduct)
 const IAP_ENABLED=false;
-const COST={bomb:30,undo:30,cont:100,wLetter:20,q50:20,qTime:15,mzCompass:25,mzTime:20,moLetter:20,moClean:15,moTry:30};
+const COST={undo:30,cont:100,wLetter:20,q50:20,qTime:15,mzCompass:25,mzTime:20,moLetter:20,moClean:15,moTry:30};
 
 function setCoins(v,gain){coins=Math.max(0,v);store.set('coins',coins);document.querySelectorAll('.coinN').forEach(el=>{el.textContent=coins.toLocaleString(LOC);if(gain){el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}})}
 function earn(n,why){setCoins(coins+n,true);if(why)coinToast('+'+n+' 🪙 '+why)}
@@ -1162,7 +1234,7 @@ function renderShop(){
     ${starterDone?'':`<button class="pack starter" data-id="${STARTER.id}"><span class="ic">🎁</span><span class="nm"><b>${L('Pack de départ')}</b><span>${STARTER.coins} 🪙 + ${STARTER.bombs} 💣 + ${STARTER.undos} ↶ · ${L('une seule fois')}</span></span><span class="pr">${STARTER.price}</span></button>`}
     <div class="packs">${PACKS.map(p=>`<button class="pack" data-id="${p.id}">${p.tag?`<i class="tag">${p.tag}</i>`:''}<span class="ic">🪙</span><b>${p.coins.toLocaleString(LOC)}</b><span class="nm2">${p.label}</span><span class="pr">${p.price}</span></button>`).join('')}</div>
     ${noAds?'<p class="shopnote">'+L('✓ Version sans publicité activée. Merci !')+'</p>':`<button class="pack noads" data-id="${NOADS.id}"><span class="ic">🚫</span><span class="nm"><b>${L('Sans publicité')}</b><span>${L('Retire la pub plein écran pour toujours')}</span></span><span class="pr">${NOADS.price}</span></button>`}
-    <div class="shopcost"><b>${L('À quoi servent les pièces ?')}</b><span>💣 ${L('Bombe')} ${COST.bomb} · ↶ ${L('Retour')} ${COST.undo} · ${L('Continuer après une défaite')} ${COST.cont}</span><span>${L('Jeux bonus : lettres, 50/50, temps en plus, boussole, essai en plus…')}</span></div>
+    <div class="shopcost"><b>${L('À quoi servent les pièces ?')}</b><span>💣 ${L('Bombe')} ${BOMB_PRICES.join(' / ')} · ↶ ${L('Retour')} ${COST.undo} · ${L('Continuer après une défaite')} ${COST.cont}</span><span>${L('Jeux bonus : lettres, 50/50, temps en plus, boussole, essai en plus…')}</span></div>
     <p class="shopnote">${L('Les achats sont facultatifs : tout le jeu se joue sans payer.')}</p>
     <button class="btn ghost" id="shRestore" style="font-size:.85rem;padding:9px">${L('Restaurer mes achats')}</button>`;
   // Achats intégrés désactivés pour la 1re version : seules les pièces gagnées en jouant et les pubs sont proposées
@@ -1197,7 +1269,7 @@ function checkDaily(){
 function openBonusAnytime(){if(!$('mg').hidden)return;
   if(state==='play'||state==='pause'){state='bonus';touching=false;primary=null;mouseDown=false;$('overlay').hidden=true;$('pauseBtn').textContent='❚❚';openChooser(Math.max(1,Math.floor(level/5)),false)}
   else openChooser(1,true)}
-function clearForContinue(){grid.splice(ROWS-4,4);for(let i=0;i<4;i++)grid.unshift(Array(COLS).fill(null));for(let r=0;r<4;r++)grid[r]=Array(COLS).fill(null);state='play';$('overlay').hidden=true;resume=null;spawn()}
+function clearForContinue(){grid.splice(ROWS-floorN-4,4);for(let i=0;i<4;i++)grid.unshift(Array(COLS).fill(null));for(let r=0;r<4;r++)grid[r]=Array(COLS).fill(null);state='play';$('overlay').hidden=true;resume=null;spawn()}
 const bg=$('bgfx'),bctx=bg.getContext('2d');let shapesBg=[];
 function bgResize(){const d=window.devicePixelRatio||1;bg.width=innerWidth*d;bg.height=innerHeight*d;bctx.setTransform(d,0,0,d,0,0);
   shapesBg=Array.from({length:14},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,s:14+Math.random()*22,v:.15+Math.random()*.35,r:Math.random()*6,vr:(Math.random()-.5)*.01,t:'IOTSZJL'[Math.random()*7|0]}))}
@@ -1207,6 +1279,7 @@ function bgDraw(){bctx.clearRect(0,0,innerWidth,innerHeight);shapesBg.forEach(o=
   if(!matchMedia('(prefers-reduced-motion: reduce)').matches)requestAnimationFrame(bgDraw)}
 bgResize();bgDraw();window.addEventListener('resize',bgResize);
 grid=newGrid();bombs=1;undos=2;history=[];chIdx=0;stats={};next=make(draw7());hud();resize();requestAnimationFrame(loop);
+bindHome();setSpeed(speedMul);
 // recalcule la grille dès que sa place change : marges de l'iPhone connues après le lancement, polices, rotation…
 if(window.ResizeObserver)new ResizeObserver(resize).observe($('stage'));
 setCoins(coins);applyNoAds();$('coinBtn').onclick=()=>openShop();$('giftBtn').onclick=openBonusAnytime;$('shopClose').onclick=closeShop;setTimeout(checkDaily,600);
