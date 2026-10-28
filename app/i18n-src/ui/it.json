@@ -29,7 +29,7 @@
 "↶ Annuler le dernier coup ({0})":"↶ Annulla l'ultima mossa ({0})",
 "▶ Regarder une pub pour continuer":"▶ Guarda una pubblicità per continuare",
 "🪙 Continuer":"🪙 Continua",
-"🎁 Jeux bonus":"🎁 Giochi bonus",
+"🎮 Jeux bonus":"🎮 Giochi bonus",
 "Rejouer":"Gioca ancora",
 "continuer la partie":"continuare la partita",
 "Pas de pub disponible : on te l'offre !":"Nessuna pubblicità disponibile: te lo regaliamo!",
@@ -189,7 +189,6 @@
 "Annuler le dernier coup":"Annulla l'ultima mossa",
 "Fermer":"Chiudi",
 "Vitesse de descente : x{0}":"Velocità di caduta: x{0}",
-"💣 {0} lignes : une bombe offerte !":"💣 {0} righe: bomba in regalo!",
 "💣 Bombe rangée":"💣 Bomba rimessa via",
 "💣 Vise avec le doigt, lâche pour exploser":"💣 Mira con il dito, lascia per farla esplodere",
 "🏠 Menu":"🏠 Menu",
@@ -201,7 +200,11 @@
 "❓ Comment jouer":"❓ Come si gioca",
 "<b>Rester appuyé</b> sans bouger : la pièce descend à toute vitesse.":"<b>Tieni premuto</b> senza muoverti: il pezzo scende a tutta velocità.",
 "<b>Vitesse</b> : touche x1 pour faire tomber les pièces 2 ou 3 fois plus vite.":"<b>Velocità</b>: tocca x1 per far cadere i pezzi 2 o 3 volte più veloci.",
-"<b>Bombe</b> : vise avec le doigt et lâche pour faire exploser toute la zone rouge. Une bombe offerte à 60, 120 et 160 lignes.":"<b>Bomba</b>: mira con il dito e lascia per far esplodere tutta la zona rossa. Una bomba in regalo a 60, 120 e 160 righe.",
-"<b>🎁</b> : passe aux jeux bonus à tout moment, puis reprends ta partie.":"<b>🎁</b>: passa ai giochi bonus quando vuoi, poi riprendi la partita.",
-"Vitesse de descente":"Velocità di caduta"
+"<b>🎮 Jeux</b> : passe aux jeux bonus à tout moment, puis reprends ta partie.":"<b>🎮 Giochi</b>: passa ai giochi bonus quando vuoi, poi riprendi la partita.",
+"Vitesse de descente":"Velocità di caduta",
+"Jeux":"Giochi",
+"⚠️ Le sol monte ! Plus que {0} lignes":"⚠️ Il fondo sale! Restano solo {0} righe",
+"💣 Plus de bombe à acheter dans cette partie":"💣 Niente più bombe da comprare in questa partita",
+"<b>Bombe</b> : vise avec le doigt et lâche pour faire exploser toute la zone rouge. 3 bombes à acheter par partie : 60, puis 120, puis 160 🪙.":"<b>Bomba</b>: mira con il dito e lascia per far esplodere tutta la zona rossa. 3 bombe da comprare per partita: 60, poi 120, poi 160 🪙.",
+"<b>Le sol monte</b> tous les 4 000 points : la grille rétrécit, accroche-toi !":"<b>Il fondo sale</b> ogni 4.000 punti: la griglia si restringe, tieni duro!"
 }

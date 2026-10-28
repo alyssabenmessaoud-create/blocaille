@@ -29,7 +29,7 @@
 "↶ Annuler le dernier coup ({0})":"↶ Deshacer la última jugada ({0})",
 "▶ Regarder une pub pour continuer":"▶ Ver un anuncio para continuar",
 "🪙 Continuer":"🪙 Continuar",
-"🎁 Jeux bonus":"🎁 Juegos extra",
+"🎮 Jeux bonus":"🎮 Juegos extra",
 "Rejouer":"Jugar de nuevo",
 "continuer la partie":"seguir jugando",
 "Pas de pub disponible : on te l'offre !":"No hay anuncio disponible: ¡te lo regalamos!",
@@ -189,7 +189,6 @@
 "Annuler le dernier coup":"Deshacer la última jugada",
 "Fermer":"Cerrar",
 "Vitesse de descente : x{0}":"Velocidad de caída: x{0}",
-"💣 {0} lignes : une bombe offerte !":"💣 {0} líneas: ¡bomba de regalo!",
 "💣 Bombe rangée":"💣 Bomba guardada",
 "💣 Vise avec le doigt, lâche pour exploser":"💣 Apunta con el dedo y suelta para explotar",
 "🏠 Menu":"🏠 Menú",
@@ -201,7 +200,11 @@
 "❓ Comment jouer":"❓ Cómo jugar",
 "<b>Rester appuyé</b> sans bouger : la pièce descend à toute vitesse.":"<b>Mantén pulsado</b> sin moverte: la pieza baja a toda velocidad.",
 "<b>Vitesse</b> : touche x1 pour faire tomber les pièces 2 ou 3 fois plus vite.":"<b>Velocidad</b>: toca x1 para que las piezas caigan 2 o 3 veces más rápido.",
-"<b>Bombe</b> : vise avec le doigt et lâche pour faire exploser toute la zone rouge. Une bombe offerte à 60, 120 et 160 lignes.":"<b>Bomba</b>: apunta con el dedo y suelta para hacer explotar toda la zona roja. Una bomba de regalo a las 60, 120 y 160 líneas.",
-"<b>🎁</b> : passe aux jeux bonus à tout moment, puis reprends ta partie.":"<b>🎁</b>: pasa a los juegos extra cuando quieras y luego retoma tu partida.",
-"Vitesse de descente":"Velocidad de caída"
+"<b>🎮 Jeux</b> : passe aux jeux bonus à tout moment, puis reprends ta partie.":"<b>🎮 Juegos</b>: pasa a los juegos extra cuando quieras y luego retoma tu partida.",
+"Vitesse de descente":"Velocidad de caída",
+"Jeux":"Juegos",
+"⚠️ Le sol monte ! Plus que {0} lignes":"⚠️ ¡El suelo sube! Solo quedan {0} líneas",
+"💣 Plus de bombe à acheter dans cette partie":"💣 No quedan bombas por comprar en esta partida",
+"<b>Bombe</b> : vise avec le doigt et lâche pour faire exploser toute la zone rouge. 3 bombes à acheter par partie : 60, puis 120, puis 160 🪙.":"<b>Bomba</b>: apunta con el dedo y suelta para hacer explotar toda la zona roja. 3 bombas a la venta por partida: 60, luego 120, luego 160 🪙.",
+"<b>Le sol monte</b> tous les 4 000 points : la grille rétrécit, accroche-toi !":"<b>El suelo sube</b> cada 4.000 puntos: la cuadrícula se encoge, ¡aguanta!"
 }

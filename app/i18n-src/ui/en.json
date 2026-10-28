@@ -29,7 +29,7 @@
 "↶ Annuler le dernier coup ({0})":"↶ Undo last move ({0})",
 "▶ Regarder une pub pour continuer":"▶ Watch an ad to continue",
 "🪙 Continuer":"🪙 Continue",
-"🎁 Jeux bonus":"🎁 Bonus games",
+"🎮 Jeux bonus":"🎮 Bonus games",
 "Rejouer":"Play again",
 "continuer la partie":"keep playing",
 "Pas de pub disponible : on te l'offre !":"No ad available: this one's on us!",
@@ -189,7 +189,6 @@
 "Annuler le dernier coup":"Undo last move",
 "Fermer":"Close",
 "Vitesse de descente : x{0}":"Drop speed: x{0}",
-"💣 {0} lignes : une bombe offerte !":"💣 {0} lines: free bomb!",
 "💣 Bombe rangée":"💣 Bomb put away",
 "💣 Vise avec le doigt, lâche pour exploser":"💣 Aim with your finger, let go to explode",
 "🏠 Menu":"🏠 Menu",
@@ -201,7 +200,11 @@
 "❓ Comment jouer":"❓ How to play",
 "<b>Rester appuyé</b> sans bouger : la pièce descend à toute vitesse.":"<b>Press and hold</b> without moving: the piece drops at full speed.",
 "<b>Vitesse</b> : touche x1 pour faire tomber les pièces 2 ou 3 fois plus vite.":"<b>Speed</b>: tap x1 to make pieces fall 2 or 3 times faster.",
-"<b>Bombe</b> : vise avec le doigt et lâche pour faire exploser toute la zone rouge. Une bombe offerte à 60, 120 et 160 lignes.":"<b>Bomb</b>: aim with your finger and let go to blow up the whole red area. A free bomb at 60, 120 and 160 lines.",
-"<b>🎁</b> : passe aux jeux bonus à tout moment, puis reprends ta partie.":"<b>🎁</b>: switch to the bonus games at any time, then resume your game.",
-"Vitesse de descente":"Drop speed"
+"<b>🎮 Jeux</b> : passe aux jeux bonus à tout moment, puis reprends ta partie.":"<b>🎮 Games</b>: switch to the bonus games at any time, then resume your game.",
+"Vitesse de descente":"Drop speed",
+"Jeux":"Games",
+"⚠️ Le sol monte ! Plus que {0} lignes":"⚠️ The floor is rising! Only {0} lines left",
+"💣 Plus de bombe à acheter dans cette partie":"💣 No more bombs to buy this game",
+"<b>Bombe</b> : vise avec le doigt et lâche pour faire exploser toute la zone rouge. 3 bombes à acheter par partie : 60, puis 120, puis 160 🪙.":"<b>Bomb</b>: aim with your finger and let go to blow up the whole red area. 3 bombs to buy per game: 60, then 120, then 160 🪙.",
+"<b>Le sol monte</b> tous les 4 000 points : la grille rétrécit, accroche-toi !":"<b>The floor rises</b> every 4,000 points: the grid shrinks, hang on!"
 }
