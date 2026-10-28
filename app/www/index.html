@@ -102,7 +102,7 @@ button.stat:active{transform:translateY(3px);box-shadow:0 1px 0 var(--sh)}
 .adscreen p{color:#e4d4ff;margin:0}
 .count{font-family:var(--display);font-size:2.6rem;color:var(--yellow)}
 
-.mg{position:fixed;inset:0;z-index:15;display:flex;flex-direction:column;gap:8px;background:linear-gradient(160deg,#6a12b8,#a43dff 35%,#ff3d8b 75%,#ff8a1f);padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px));padding-top:calc(10px + env(safe-area-inset-top,0px));padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));box-sizing:border-box;animation:mgin .45s cubic-bezier(.2,1.4,.4,1)}
+.mg{position:fixed;inset:0;z-index:15;display:flex;flex-direction:column;gap:8px;background:linear-gradient(160deg,#6a12b8,#a43dff 35%,#ff3d8b 75%,#ff8a1f);padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px));padding-top:calc(10px + env(safe-area-inset-top,0px));padding-bottom:calc(10px + env(safe-area-inset-bottom,0px) + var(--nad,0px));box-sizing:border-box;animation:mgin .45s cubic-bezier(.2,1.4,.4,1)}
 @keyframes mgin{from{transform:translateY(40px) scale(.95);opacity:0}to{transform:none;opacity:1}}
 .mg-head{display:flex;align-items:center;gap:10px;max-width:560px;width:100%;margin:0 auto}
 .mg-title{font-family:var(--display);font-size:1.15rem;flex:1;text-shadow:0 3px 0 var(--deep);line-height:1.1}
@@ -204,7 +204,7 @@ button.stat:active{transform:translateY(3px);box-shadow:0 1px 0 var(--sh)}
 .coinbtn i{font-style:normal;font-family:var(--ui);font-weight:700;background:var(--green);color:#fff;border-radius:8px;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;margin-left:2px}
 .coinbtn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(42,10,74,.35)}
 .coinN{display:inline-block}.coinN.pop{animation:pop .4s ease}
-.shop{position:fixed;inset:0;z-index:18;background:rgba(42,10,74,.55);display:flex;align-items:center;justify-content:center;padding:16px;padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.shop{position:fixed;inset:0;z-index:18;background:rgba(42,10,74,.55);display:flex;align-items:center;justify-content:center;padding:16px;padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(16px + env(safe-area-inset-bottom,0px) + var(--nad,0px))}
 .shop-card{background:#fff;color:var(--deep);border-radius:24px;width:100%;max-width:420px;max-height:100%;display:flex;flex-direction:column;box-shadow:0 8px 0 rgba(42,10,74,.35);animation:cardin .45s cubic-bezier(.2,1.6,.4,1);overflow:hidden}
 .shop-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:linear-gradient(90deg,var(--yellow),var(--orange));font-family:var(--display);font-size:1.15rem}
 .shop-head .mg-close{box-shadow:0 3px 0 rgba(42,10,74,.25)}
@@ -678,7 +678,8 @@ async function initAds(){
   if(!AdMob)return;
   // dans l'appli, on cache tout de suite l'encart de démonstration : la vraie bannière s'affiche par-dessus quand elle est chargée
   document.getElementById('bannerSlot').classList.add('native');
-  document.documentElement.style.setProperty('--ad-h','0px');setTimeout(()=>{try{resize()}catch(e){}},0);
+  // --nad : place laissée à la vraie bannière (qui reste par-dessus tout) en bas des jeux bonus et de la boutique
+  document.documentElement.style.setProperty('--ad-h','0px');document.documentElement.style.setProperty('--nad','50px');setTimeout(()=>{try{resize()}catch(e){}},0);
   try{
     await AdMob.initialize({});
     if(platform==='ios'){
@@ -689,9 +690,10 @@ async function initAds(){
     if(c&&c.isConsentFormAvailable&&c.status==='REQUIRED')await AdMob.showConsentForm();
     adsReady=true;
     // réserve exactement la hauteur de la vraie bannière, pour qu'elle ne cache jamais le bas de la grille
-    AdMob.addListener('bannerAdSizeChanged',s=>{if(s&&s.height>0){document.documentElement.style.setProperty('--ad-h',Math.ceil(s.height)+'px');resize()}});
+    AdMob.addListener('bannerAdSizeChanged',s=>{if(s&&s.height>0){document.documentElement.style.setProperty('--ad-h',Math.ceil(s.height)+'px');document.documentElement.style.setProperty('--nad',Math.ceil(s.height)+'px');resize()}});
+    AdMob.addListener('bannerAdFailedToLoad',()=>document.documentElement.style.setProperty('--nad','0px'));
     await AdMob.showBanner({adId:adIds.banner,adSize:'BANNER',position:'BOTTOM_CENTER',margin:0,isTesting:ADS_CONFIG.testing});
-  }catch(e){console.warn('Pub indisponible',e)}
+  }catch(e){console.warn('Pub indisponible',e);document.documentElement.style.setProperty('--nad','0px')}
 }
 async function showRewardedAd(){
   if(!AdMob)return null; // null = navigateur, on simule
