@@ -766,6 +766,26 @@ function maybeInterstitialInGame(){
   },1500);
 }
 initAds();
+// ===== Mise à jour : propose la nouvelle version du store au lancement (Android : mise à jour intégrée) =====
+const AppUpdate=Cap&&Cap.isNativePlatform&&Cap.isNativePlatform()&&Cap.Plugins&&Cap.Plugins.AppUpdate;
+async function checkUpdate(){
+  if(!AppUpdate)return;
+  try{
+    const i=await AppUpdate.getAppUpdateInfo();
+    if(!i||i.updateAvailability!==2||state!=='menu')return;
+    const key='upd_'+(i.availableVersionCode||i.availableVersionName);
+    if(store.get(key,0)>=2)return; // pas plus de 2 rappels par version
+    store.set(key,store.get(key,0)+1);
+    showCard('<h2>'+L('Nouvelle version disponible')+'</h2><p>'+L('Une mise à jour de Blocaille est prête, avec des nouveautés.')+'</p>'+
+      '<button class="btn" id="updNow">'+L('Mettre à jour')+'</button><button class="btn undo" id="updLater">'+L('Plus tard')+'</button>');
+    $('updLater').onclick=showHome;
+    $('updNow').onclick=async()=>{
+      try{if(platform==='android'&&i.immediateUpdateAllowed)await AppUpdate.performImmediateUpdate();else await AppUpdate.openAppStore()}
+      catch(e){try{await AppUpdate.openAppStore()}catch(e2){showHome()}}
+    };
+  }catch(e){console.warn('Vérification de mise à jour impossible',e)}
+}
+setTimeout(checkUpdate,2500);
 function giveContinue(){
   grid.splice(ROWS-floorN-4,4);for(let i=0;i<4;i++)grid.unshift(Array(COLS).fill(null));
   for(let r=0;r<4;r++)grid[r]=Array(COLS).fill(null);
