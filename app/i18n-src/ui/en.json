@@ -212,5 +212,15 @@
 "Nouvelle version disponible":"New version available",
 "Une mise à jour de Blocaille est prête, avec des nouveautés.":"A Blocaille update is ready, with new features.",
 "Mettre à jour":"Update",
-"Plus tard":"Later"
+"Plus tard":"Later",
+"Défi explosion {0}":"Blast challenge {0}",
+"Pose les pièces contre les cubes de la même couleur : le groupe collé explose dès {0} cubes ou plus !":"Place pieces next to cubes of the same colour: a touching group blasts once it has {0} cubes or more!",
+"Cubes explosés : {0}/{1}":"Cubes blasted: {0}/{1}",
+"Pièces : {0}":"Pieces: {0}",
+"💥 {0} cubes !":"💥 {0} cubes!",
+"Défi réussi !":"Challenge complete!",
+"Défi raté":"Challenge failed",
+"Pas de souci, tu peux réessayer.":"No worries, you can try again.",
+"Réessayer":"Try again",
+"Continuer la partie":"Back to the game"
 }

@@ -212,5 +212,15 @@
 "Nouvelle version disponible":"Neue Version verfügbar",
 "Une mise à jour de Blocaille est prête, avec des nouveautés.":"Ein Blocaille-Update mit Neuerungen ist bereit.",
 "Mettre à jour":"Aktualisieren",
-"Plus tard":"Später"
+"Plus tard":"Später",
+"Défi explosion {0}":"Explosions-Challenge {0}",
+"Pose les pièces contre les cubes de la même couleur : le groupe collé explose dès {0} cubes ou plus !":"Lege Teile an Würfel gleicher Farbe: Eine zusammenhängende Gruppe explodiert ab {0} Würfeln!",
+"Cubes explosés : {0}/{1}":"Explodierte Würfel: {0}/{1}",
+"Pièces : {0}":"Teile: {0}",
+"💥 {0} cubes !":"💥 {0} Würfel!",
+"Défi réussi !":"Challenge geschafft!",
+"Défi raté":"Challenge verfehlt",
+"Pas de souci, tu peux réessayer.":"Kein Problem, versuch es nochmal.",
+"Réessayer":"Nochmal",
+"Continuer la partie":"Zurück zum Spiel"
 }

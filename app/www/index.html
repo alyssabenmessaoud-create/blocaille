@@ -103,6 +103,22 @@ button.stat:active{transform:translateY(3px);box-shadow:0 1px 0 var(--sh)}
 .count{font-family:var(--display);font-size:2.6rem;color:var(--yellow)}
 
 .mg{position:fixed;inset:0;z-index:15;display:flex;flex-direction:column;gap:8px;background:linear-gradient(160deg,#6a12b8,#a43dff 35%,#ff3d8b 75%,#ff8a1f);padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px));padding-top:calc(10px + env(safe-area-inset-top,0px));padding-bottom:calc(10px + env(safe-area-inset-bottom,0px) + var(--nad,0px));box-sizing:border-box;animation:mgin .45s cubic-bezier(.2,1.4,.4,1)}
+/* Défi explosion */
+.bx-info{display:flex;justify-content:space-between;gap:8px;font-weight:700;font-size:.9rem}
+.bx-info span{background:rgba(255,255,255,.95);color:var(--deep);border-radius:999px;padding:5px 12px}
+.bx-bar{height:12px;border-radius:99px;background:rgba(0,0,0,.28);overflow:hidden}.bx-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--yellow),var(--orange));transition:width .35s}
+.bx-grid{display:grid;gap:3px;background:var(--boardbg);padding:6px;border-radius:16px;margin:0 auto;touch-action:none;box-shadow:0 5px 0 rgba(0,0,0,.3);user-select:none}
+.bx-c{aspect-ratio:1;border-radius:20%;background:rgba(255,255,255,.07)}
+.bx-c.f{background:linear-gradient(135deg,var(--c2),var(--c));box-shadow:inset 0 -.18em 0 var(--c3),inset .1em .12em 0 rgba(255,255,255,.35)}
+.bx-c.ok{outline:3px solid #fff;outline-offset:-3px;background:rgba(255,255,255,.35)}
+.bx-c.no{outline:3px solid #ff5a5a;outline-offset:-3px}
+.bx-c.boom{animation:bxboom .38s ease-out forwards}
+@keyframes bxboom{0%{transform:scale(1);filter:brightness(1)}40%{transform:scale(1.25);filter:brightness(2)}100%{transform:scale(0);opacity:0}}
+.bx-tray{display:flex;justify-content:space-around;align-items:center;min-height:96px;gap:10px}
+.bx-p{display:grid;gap:2px;touch-action:none;cursor:grab;padding:6px}
+.bx-p .bx-c{width:26px;aspect-ratio:1;background:transparent}.bx-p .bx-c.f{background:linear-gradient(135deg,var(--c2),var(--c))}
+.bx-p.used{opacity:.15;pointer-events:none}
+.bx-drag{position:fixed;z-index:40;pointer-events:none;display:grid;gap:3px}
 @keyframes mgin{from{transform:translateY(40px) scale(.95);opacity:0}to{transform:none;opacity:1}}
 .mg-head{display:flex;align-items:center;gap:10px;max-width:560px;width:100%;margin:0 auto}
 .mg-title{font-family:var(--display);font-size:1.15rem;flex:1;text-shadow:0 3px 0 var(--deep);line-height:1.1}
@@ -385,6 +401,7 @@ const $=id=>document.getElementById(id);
 const cv=$('board'), ctx=cv.getContext('2d');
 let grid, cur, next, hold, holdUsed, resume, bag=[], score, lines, level, bombs, undos, history, chIdx, stats;
 let bombsBought=0,floorN=0;
+let cumBase=0, challengePending=false;
 let best=0, state='menu', dropAcc=0, last=0, cell=20, usedReward=false, vis={x:0,y:0}, particles=[], flashes=[], floats=[], hint=null, bonusPending=false, carry={bomb:0,undo:0};
 try{best=+localStorage.getItem('blocaille_best')||0}catch(e){}
 const HOME_HTML=$('card').innerHTML;
@@ -452,7 +469,7 @@ function gridAfter(p){
 }
 
 function reset(){
-  grid=newGrid();score=0;lines=0;level=1;bombs=1+carry.bomb;undos=2+carry.undo;carry={bomb:0,undo:0};bonusPending=false;history=[];chIdx=0;hold=null;holdUsed=false;resume=null;
+  cumBase=0;grid=newGrid();score=0;lines=0;level=1;bombs=1+carry.bomb;undos=2+carry.undo;carry={bomb:0,undo:0};bonusPending=false;history=[];chIdx=0;hold=null;holdUsed=false;resume=null;
   stats={lines:0,best:0,score:0,bombs:0,holds:0,level:1};usedReward=false;bag=[];bombsBought=0;floorN=0;
   recent=[];const first=make(smartPick(grid));next=make(smartPick(gridAfter(first)));setCur(first);hud();
 }
@@ -479,9 +496,11 @@ function lock(){
     floatText(['','+'+pts,L('DOUBLE !'),L('TRIPLE !'),L('MÉGA !')][cleared],Math.min(ROWS-2,lowest),Math.round(cell*(cleared>1?1.4:1)));if(cleared>1){shake();confetti(cleared*12)}
     score+=pts;lines+=cleared;setCoins(coins+cleared*2,true);const nl=1+Math.floor(lines/10);if(nl>level&&Math.floor(nl/5)>Math.floor(level/5))bonusPending=true;if(nl>level){setTimeout(()=>{floatText(L('NIVEAU {0}',nl),8,Math.round(cell*1.2));confetti(40)},450)}level=nl;stats.best=Math.max(stats.best,cleared)}
   stats.lines=lines;stats.score=score;stats.level=level;
+  {const d=score-cumBase;cumBase=score;const cum=store.get('cum',0)+Math.max(0,d);store.set('cum',cum);if(Math.floor(cum/3000)>store.get('chal',0))challengePending=true}
   if(!raiseFloor())return;
   checkChallenge();spawn();
   if(bonusPending&&state==='play'){bonusPending=false;state='bonus';touching=false;primary=null;mouseDown=false;setTimeout(()=>openChooser(Math.floor(level/5),false),1100)}
+  else if(challengePending&&state==='play'){challengePending=false;state='bonus';touching=false;primary=null;mouseDown=false;setTimeout(openChallenge,900)}
   else maybeInterstitialInGame();
 }
 // fait monter le sol de pierre si le score a passé un palier ; false si la partie est finie
@@ -969,6 +988,80 @@ $('mgClose').onclick=closeMini;
 const playBlocksHTML=()=>`<button class="btn" id="mgPlay">🧱 ${L('Jouer aux blocs')}</button>`;
 function bindPlayBlocks(){const b=$('mgPlay');if(b)b.onclick=()=>{closeMini();start()}}
 
+
+// ---------- Défi explosion : pose les pièces contre les cubes de la même couleur, le groupe collé explose ----------
+const BX_COLS=7,BX_ROWS=8,BX_PAL=['Z','L','O','S','I','J'];
+const BX_SHAPES=[[[0,0]],[[0,0]],[[0,0],[1,0]],[[0,0],[0,1]],[[0,0],[1,0],[2,0]],[[0,0],[0,1],[0,2]],[[0,0],[1,0],[0,1]],[[0,0],[1,0],[1,1]],[[0,0],[1,0],[0,1],[1,1]]];
+const bxCfg=n=>({colors:Math.min(6,3+Math.floor((n-1)/2)),min:n>=8?5:n>=4?4:3,target:Math.min(40,10+3*(n-1)),moves:Math.max(8,12-Math.floor((n-1)/2)),fill:Math.min(.6,.38+.02*n)});
+function bxGroup(g,r,c){const t=g[r][c],seen=new Set([r*BX_COLS+c]),q=[[r,c]],out=[];
+  while(q.length){const [y,x]=q.pop();out.push([y,x]);for(const [dy,dx] of [[1,0],[-1,0],[0,1],[0,-1]]){const yy=y+dy,xx=x+dx;if(yy<0||yy>=BX_ROWS||xx<0||xx>=BX_COLS||g[yy][xx]!==t||seen.has(yy*BX_COLS+xx))continue;seen.add(yy*BX_COLS+xx);q.push([yy,xx])}}
+  return out}
+function bxDeal(){const cf=bx.cfg,cols=BX_PAL.slice(0,cf.colors);bx.tray=[0,1,2].map(()=>({sh:BX_SHAPES[Math.random()*BX_SHAPES.length|0],t:cols[Math.random()*cols.length|0],used:false}))}
+let bx=null;
+function openChallenge(){
+  const n=store.get('chal',0)+1;store.set('chal',n);
+  mg={stage:n,practice:false,round:0,won:{bomb:0,undo:0},type:'blast'};mgEl.hidden=false;mgBank();startBlast(n)}
+function startBlast(n){
+  const cf=bxCfg(n),cols=BX_PAL.slice(0,cf.colors);
+  const g=Array.from({length:BX_ROWS},()=>Array(BX_COLS).fill(null));
+  for(let r=0;r<BX_ROWS;r++)for(let c=0;c<BX_COLS;c++)if(Math.random()<cf.fill)g[r][c]=cols[Math.random()*cols.length|0];
+  // pas de groupe déjà assez gros au départ
+  for(let k=0;k<200;k++){let bad=false;for(let r=0;r<BX_ROWS&&!bad;r++)for(let c=0;c<BX_COLS;c++)if(g[r][c]){const gr=bxGroup(g,r,c);if(gr.length>=cf.min){const [y,x]=gr[Math.random()*gr.length|0];g[y][x]=cols.filter(t=>t!==g[y][x])[Math.random()*(cols.length-1)|0];bad=true;break}}if(!bad)break}
+  bx={n,cfg:cf,g,cleared:0,moves:cf.moves,over:false};bxDeal();bxRender()}
+function bxCell(t,extra){return t?`<i class="bx-c f ${extra||''}" style="--c:${COLORS[t]};--c2:${shade(COLORS[t],.35)};--c3:${shade(COLORS[t],-.35)}"></i>`:`<i class="bx-c ${extra||''}"></i>`}
+function bxRender(){
+  const cf=bx.cfg;$('mgTitle').textContent=L('Défi explosion {0}',bx.n);
+  $('mgBody').onclick=null;
+  $('mgBody').innerHTML=`<div class="intro">${L('Pose les pièces contre les cubes de la même couleur : le groupe collé explose dès {0} cubes ou plus !',cf.min)}</div>
+    <div class="bx-info"><span id="bxCl">${L('Cubes explosés : {0}/{1}',bx.cleared,cf.target)}</span><span id="bxMv">${L('Pièces : {0}',bx.moves)}</span></div>
+    <div class="bx-bar"><i id="bxBar"></i></div>
+    <div class="bx-grid" id="bxGrid" style="grid-template-columns:repeat(${BX_COLS},1fr);width:min(100%,${BX_COLS*52}px)"></div>
+    <div class="bx-tray" id="bxTray"></div>`;
+  $('mgFoot').innerHTML=`<button class="btn ghost" id="mgSkip">${L('Continuer la partie')}</button>`;$('mgSkip').onclick=closeMini;
+  bxPaint()}
+function bxPaint(){
+  $('bxGrid').innerHTML=bx.g.map(row=>row.map(t=>bxCell(t)).join('')).join('');
+  $('bxTray').innerHTML=bx.tray.map((p,i)=>{const w=Math.max(...p.sh.map(a=>a[0]))+1,h=Math.max(...p.sh.map(a=>a[1]))+1;
+    let cells='';for(let y=0;y<h;y++)for(let x=0;x<w;x++)cells+=bxCell(p.sh.some(a=>a[0]===x&&a[1]===y)?p.t:null);
+    return `<div class="bx-p ${p.used?'used':''}" data-i="${i}" style="grid-template-columns:repeat(${w},26px)">${cells}</div>`}).join('');
+  $('bxTray').querySelectorAll('.bx-p').forEach(el=>el.onpointerdown=e=>bxDrag(e,+el.dataset.i));
+  $('bxCl').textContent=L('Cubes explosés : {0}/{1}',bx.cleared,bx.cfg.target);$('bxMv').textContent=L('Pièces : {0}',bx.moves);
+  $('bxBar').style.width=Math.min(100,bx.cleared/bx.cfg.target*100)+'%'}
+function bxFits(p,r,c){return p.sh.every(([dx,dy])=>{const y=r+dy,x=c+dx;return y>=0&&y<BX_ROWS&&x>=0&&x<BX_COLS&&!bx.g[y][x]})}
+function bxDrag(e,i){
+  if(bx.over)return;const p=bx.tray[i];if(p.used)return;e.preventDefault();
+  const gr=$('bxGrid'),cs=(gr.clientWidth-12)/BX_COLS;
+  const w=Math.max(...p.sh.map(a=>a[0]))+1,h=Math.max(...p.sh.map(a=>a[1]))+1;
+  const dr=document.createElement('div');dr.className='bx-drag';dr.style.gridTemplateColumns=`repeat(${w},${cs}px)`;dr.style.gridAutoRows=cs+'px';
+  let cells='';for(let y=0;y<h;y++)for(let x=0;x<w;x++)cells+=bxCell(p.sh.some(a=>a[0]===x&&a[1]===y)?p.t:null);dr.innerHTML=cells;document.body.appendChild(dr);
+  let tgt=null;
+  const cellAt=(px,py)=>{const b=gr.getBoundingClientRect();const x=Math.floor((px-b.left-6)/(cs+3)),y=Math.floor((py-b.top-6)/(cs+3));return [y,x]};
+  const move=ev=>{const px=ev.clientX,py=ev.clientY-cs*1.6;dr.style.left=(px-cs*w/2)+'px';dr.style.top=(py-cs*h/2)+'px';
+    const [y,x]=cellAt(px-cs*(w-1)/2,py-cs*(h-1)/2);gr.querySelectorAll('.ok,.no').forEach(c=>c.classList.remove('ok','no'));tgt=null;
+    if(y>=-1&&x>=-1&&y<BX_ROWS&&x<BX_COLS){const ok=bxFits(p,y,x);if(ok)tgt=[y,x];p.sh.forEach(([dx,dy])=>{const yy=y+dy,xx=x+dx;if(yy>=0&&yy<BX_ROWS&&xx>=0&&xx<BX_COLS)gr.children[yy*BX_COLS+xx].classList.add(ok?'ok':'no')})}};
+  const up=()=>{window.removeEventListener('pointermove',move);window.removeEventListener('pointerup',up);window.removeEventListener('pointercancel',up);dr.remove();gr.querySelectorAll('.ok,.no').forEach(c=>c.classList.remove('ok','no'));if(tgt)bxPlace(i,tgt[0],tgt[1])};
+  window.addEventListener('pointermove',move);window.addEventListener('pointerup',up);window.addEventListener('pointercancel',up);move(e)}
+function bxPlace(i,r,c){
+  const p=bx.tray[i];if(!bxFits(p,r,c))return;p.used=true;bx.moves--;
+  const placed=p.sh.map(([dx,dy])=>[r+dy,c+dx]);placed.forEach(([y,x])=>bx.g[y][x]=p.t);
+  // tous les groupes qui touchent la pièce posée et qui sont assez gros explosent
+  const boom=new Map();placed.forEach(([y,x])=>{const gr=bxGroup(bx.g,y,x);if(gr.length>=bx.cfg.min)gr.forEach(([a,b])=>boom.set(a*BX_COLS+b,[a,b]))});
+  bxPaint();
+  if(boom.size){const gr=$('bxGrid');boom.forEach(([y,x])=>{gr.children[y*BX_COLS+x].classList.add('boom');bx.g[y][x]=null});bx.cleared+=boom.size;mgMsg(L('💥 {0} cubes !',boom.size));try{navigator.vibrate&&navigator.vibrate(30)}catch(e){}
+    setTimeout(()=>{if(mg&&mg.type==='blast'){bxPaint();bxCheck()}},420)}
+  else bxCheck()}
+function bxCheck(){
+  if(!bx||bx.over)return;
+  if(bx.cleared>=bx.cfg.target){bx.over=true;const c=10+bx.n*2;setCoins(coins+c,true);give('bomb');give('undo');bxEnd(true,'+1 💣 +1 ↶ +'+c+' 🪙');return}
+  if(bx.tray.every(p=>p.used)){if(bx.moves<=0){bxEnd(false);return}bxDeal();bxPaint()}
+  if(bx.moves<=0){bxEnd(false);return}
+  // aucune pièce ne rentre : fin
+  const can=bx.tray.some(p=>!p.used&&bx.g.some((row,r)=>row.some((_,c)=>bxFits(p,r,c))));if(!can)bxEnd(false)}
+function bxEnd(win,rew){
+  bx.over=true;
+  $('mgBody').insertAdjacentHTML('beforeend',`<div class="intro" style="text-align:center"><b>${win?L('Défi réussi !'):L('Défi raté')}</b><br>${win?L('Récompense : {0}',rew):L('Pas de souci, tu peux réessayer.')}</div>`);
+  $('mgFoot').innerHTML=(win?'':`<button class="btn" id="bxRetry">${L('Réessayer')}</button>`)+`<button class="btn ghost" id="mgSkip">${L('Continuer la partie')}</button>`;
+  $('mgSkip').onclick=closeMini;const rt=$('bxRetry');if(rt)rt.onclick=()=>startBlast(bx.n)}
 // ---------- Mots en ligne ----------
 function startWords(){
   stopTimer();const d=roundDiff(),tiers=roundTiers(d);
