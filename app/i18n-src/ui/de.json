@@ -206,5 +206,7 @@
 "⚠️ Le sol monte ! Plus que {0} lignes":"⚠️ Der Boden steigt! Nur noch {0} Reihen",
 "💣 Plus de bombe à acheter dans cette partie":"💣 In dieser Runde gibt es keine Bomben mehr zu kaufen",
 "<b>Bombe</b> : vise avec le doigt et lâche pour faire exploser toute la zone rouge. 3 bombes à acheter par partie : 60, puis 120, puis 160 🪙.":"<b>Bombe</b>: Ziel mit dem Finger und lass los, um die ganze rote Zone zu sprengen. 3 Bomben pro Runde zu kaufen: 60, dann 120, dann 160 🪙.",
-"<b>Le sol monte</b> tous les 4 000 points : la grille rétrécit, accroche-toi !":"<b>Der Boden steigt</b> alle 4.000 Punkte: Das Spielfeld wird kleiner, halte durch!"
+"<b>Le sol monte</b> tous les 4 000 points : la grille rétrécit, accroche-toi !":"<b>Der Boden steigt</b> alle 4.000 Punkte: Das Spielfeld wird kleiner, halte durch!",
+"Petite pause pub":"Kurze Werbepause",
+"La partie reprend juste après.":"Das Spiel geht gleich danach weiter."
 }
