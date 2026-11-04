@@ -212,5 +212,15 @@
 "Nouvelle version disponible":"Nova versão disponível",
 "Une mise à jour de Blocaille est prête, avec des nouveautés.":"Há uma atualização do Blocaille com novidades.",
 "Mettre à jour":"Atualizar",
-"Plus tard":"Mais tarde"
+"Plus tard":"Mais tarde",
+"Défi explosion {0}":"Desafio explosão {0}",
+"Pose les pièces contre les cubes de la même couleur : le groupe collé explose dès {0} cubes ou plus !":"Coloque as peças junto de cubos da mesma cor: o grupo colado explode a partir de {0} cubos.",
+"Cubes explosés : {0}/{1}":"Cubos explodidos: {0}/{1}",
+"Pièces : {0}":"Peças: {0}",
+"💥 {0} cubes !":"💥 {0} cubos!",
+"Défi réussi !":"Desafio concluído!",
+"Défi raté":"Desafio falhou",
+"Pas de souci, tu peux réessayer.":"Sem problema, podes tentar de novo.",
+"Réessayer":"Tentar de novo",
+"Continuer la partie":"Voltar ao jogo"
 }
