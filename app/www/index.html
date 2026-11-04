@@ -482,6 +482,7 @@ function lock(){
   if(!raiseFloor())return;
   checkChallenge();spawn();
   if(bonusPending&&state==='play'){bonusPending=false;state='bonus';touching=false;primary=null;mouseDown=false;setTimeout(()=>openChooser(Math.floor(level/5),false),1100)}
+  else maybeInterstitialInGame();
 }
 // fait monter le sol de pierre si le score a passé un palier ; false si la partie est finie
 function raiseFloor(){
@@ -630,6 +631,7 @@ function resize(){
 function loop(t){
   const dt=Math.min(50,t-(last||t));last=t;
   if(state==='play'){
+    playMs+=dt;
     if(holdingStill()){
       // doigt appuyé sans bouger : la pièce descend à toute vitesse
       dropAcc=0;fastAcc+=dt;
@@ -699,13 +701,14 @@ async function initAds(){
   document.documentElement.style.setProperty('--ad-h','0px');document.documentElement.style.setProperty('--nad','50px');setTimeout(()=>{try{resize()}catch(e){}},0);
   try{
     await AdMob.initialize({});
+    // une erreur sur le suivi (ATT) ou le consentement ne doit jamais couper toutes les pubs
     if(platform==='ios'){
-      const t=await AdMob.trackingAuthorizationStatus();
-      if(t&&t.status==='notDetermined')await AdMob.requestTrackingAuthorization();
+      try{const t=await AdMob.trackingAuthorizationStatus();
+        if(t&&t.status==='notDetermined')await AdMob.requestTrackingAuthorization();}catch(e){console.warn('Suivi (ATT)',e)}
     }
-    const c=await AdMob.requestConsentInfo({});
-    if(c&&c.isConsentFormAvailable&&c.status==='REQUIRED')await AdMob.showConsentForm();
-    adsReady=true;
+    try{const c=await AdMob.requestConsentInfo({});
+      if(c&&c.isConsentFormAvailable&&c.status==='REQUIRED')await AdMob.showConsentForm();}catch(e){console.warn('Consentement',e)}
+    adsReady=true;loadInterstitial();
     // réserve exactement la hauteur de la vraie bannière, pour qu'elle ne cache jamais le bas de la grille
     AdMob.addListener('bannerAdSizeChanged',s=>{if(s&&s.height>0){document.documentElement.style.setProperty('--ad-h',Math.ceil(s.height)+'px');document.documentElement.style.setProperty('--nad',Math.ceil(s.height)+'px');resize()}});
     AdMob.addListener('bannerAdFailedToLoad',()=>document.documentElement.style.setProperty('--nad','0px'));
@@ -720,23 +723,47 @@ async function showRewardedAd(alt){
       try{
         await AdMob.prepareRewardInterstitialAd({adId:adIds.rewardedInterstitial,isTesting:ADS_CONFIG.testing});
         const r=await AdMob.showRewardInterstitialAd();
-        lastInter=Date.now();
+        playMs=0;
         return !!r;
       }catch(e){console.warn('Interstitiel récompensé indisponible, vidéo à la place',e)}
     }
     await AdMob.prepareRewardVideoAd({adId:adIds.rewarded,isTesting:ADS_CONFIG.testing});
     const reward=await AdMob.showRewardVideoAd();
-    lastInter=Date.now();
+    playMs=0;
     return !!reward;
   }catch(e){console.warn(e);return false}
 }
-// pub plein écran toutes les 3 minutes, seulement à un moment calme (fin de partie, retour à l'accueil)
-let lastInter=Date.now(),rewardedCount=0;
+// pub plein écran toutes les 3 minutes de jeu (temps passé à jouer, compté dans loop)
+// la pub est chargée à l'avance pour s'afficher tout de suite ; en partie, on met en pause et on prévient avant
+let playMs=0,interLoaded=false,interLoading=false,rewardedCount=0;
 const INTER_EVERY=180000;
-async function maybeInterstitial(){
-  if(!AdMob||!adsReady||window.noAds||Date.now()-lastInter<INTER_EVERY)return;
-  lastInter=Date.now();
-  try{await AdMob.prepareInterstitial({adId:adIds.interstitial,isTesting:ADS_CONFIG.testing});await AdMob.showInterstitial()}catch(e){console.warn('Interstitiel indisponible',e)}
+async function loadInterstitial(){
+  if(!AdMob||!adsReady||window.noAds||interLoaded||interLoading)return;
+  interLoading=true;
+  try{await AdMob.prepareInterstitial({adId:adIds.interstitial,isTesting:ADS_CONFIG.testing});interLoaded=true}
+  catch(e){console.warn('Interstitiel pas encore disponible',e);setTimeout(loadInterstitial,60000)}
+  interLoading=false;
+}
+function interDue(){return !!AdMob&&adsReady&&!window.noAds&&playMs>=INTER_EVERY}
+async function showInterstitialNow(){
+  if(!interLoaded){loadInterstitial();return false}
+  interLoaded=false;playMs=0;
+  try{await AdMob.showInterstitial();return true}
+  catch(e){console.warn('Interstitiel indisponible',e);return false}
+  finally{setTimeout(loadInterstitial,2000)}
+}
+// fin de partie, retour à l'accueil
+async function maybeInterstitial(){if(interDue())await showInterstitialNow()}
+// en pleine partie, juste après la pose d'une pièce
+function maybeInterstitialInGame(){
+  if(!interDue()||!interLoaded||state!=='play')return;
+  state='pause';touching=false;primary=null;mouseDown=false;$('pauseBtn').textContent='▶';
+  showCard('<h2>'+L('Petite pause pub')+'</h2><p>'+L('La partie reprend juste après.')+'</p>');
+  setTimeout(async()=>{
+    if(state!=='pause')return;
+    await showInterstitialNow();
+    if(state==='pause'){state='play';togglePause()} // affiche la carte Pause : le joueur reprend quand il veut
+  },1500);
 }
 initAds();
 function giveContinue(){

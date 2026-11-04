@@ -206,5 +206,7 @@
 "⚠️ Le sol monte ! Plus que {0} lignes":"⚠️ ¡El suelo sube! Solo quedan {0} líneas",
 "💣 Plus de bombe à acheter dans cette partie":"💣 No quedan bombas por comprar en esta partida",
 "<b>Bombe</b> : vise avec le doigt et lâche pour faire exploser toute la zone rouge. 3 bombes à acheter par partie : 60, puis 120, puis 160 🪙.":"<b>Bomba</b>: apunta con el dedo y suelta para hacer explotar toda la zona roja. 3 bombas a la venta por partida: 60, luego 120, luego 160 🪙.",
-"<b>Le sol monte</b> tous les 4 000 points : la grille rétrécit, accroche-toi !":"<b>El suelo sube</b> cada 4.000 puntos: la cuadrícula se encoge, ¡aguanta!"
+"<b>Le sol monte</b> tous les 4 000 points : la grille rétrécit, accroche-toi !":"<b>El suelo sube</b> cada 4.000 puntos: la cuadrícula se encoge, ¡aguanta!",
+"Petite pause pub":"Pausa publicitaria",
+"La partie reprend juste après.":"La partida continúa justo después."
 }
